@@ -12,6 +12,9 @@ import Reservas from './pages/Reservas'
 import Profile from './pages/Profile'
 import Administrator from './pages/Administrator'
 import Wishlist from './pages/Wishlist'
+import Private from './components/auth/Private'
+import Public from './components/auth/Public'
+import Owner from './components/auth/Owner'
 
 function App() {
   
@@ -20,16 +23,16 @@ function App() {
     <>
       <Navbar/>
       <Routes>
-        <Route path='/signup' element={ <Signup/> }/>
-        <Route path='/login' element={ <Login/> }/>
-        <Route path='/profile' element={ <Profile/> }/>
+        <Route path='/signup' element={ <Public> <Signup/> </Public> }/>
+        <Route path='/login' element={ <Public> <Login/> </Public> }/>
+        <Route path='/profile' element={ <Private> <Profile/> </Private> }/>
         <Route path='/' element={ <Home/> }/>
         <Route path='/restaurants/:restaurantId' element={ <Restaurant/> }/>
-        <Route path='/restaurants/:restaurantId/bookings' element={ <RestaurantBooking/> }/>
-        <Route path='/favourites' element={ <Favoritos/> } />
-        <Route path='/wishlist' element={ <Wishlist/> } />
-        <Route path='/bookings' element={ <Reservas/> }/>
-        <Route path='/administrator' element={ <Administrator/> }/>
+        <Route path='/restaurants/:restaurantId/bookings' element={ <Private> <RestaurantBooking/> </Private> }/>
+        <Route path='/favourites' element={ <Private> <Favoritos/> </Private> } />
+        <Route path='/wishlist' element={ <Private> <Wishlist/> </Private> } />
+        <Route path='/bookings' element={ <Private> <Reservas/> </Private> }/>
+        <Route path='/administrator' element={ <Owner> <Administrator/> </Owner> }/>
         <Route path='*' element={ <Home/> }/>
       </Routes>
       <Footer/>

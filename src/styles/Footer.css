@@ -2,8 +2,8 @@
     display: flex;
     width: 100%;
     justify-content: center;
-    background-color: rgb(70, 130, 182);
     background-color: rgb(185, 196, 220);
+    background-color: rgb(70, 130, 182);
     height: 45px;
     position: fixed;
     bottom: 0;
@@ -24,6 +24,7 @@
     height: 30px;
     aspect-ratio: 1/1;
     border: 2px solid rgb(41, 46, 48);
+    border: 2px solid white;
     border-radius: 100%;
     display: flex;
     justify-content: center;

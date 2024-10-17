@@ -1,17 +1,23 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
+import { ThemeContext } from "../context/theme.context";
+import nearBitesText from "../assets/images/logos/nearBites_texto.png";
+
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 function Signup() {
 
   const navigate = useNavigate()
+  const { isDark } = useContext(ThemeContext)
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [username, setUsername] = useState("")
   const [errorMessage, setErrorMessage] = useState("")
+  const [warning, setWarning] = useState(false)
+
 
   const handleEmail = (e)=>setEmail(e.target.value);
   const handleUsername = (e)=>setUsername(e.target.value);
@@ -19,11 +25,16 @@ function Signup() {
 
   useEffect(() => {
     if (errorMessage) {
+      setWarning(true)
+      const warn = setTimeout(() => {
+        setWarning(false);
+      }, 3000);
+      
       const timer = setTimeout(() => {
         setErrorMessage("");
-      }, 3000);
+      }, 3500);
 
-      return () => clearTimeout(timer);
+      return () => {clearTimeout(timer), clearTimeout(warn)};
     }
   }, [errorMessage]);
 
@@ -44,20 +55,32 @@ function Signup() {
   }
 
   return (
-    <div style={{display:"flex", flexDirection:"column", marginTop:"60px"}}>
-      <h1 style={{marginBottom:"30px"}}>REGISTRO</h1>
-      <form onSubmit={handleSignup} style={{display:"flex", flexDirection:"column", gap:"10px", alignItems:"center"}}>
-        <label htmlFor="email">Email</label>
-        <input onChange={(e)=>handleEmail(e)} type="email" name="email" value={email} placeholder="example@domain.com"/>
-        <label htmlFor="username">Usuario</label>
-        <input onChange={(e)=>handleUsername(e)} type="text" name="username" value={username} placeholder="Your_username"/>
-        <label htmlFor="password">Contraseña</label>
-        <input onChange={(e)=>handlePassword(e)} type="password" name="password" value={password} placeholder="********"/>
-        <button>Crear Cuenta</button>
-        <p style={{marginTop:"40px"}}>Ya eres usuario?</p>
-        <button onClick={()=>navigate("/login")}>Logearse</button>
-        <p style={{opacity:errorMessage?"1":"0", transition:"all .5s", position:"absolute", backgroundColor:"rgb(98, 182, 255)", color:"white", top:"60px", width:"100%", textAlign:"center"}}>{errorMessage}</p>
-      </form>
+    <div className="reg-centradito">
+      <img className={`${isDark?'dark-':'light-'}reg-image reg-image`} src={nearBitesText} alt="Near Bites logo"/>
+      <div className={`${isDark?'dark-':'light-'}reg-cajon reg-cajon`}>
+        <p className={`${isDark?'dark-':'light-'}reg-warning reg-warning`} style={{opacity:warning?"1":"0"}}>{errorMessage}</p>
+        <form onSubmit={handleSignup} style={{display:"flex", flexDirection:"column", gap:"10px", alignItems:"center"}}>
+          <div className={`${isDark?'dark-':'light-'}reg-pareja reg-pareja`}>
+            <label htmlFor="email">email</label>
+            <input className={`${isDark?'dark-':'light-'}reg-input reg-input`} onChange={(e)=>handleEmail(e)} type="email" name="email" value={email} placeholder="example@domain.com"/>
+          </div>
+          <div className={`${isDark?'dark-':'light-'}reg-pareja reg-pareja`}>
+            <label htmlFor="username">usuario</label>
+            <input className={`${isDark?'dark-':'light-'}reg-input reg-input`} onChange={(e)=>handleUsername(e)} type="text" name="username" value={username} placeholder="Your_username"/>
+          </div>
+          <div className={`${isDark?'dark-':'light-'}reg-pareja reg-pareja`}>
+            <label htmlFor="password">contraseña</label>
+            <input className={`${isDark?'dark-':'light-'}reg-input reg-input`} onChange={(e)=>handlePassword(e)} type="password" name="password" value={password} placeholder="********"/>
+          </div>
+          <button className={`${isDark?'dark-':'light-'}reg-boton reg-boton`}>Crear Cuenta</button>
+       </form>
+      </div>
+      <div className={`${isDark?'dark-':'light-'}reg-cajon reg-cajon`} style={{padding:"15px"}}>
+        <div  className={`${isDark?'dark-':'light-'}reg-swap reg-swap`}>
+          <p className={`${isDark?'dark-':'light-'}reg-swap-text reg-swap-text`}>¿Ya eres usuario?</p>
+          <button className={`${isDark?'dark-':'light-'}reg-swap-boton reg-swap-boton`} onClick={()=>navigate("/login")}>Entrar</button>
+        </div>
+      </div>
     </div>
   )
 }

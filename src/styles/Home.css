@@ -16,5 +16,6 @@
 .home-map-container{
     border: 1px solid rgb(185, 196, 220);
     border-radius: 15px;
-    height: 40%;
+    height: 50%;
+    overflow: hidden;
 }
