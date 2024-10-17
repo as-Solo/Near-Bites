@@ -1,0 +1,20 @@
+.home-centradito{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.home-container{
+    border: 1px solid green;
+    height: calc(100vh - 105px);
+    width: 100%;
+    margin-top: 60px;
+    max-width: 1200px;
+    padding: 10px;
+}
+
+.home-map-container{
+    border: 1px solid rgb(185, 196, 220);
+    border-radius: 15px;
+    height: 40%;
+}

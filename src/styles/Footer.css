@@ -1,0 +1,38 @@
+.footer-centradito{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    background-color: rgb(70, 130, 182);
+    background-color: rgb(185, 196, 220);
+    height: 45px;
+    position: fixed;
+    bottom: 0;
+}
+
+.footer-container{
+    display: flex;
+    height: 45px;
+    width: 100%;
+    max-width: 1200px;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 20px;
+    /* border: solid blue 1px; */
+}
+
+.footer-logo-container{
+    height: 30px;
+    aspect-ratio: 1/1;
+    border: 2px solid rgb(41, 46, 48);
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1px 0px 0px 1px;
+}
+
+.footer-logo-profile{
+    width: 75%;
+    height: 75%;
+    object-fit: contain;
+}
