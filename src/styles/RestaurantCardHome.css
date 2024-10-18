@@ -1,0 +1,113 @@
+.paleta{
+    color: rgb(41, 46, 48);
+    color: rgb(70, 130, 182);
+    color: rgb(127, 163, 201);
+    color: rgb(243, 229, 240);
+
+    color: rgb(0, 183, 255);
+}
+
+.res-card-home-container{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    width: 100%;
+    padding: 10px;
+    gap: 5px;
+}
+
+.res-card-image-container{
+    display: flex;
+    /* border: 1px solid black; */
+    width: 100%;
+    gap: 15px;
+}
+
+.res-card-images{
+    display: flex;
+    border: 1px solid rgb(127, 163, 201);
+    border-radius: 5px;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 5px 10px;
+}
+
+.res-card-main-image{
+    border: 1px solid rgb(0, 183, 255);
+    width: 100px;
+    height: 100px; 
+}
+
+.res-card-other-image{
+    width: 90px;
+    height: 90px;
+}
+
+.res-card-main-image, .res-card-other-image {
+    border-radius: 5px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.res-card-image{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.res-card-home-data{
+    /* border: 1px rgb(70, 130, 182) solid; */
+    border-radius: 5px;
+    padding: 2px 5px;
+    color: rgb(243, 229, 240);
+    font-size: .75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.res-car-homr-data-row{
+    display: flex;
+    gap: 15px;
+    align-items: baseline;
+}
+
+.res-card-home-name{
+    font-style: italic;
+    color: white;
+    font-weight: 300;
+
+}
+
+.res-card-home-adress{
+    font-weight: 400;
+}
+
+.res-card-home-categories-container{
+    display: flex;
+    gap: 4px;
+    margin-top: 5px;
+}
+.res-card-home-data-categoria{
+    border: 1px solid rgb(0, 183, 255);
+    border-radius: 3px;
+    padding: 1px 3px;
+    font-size: .6rem;
+    color: rgb(127, 163, 201);
+}
+
+.res-card-home-rating, .res-card-home-distance{
+    font-size: .6rem;
+}
+
+.res-card-home-data-button{
+    /* background-color: #ffc9c9; */
+    background-color: rgb(70, 130, 182);
+    border: none;
+    /* border: 2px solid white; */
+    border-radius: 5px;
+    padding: 4px 20px;
+    color: white;
+    font-weight: 600;
+}

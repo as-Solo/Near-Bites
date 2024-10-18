@@ -38,7 +38,8 @@
     width: 70%;
     max-width: 450px;
     margin-bottom: 30px;
-
+    /* object-fit: contain; */
+    /* border: 1px solid green; */
 }
 
 .reg-pareja{

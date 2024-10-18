@@ -15,6 +15,7 @@ function AuthWrapper(props){
   const [loggedUserId, setLoggedUserId] = useState(null)
   const [isOwner, setIsOwner] = useState(false)
   const [isValidatingToken, setIsValidatingToken] = useState(true)
+  const [update, setUpdate] = useState(true)
 
   useEffect(()=>{
     authenticateUser()
@@ -45,6 +46,7 @@ function AuthWrapper(props){
       setLoggedUserId(null)
       setIsOwner(false)
       setIsValidatingToken(false)
+      // setUpdate(current=>!current)
     }
   }
 
@@ -52,6 +54,8 @@ function AuthWrapper(props){
     isLogin,
     loggedUserId,
     isOwner,
+    update,
+    setUpdate,
     authenticateUser
   }
 

@@ -32,6 +32,7 @@ body {
   width: 100vw;
   height: 100vh;
   background-color: rgb(41, 46, 48);
+  overflow: hidden;
 }
 
 #root{
@@ -39,4 +40,5 @@ body {
   flex-direction: column;
   justify-content: center;
   width: 100%;
+  overflow: hidden;
 }

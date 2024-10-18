@@ -3,6 +3,7 @@ import "../styles/Home.css"
 import Input from "../components/Input"
 import Map from "../components/Map"
 import axios from "axios"
+import RestaurantCardHome from "../components/RestaurantCardHome"
 
 function Home() {
 
@@ -49,20 +50,15 @@ function Home() {
         <div className="home-map-container">
           <Map position={position} restaurantes={restaurantList}/>
         </div>
-        <div className="home-content-container">
-          <div className="home-filters-container"></div>
+        <div className="home-content-container" style={{padding:"5px 0"}}>
+          {/* <div className="home-filters-container"></div> */}
           <div className="home-restaurants-container">
             {restaurantList.map(restaurant=>{
               return(
-                <div key={restaurant._id}>
-                  <p>{restaurant.name}</p>
-                  <p>{restaurant.rating}</p>
-                  <p>{restaurant.price}</p>
-                  <p>{restaurant.categories}</p>
-                  <hr />
-                </div>
+                <RestaurantCardHome key={restaurant._id} restaurant={restaurant}/>
               )
             })}
+            <div style={{height:"00px", width:"100%"}}></div>
           </div>
         </div>
       </div>
