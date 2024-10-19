@@ -1,0 +1,25 @@
+.paleta{
+    color: rgb(41, 46, 48);
+    color: rgb(70, 130, 182);
+    color: rgb(127, 163, 201);
+    color: rgb(243, 229, 240);
+
+    color: rgb(0, 183, 255);
+}
+
+.cabecera-booking{
+    height: 18%;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    border-bottom: 1px solid rgb(70, 130, 182);
+}
+
+.res-ficha-cabecera{
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.form-booking-container{
+    padding: 15px 20px;
+}

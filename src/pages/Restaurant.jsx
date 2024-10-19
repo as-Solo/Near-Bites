@@ -106,10 +106,14 @@ function Restaurant() {
   }
 
   const handleLike = async ()=>{
+    const token = localStorage.getItem("authToken")
+    const config = {
+      headers: { Authorization: `Bearer ${token}` }
+  };
     if(!isLike){
       try {
         // console.log(typeof restaurantId, typeof loggedUserId)
-        const response = await axios.put(`${API_URL}/api/restaurants/like`, {restaurantId:restaurantId, userId:loggedUserId})
+        const response = await axios.put(`${API_URL}/api/restaurants/like`, {restaurantId:restaurantId, userId:loggedUserId}, config)
         setInfoMessage(response.data.message)
         setIsLike(true)
       } catch (error) {
