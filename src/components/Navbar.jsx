@@ -14,7 +14,7 @@ function Navbar() {
   
   
   const getData = async()=>{
-    console.log(isLogin)
+    // console.log(isLogin)
     if(isLogin){
       const response = await axios.get(`${API_URL}/api/users/${loggedUserId}`)
       setImageProfile(response.data.image)
@@ -30,8 +30,8 @@ function Navbar() {
   
   
   
-  console.log("image:" + imageProfile)
-  console.log("user:" + imageProfile)
+  // console.log("image:" + imageProfile)
+  // console.log("user:" + imageProfile)
   
   return (
     <div className="centradito">

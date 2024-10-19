@@ -25,7 +25,7 @@ function Profile() {
 
   const getData = async()=>{
     const response = await axios.get(`${API_URL}/api/users/${loggedUserId}`)
-    console.log(response.data)
+    // console.log(response.data)
     setNewData({
       password: response.data.password || '',
       name: response.data.name || '',

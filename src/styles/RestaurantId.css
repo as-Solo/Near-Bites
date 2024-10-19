@@ -1,0 +1,295 @@
+.paleta{
+    color: rgb(41, 46, 48);
+    color: rgb(70, 130, 182);
+    color: rgb(127, 163, 201);
+    color: rgb(243, 229, 240);
+
+    color: rgb(0, 183, 255);
+}
+
+.restaurant-id-centradito{
+    display: flex;
+    width: 100%;
+    height: calc(100vh - 45px);
+    
+    justify-content: center;
+    align-items: center;
+}
+
+.restaurant-id-container{
+    /* border: 1px solid rgba(255, 255, 255, 0.2); */
+    display: flex;
+    width: 100%;
+    height: 100%;
+    max-width: 1200px;
+    flex-direction: column;
+}
+
+.restaurant-id-img-container{
+    width: 100%;
+    height: 40%;
+    position: relative;
+    /* border: solid 1px greenyellow; */
+}
+
+.restaurant-id-img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.restaurant-id-ficha, .restaurant-id-reviews{
+    width: 100%;
+    height: 30%;
+    /* border: 1px solid greenyellow; */
+}
+
+.restaurant-id-ficha{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 1.2rem;
+    color: rgb(243, 229, 240);
+    padding: 20px;
+    position: relative;
+    justify-content: center;
+}
+
+.restaurant-id-reviews{
+    padding: 10px 20px;
+    overflow-y: auto;
+    border-top: 1px solid rgb(127, 163, 201);
+}
+
+
+.restaurant-id-botonera{
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 15px;
+}
+
+.res-id-boton{
+    padding: 5px 30px;
+    font-size: .9rem;
+    font-weight: 800;
+    border: none;
+    border-radius: 4px;
+}
+
+.restaurant-id-volver{
+    width: 30px;
+    height: 30px;
+    border: 2px solid white;
+    border-radius: 100%;
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background-color: rgba(41, 46, 48, 0.5);
+    padding: 0 2px 2px 0;
+    z-index: 55;
+}
+/* ◀ */
+
+.restaurant-id-volver:hover{
+    color: rgb(0, 183, 255);
+    border-color: rgb(0, 183, 255);
+}
+
+.res-id-name{
+    color: white;
+    font-style: italic;
+    font-weight: 300;
+    letter-spacing: .1rem;
+}
+
+.res-id-rating{
+    font-size: .8rem;
+}
+
+.boton-izq{
+    background-color: rgb(127, 163, 201);
+    color: rgb(41, 46, 48);
+}
+
+.boton-der{
+    background-color:rgb(70, 130, 182);
+    color: white;
+}
+
+.form-make-review{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: rgb(185, 196, 220);
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    border: solid 1px rgb(0, 183, 255);
+    border-radius: 3px;
+    padding: 15px;
+    transition: all .4s ease;
+    z-index: 5;
+}
+
+.make-review-area{
+    width: 90%;
+    height:70%;
+    background-color: rgb(41, 46, 48);
+    resize: none;
+    padding: 20px;
+    color: rgb(185, 196, 220);
+    font-weight: 400;
+    font-style: italic;
+    border-radius: 4px;
+}
+
+.make-review-rating-container{
+    display: flex;
+    font-size: .9rem;
+    align-items: center;
+    gap: 3px;
+    color: rgb(41, 46, 48);
+}
+
+.make-review-rating{
+    background-color: rgb(41, 46, 48);
+    border: none;
+    color: rgb(0, 183, 255);
+    text-align: center;
+    border-radius: 5px;
+}
+
+.make-review-rating-text{
+    font-weight: 700;
+}
+
+.make-review-botonera{
+    display: flex;
+    gap: 10px;
+}
+
+.make-review-boton{
+    min-width: 150px;
+    padding: 3px;
+    border-radius: 3px;
+    border: none;
+    font-weight: 600;
+}
+
+.review-boton-cancelar{
+    background-color: rgb(82, 109, 138);
+    color: rgb(20, 20, 20);
+    border: solid 1px rgb(41, 46, 48);
+}
+
+.review-boton-crear{
+    background-color: rgb(0, 183, 255);
+    color: white;
+}
+
+.reviews-vacias{
+    color: rgb(185, 196, 220);
+    font-weight: 300;
+    font-style: italic;
+    text-align: center;
+    justify-self: center;
+    align-self: center;
+}
+
+.like-button{
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid 2px;
+    border-radius: 100%;
+    position: absolute;
+    top: -50px;
+    right: 20px;
+    padding-top: 2px;
+    background-color: rgba(41, 46, 48, 0.6);
+}
+.like-button img{
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+}
+
+/* a prtir de aqui son estilos de review-card */
+.review-card-container{
+    position: relative;
+    width: 100%;
+    border: solid 1px rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    padding: 10px 30px;
+    text-align: center;
+    margin-top: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-profile-review{
+    display: flex;
+    position: absolute;
+    top: -30px;
+    left: 10px;
+    gap: 5px;
+    font-size: .7rem;
+    color: rgb(127, 163, 201);
+    align-items: center;
+}
+
+.user-profile-img-container{
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgb(70, 130, 182);
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-profile-img{
+    width: 85%;
+    height: 85%;
+    object-fit: cover;
+    border-radius: 100%;
+}
+
+.res-id-review-rating{
+    position: absolute;
+    top: -20px;
+    right: 10px;
+    color: rgb(70, 130, 182);
+    font-size: .8rem;
+    
+}
+
+.res-id-review-description{
+    font-weight: 400;
+    color: rgb(243, 229, 240);
+    font-style: italic;
+    font-size: .9rem;
+}
+
+.review-card-delete{
+    height: 100%;
+    background-color: rgb(127, 163, 201);
+    border: none;
+    color: white;
+    position: absolute;
+    right: 0px;
+    padding: 0 7px;
+    border-radius: 0px 5px 5px 0;
+    font-weight: bolder;
+}
+/* 🗑️ */

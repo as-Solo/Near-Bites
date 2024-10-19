@@ -36,7 +36,8 @@
 .res-card-main-image{
     border: 1px solid rgb(0, 183, 255);
     width: 100px;
-    height: 100px; 
+    height: 100px;
+    /* transition: all .3s ease; */
 }
 
 .res-card-other-image{
@@ -54,6 +55,8 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: all .3s ease;
+
 }
 
 .res-card-home-data{
@@ -110,4 +113,12 @@
     padding: 4px 20px;
     color: white;
     font-weight: 600;
+}
+
+.res-card-main-image:hover{
+    border: 3px double aqua;
+}
+
+.res-card-main-image:hover img{
+    transform: scale(1.2);
 }

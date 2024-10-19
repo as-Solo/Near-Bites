@@ -13,7 +13,7 @@ function Home() {
 
   const getData = async ()=>{
     const response = await axios.get(`${API_URL}/api/restaurants/${position[0]}/${position[1]}/${2000}/${10}`)
-    console.log(response.data)
+    // console.log(response.data)
     setRestaurantList(response.data)
   }
 
@@ -21,7 +21,7 @@ function Home() {
     if (navigator.geolocation) {
       navigator.geolocation.watchPosition(
         (pos) => {
-          console.log(pos)
+          // console.log(pos)
           const { latitude, longitude } = pos.coords;
           setPosition([latitude, longitude]);
         },
@@ -37,9 +37,10 @@ function Home() {
   }, []);
 
   const [content, setContent] = useState("")
+
   const handleInput = (e)=>{
     e.preventDefault()
-    console.log(e.target.value)
+    // console.log(e.target.value)
     setContent(e.target.value)
   }
 
