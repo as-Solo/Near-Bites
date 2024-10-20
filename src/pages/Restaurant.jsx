@@ -81,7 +81,7 @@ function Restaurant() {
   const handleCreate = async ()=>{
     if(newReview.description){
       try {
-        const response = await axios.post(`${API_URL}/api/reviews`, {
+          await axios.post(`${API_URL}/api/reviews`, {
           user: loggedUserId,
           restaurant: restaurantId,
           description: newReview.description,
@@ -164,7 +164,7 @@ function Restaurant() {
             </div>
         </div>
         <div className="restaurant-id-reviews">
-          {reviews.length === 0 && <p className="reviews-vacias">Aún no hay reseñas de este sitio.<br/>Sé el primero en escribir una reseña</p> }
+          {reviews.length === 0 && <p className="reviews-vacias">Aún no hay reseñas de este sitio.<br/>Se el primero en escribir una.</p> }
           {reviews.map(review=>{
             return(
               <ReviewBoard key={review._id} review={review} setInfoMessage={setInfoMessage} getData={getData}/>

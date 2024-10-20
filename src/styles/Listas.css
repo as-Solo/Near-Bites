@@ -1,0 +1,181 @@
+.paleta{
+    color: rgb(41, 46, 48);
+    color: rgb(70, 130, 182);
+    color: rgb(127, 163, 201);
+    color: rgb(243, 229, 240);
+
+    color: rgb(0, 183, 255);
+}
+
+.centradito-listas{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: calc(100vh - 105px);
+    /* border: solid 1px rgba(255, 255, 255, 0.5); */
+    margin-top: 60px;
+    justify-content: center;
+    align-items: center;
+}
+
+.reservas-maxwidth-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    position: relative;
+    height: 100%;
+    padding: 20px;
+    /* border: 1px green solid; */
+    gap: 15px;
+}
+.reservas-container{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    border: 1px solid rgb(70, 130, 182);
+    border-radius: 5px;
+    width: 100%;
+    /* max-height: 40%; */
+    min-height: 110px;
+    padding: 10px;
+    /* padding-top: 20px; */
+    align-items:center;
+    gap: 5px;
+    overflow-y: auto;
+    position: relative;
+}
+
+.booking-list-titular{
+    line-height: .7rem;
+    align-self: flex-end;
+    margin-right: 30px;
+    padding: 0 10px 0 20px;
+    position: relative;
+    top: 20px;
+    background-color: rgb(41, 46, 48);
+    z-index: 30;
+    color: rgb(70, 130, 182);
+    font-weight: 700;
+}
+
+.ficha-bookinglist-container{
+    border-radius: 4px;
+    display: flex;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 3px 7px 3px 3px;
+    gap: 8px;
+    position: relative;
+}
+
+.ficha-bookinglist-img-container{
+    width: 75px;
+    height: 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 4px;
+
+}
+
+.ficha-bookinglist-img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+    transition: all .3s ease;
+}
+
+.data-cabecera{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.ficha-bookinglist-text{
+    font-weight: 500;
+    font-size: .7rem;
+    color: rgb(243, 229, 240);
+}
+
+.ficha-bookinglist-text-data{
+    font-weight: 500;
+    font-size: .6rem;
+    color: rgb(127, 163, 201);
+}
+
+strong{
+    font-size: .8rem;
+    font-weight: 800;
+    color: rgb(0, 183, 255);
+}
+
+
+.separador{
+    border: none;
+    height: 1px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.05);
+    margin: 5px 0;
+}
+
+.ficha-bookinglist-boton{
+    font-weight: 800;
+    color: white;
+    background-color: rgb(70, 130, 182);
+    border: none;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: .6rem;
+}
+
+.ficha-bookinglist-botonera{
+    position: absolute;
+    bottom: 3px;
+    right: 3px;
+}
+
+.ficha-bookinglist-img-container:hover{
+    border: 1px solid white;
+}
+.ficha-bookinglist-img:hover{
+    transform: scale(1.2);
+}
+
+
+@media (width > 678px){
+    .ficha-bookinglist-img-container{
+        width: 90px;
+        height: 90px;
+    }
+    .ficha-bookinglist-boton{
+        font-size: .8rem;
+    }
+    .ficha-bookinglist-text{
+        font-size: .8rem;
+    }
+    
+    .ficha-bookinglist-text-data{
+        font-size: .7rem;
+    }
+
+    .ficha-bookinglist-container{
+        padding: 3px 13px 3px 3px;
+    }
+
+    .reservas-container{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 100%;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 10px;
+        padding-top: 20px;
+        min-height: 140px;
+    }
+
+}

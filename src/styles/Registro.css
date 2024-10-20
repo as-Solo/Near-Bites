@@ -113,11 +113,11 @@
 .reg-warning{
     transition: all .4s ease;
     position: absolute;
-    background-color: rgb(98, 182, 255);
-    color: white;
+    background-color:#F1C40F;
+    color: rgb(20, 20, 20);
     text-align: center;
     width: 100%;
     top: 0;
-    padding: 2px;
-    font-weight: 400;
+    padding: 3px;
+    font-weight: 600;
 }

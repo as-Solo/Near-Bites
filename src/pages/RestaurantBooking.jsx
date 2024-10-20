@@ -4,10 +4,12 @@ import { AuthContext } from "../context/auth.context";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { ThemeContext } from "../context/theme.context";
-import "../styles/RestaurantIdReview.css"
+import "../styles/RestaurantIdBooking.css"
 
 
 function RestaurantBooking() {
+
+  let numResults = 0
 
   const API_URL = import.meta.env.VITE_API_URL;
 
@@ -73,7 +75,7 @@ function RestaurantBooking() {
       clone.push({[startHour]: response.data.capacity})
     })
 
-    const booking = await axios.get(`${API_URL}/api/bookings/${restaurantId}/${dia}`)
+    const booking = await axios.get(`${API_URL}/api/bookings/restaurants/${restaurantId}/${dia}`)
     console.log(booking.data)
     booking.data.forEach(booking=>{
       clone.forEach(turno=>{
@@ -91,6 +93,21 @@ function RestaurantBooking() {
     return ()=>{}
   }, [dia])
 
+  useEffect(() => {
+    if (infoMessage) {
+      setWarning(true)
+      const warn = setTimeout(() => {
+        setWarning(false);
+      }, 3000);
+      
+      const timer = setTimeout(() => {
+        setInfoMessage("");
+      }, 3500);
+
+      return () => {clearTimeout(timer), clearTimeout(warn)};
+    }
+  }, [infoMessage]);
+
 
   if (restaurante === null){
     return( <h1>Probando</h1> )
@@ -101,10 +118,11 @@ function RestaurantBooking() {
       <div className="restaurant-id-container">
         <div className="restaurant-id-img-container">
           <img className="restaurant-id-img" src={restaurante.profileImage} alt="" />
-          <div onClick={()=>navigate('/')} className="restaurant-id-volver"><p style={{pointerEvents:"none"}}>❮</p></div>
+          <div onClick={()=>navigate(`/restaurants/${restaurantId}`)} className="restaurant-id-volver"><p style={{pointerEvents:"none"}}>❮</p></div>
         </div>
 
         <div className="restaurant-id-ficha cabecera-booking">
+          <p className={`${isDark?'dark-':'light-'}reg-warning reg-warning`} style={{opacity:warning?"1":"0", fontSize:".9rem", left:"0", zIndex:"25"}}>{infoMessage}</p>
           <div className="res-ficha-cabecera">
             <p className="res-id-name">{restaurante.name}</p>
             <p className="res-id-rating">{restaurante.rating}⭐ - {distance}km</p>
@@ -120,24 +138,40 @@ function RestaurantBooking() {
         </div>
         
         <div className="form-booking-container">
-          <input onChange={handleDia} type="date" />
-          <input onChange={handlePartySize} type="number" name="partySize" value={partySize} min={1} max={restaurante.capacity}/>
-          <hr />
-          <p>Esto son nuestros turnos para el {dia}</p>
-          {turnos.map((turno, index)=>{
-            const [hora, capacidad] = (Object.entries(turno)[0])
-            if (capacidad >= partySize){
-            return (
-              <div key={index} style={{display:"flex", gap:"5px"}}>
-                <p>{hora} - </p>
-                <p>{capacidad}</p>
-                <button onClick={handleCreateBooking} name={hora}>reservar</button>
+          <div className="form-cabecera">
+            <div className="form-cabecera-calendar-container">
+              <input className="form-booking-input" onChange={handleDia} type="date" value={dia}/>
+              <div className="form-comensales-container">
+                <label className="comensales-label" htmlFor="partySize">Comensales</label>
+                <input className="form-booking-input" onChange={handlePartySize} type="number" name="partySize" value={partySize} min={1} max={restaurante.capacity}/>
               </div>
-            )}
-          })}
+            </div>
+            {/* <p className="form-text-slots">Turnos disponibles el <span>{dia.split('-')[2]}/{dia.split('-')[1]}/{dia.split('-')[0]}</span></p> */}
+          </div>
+          <div className="form-slots-select-container">
+            {turnos.map((turno, index)=>{
+              const [hora, capacidad] = (Object.entries(turno)[0])
+              if (capacidad >= partySize){
+                numResults++
+                return (
+                  <div className="ficha-turno-container" key={index} >
+                    <div className="ficha-data">
+                      <div className="ficha-turno-column">
+                        {/* <p className="ficha-labels">Turno</p> */}
+                        <p className="ficha-turno-hora">{hora}</p>
+                      </div>
+                      <div className="ficha-turno-column">
+                        <p className="ficha-labels">Huecos</p>
+                        <p className="ficha-turnos-capacidad">{capacidad}</p>
+                      </div>
+                    </div>
+                    <button className="ficha-booking-boton" onClick={handleCreateBooking} name={hora}>Reservar</button>
+                  </div>
+                )}
+              })}
+              {!numResults && <p className="sin-reservas">Lo sentimos mucho!.<br/> No tenemos reservas disponibles con esos terminos </p>}
+            </div>
         </div>
-
-          <p>restaurante {restaurantId} usuario {loggedUserId}</p>
 
       </div>
     </div>
