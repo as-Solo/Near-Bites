@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ThemeContext } from "../context/theme.context";
 import "../styles/Listas.css"
 import BookingCard from "../components/BookingCard";
-import nearBitesText from "../assets/images/logos/nearBites_texto.png";
+import nearBitesText from "../assets/images/logos/NearBites_texto.png";
 import service from "../services/config";
 
 

@@ -3,7 +3,7 @@ import "../styles/Home.css"
 import Map from "../components/Map"
 import axios from "axios"
 import RestaurantCardHome from "../components/RestaurantCardHome"
-import nearBitesText from "../assets/images/logos/nearBites_texto.png";
+import nearBitesText from "../assets/images/logos/NearBites_texto.png";
 import { useLocation } from "react-router-dom"
 
 
