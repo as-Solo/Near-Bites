@@ -28,7 +28,7 @@
 .restaurant-id-img-container{
     width: 100%;
     height: 40%;
-    /* height: 35vh; */
+    height: 35dvh;
     position: relative;
     /* border: solid 1px greenyellow; */
 }
@@ -60,6 +60,7 @@
     padding: 10px 20px;
     overflow-y: auto;
     border-top: 1px solid rgb(127, 163, 201);
+    height: 40dvh;
 }
 
 
