@@ -3,20 +3,20 @@ import profileLogo from "../assets/images/logos/Profile_white.png"
 import { Link } from "react-router-dom"
 import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../context/auth.context"
-import axios from "axios"
+import service from "../services/config"
 
 
 function Navbar() {
-  const API_URL = import.meta.env.VITE_API_URL;
   
-  const { isLogin, loggedUserId, update } = useContext(AuthContext)
+  const { isLogin, update } = useContext(AuthContext)
   const [imageProfile, setImageProfile] = useState("")
   
   
   const getData = async()=>{
     // console.log(isLogin)
     if(isLogin){
-      const response = await axios.get(`${API_URL}/api/users/${loggedUserId}`)
+      const response = await service.get(`/users/profile`)
+      // const response = await axios.get(`${API_URL}/api/users/${loggedUserId}`)
       setImageProfile(response.data.image)
     }
     else{

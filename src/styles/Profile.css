@@ -62,3 +62,64 @@
     color: rgb(0, 183, 255);
     bottom: 10px;
 }
+
+.eliminar-cuenta{
+    color: rgba(0, 183, 255, .4);
+    position: absolute;
+    right: 5px;
+    top: -15px;
+    font-size: .5rem;
+    font-weight: 400;
+    background-color: transparent;
+    border: none;
+    transition: all .2s ease;
+}
+
+.eliminar-cuenta:hover{
+    color: rgba(0, 183, 255, 1);
+    font-weight: 500;
+
+}
+
+.botonera-eliminar-container{
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.2);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+    transition: all .5s ease;
+}
+
+.marco-eliminar{
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    text-align: center;
+    color: rgb(127, 163, 201);
+    background-color: rgb(41, 46, 48);
+    border: 1px solid rgb(70, 130, 182);
+    border-radius: 4px;
+    gap: 10px;
+}
+
+.botonera-eliminar{
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.reg-boton-cancelar{
+    background-color: rgb(127, 163, 201);
+    color: rgb(41, 46, 48);
+}
+
+.texto-warning-delete{
+    font-weight: 400;
+    font-style: italic;
+}

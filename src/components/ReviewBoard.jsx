@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import { AuthContext } from "../context/auth.context"
 import axios from "axios";
-
+import service from "../services/config";
 
 function ReviewBoard(props) {
 
@@ -12,7 +12,7 @@ function ReviewBoard(props) {
 
   const handleRemove = async ()=>{
     try {
-      const response = await axios.delete(`${API_URL}/api/reviews/${review._id}`)
+      const response = await service.delete(`/reviews/${review._id}`)
       console.log(response)
       setInfoMessage(response.data.message)
       getData()

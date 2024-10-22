@@ -4,6 +4,10 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { ThemeContext } from "../context/theme.context";
 import "../styles/Listas.css"
+import BookingCard from "../components/BookingCard";
+import nearBitesText from "../assets/images/logos/nearBites_texto.png";
+import service from "../services/config";
+
 
 function Reservas() {
 
@@ -11,6 +15,8 @@ function Reservas() {
 
   const [infoMessage, setInfoMessage] = useState("")
   const [warning, setWarning] = useState(false)
+  const [deleteConfirm, setDeleteConfirm] = useState(false)
+  const [reservaId, setReservaId] = useState("")
 
   const {loggedUserId} = useContext(AuthContext)
   const [oldBookings, setOldBookings] = useState(null)
@@ -21,7 +27,8 @@ function Reservas() {
   const distance = 2
 
   const getData = async ()=>{
-    const response = await axios.get(`${API_URL}/api/bookings/users/${loggedUserId}`)
+    // const response = await axios.get(`${API_URL}/api/bookings/users/${loggedUserId}`)
+    const response = await service.get(`/bookings/users/bookingList`)
     const hoy = new Date()
     hoy.setDate(hoy.getDate() - 1)
     const pasadas = []
@@ -58,12 +65,20 @@ function Reservas() {
     getData()
   }, [])
 
+  const handlePreDelete = (e)=>{
+    e.preventDefault()
+    setDeleteConfirm(true)
+    setReservaId(e.target.name)
+  }
   const handleDelete = async (e) =>{
     e.preventDefault()
    try {
-     await axios.delete(`${API_URL}/api/bookings/${e.target.name}`)
+    //  await axios.delete(`${API_URL}/api/bookings/${reservaId}`)
+     await service.delete(`/bookings/${reservaId}`)
      setInfoMessage("Reserva eliminada correctamente")
      getData()
+     setDeleteConfirm(false)
+     setReservaId("")
    } catch (error) {
       console.log(error)
    }
@@ -77,70 +92,59 @@ function Reservas() {
 
   return (
     <div className="centradito-listas">
+      <div className="delete-confirm" style={{opacity:deleteConfirm?"1":"0", pointerEvents:deleteConfirm?"auto":"none"}}>
+        <div className="marco-delete-confirm">
+          <p className="texto-warning-delete">¿Estás seguro que quieres eliminar esta reserva?</p>
+          <div className="delete-confirm-botonera">
+            <button onClick={handleDelete} className="delete-confirm-eliminar delete-confirm-boton">Eliminar</button>
+            <button onClick={()=>setDeleteConfirm(false)} className="delete-confirm-cancelar delete-confirm-boton">Cancelar</button>
+          </div>
+        </div>
+      </div>
       <div className="reservas-maxwidth-container">
         <p className={`${isDark?'dark-':'light-'}reg-warning reg-warning`} style={{opacity:warning?"1":"0", fontSize:".9rem", left:"0", zIndex:"25"}}>{infoMessage}</p>
         <div onClick={()=>navigate('/')} className="restaurant-id-volver" style={{top:"-45px"}}><p style={{pointerEvents:"none"}}>❮</p></div>
+        <img className={`${isDark?'dark-':'light-'}reg-image reg-image`} src={nearBitesText} alt="Near Bites logo"/>
+        {oldBookings.length === 0 && bookings.length === 0?
+        <div style={{display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column"}}>
+          <div className="reservas-anteriores-container reservas-container">
+            <p className="sin-resultados"> No tienes aun ninguna reserva hecha.<br/>Seguro que eso cambia pronto.<br/> ¿Por qué no echas un vistazo a nuestros restaurantes?</p>
+            <button onClick={()=>navigate('/')} className="reg-boton">Buscar Restaurantes</button>
+          </div>
+        </div>
+        :<>
         <p className="booking-list-titular">ANTIGUAS</p>
-        <div className="reservas-anteriores-container reservas-container">
+        {oldBookings.length === 0
+        ?<div className="reservas-anteriores-container reservas-container" style={{minHeight:"30%", flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
+          <p className="sin-resultados"> Nos alegra que te hayas unido hace poco a nuestra comunidad.<br/>¡Hay mucho que descubrir!</p>
+          <button onClick={()=>navigate('/')} className="reg-boton">Buscar Restaurantes</button>
+        </div>
+        :<div className="reservas-anteriores-container reservas-container">
           {oldBookings.map(booking=>{
             return(
-              <div className="ficha-bookinglist-container" key={booking._id}>
-                <Link to={`/restaurants/${booking.restaurant._id}`}>
-                <div className="ficha-bookinglist-img-container">
-                  <img className="ficha-bookinglist-img" src={booking.restaurant.profileImage} alt="" />
-                </div>
-                </Link>
-                <div className="ficha-bookinglist-data-container">
-                  <div className="ficha-bookinglist-data-restaurant">
-                    <div className="data-cabecera">
-                      <p className="ficha-bookinglist-text">{booking.restaurant.name}</p>
-                      <p className="ficha-bookinglist-text">{booking.restaurant.rating}⭐</p>
-                    </div>
-                    <p className="ficha-bookinglist-text">{booking.restaurant.address}</p>
-                  </div>
-                  <hr className="separador"/>
-                  <div className="ficha-bookinglist-data-reserva">
-                    <p className="ficha-bookinglist-text-data">Reservada mesa el <strong> {booking.day.split('T')[0].split('-')[2]}/{booking.day.split('T')[0].split('-')[1]}/{booking.day.split('T')[0].split('-')[0]}</strong></p>
-                    <p className="ficha-bookinglist-text-data">Para <strong> {booking.partySize} </strong> personas</p>
-                  </div>
-                  <div className="ficha-bookinglist-botonera">
-                    <button onClick={handleDelete} className="ficha-bookinglist-boton" name={booking._id}>X</button>
-                  </div>
-                </div>
-              </div>
+              <BookingCard key={booking._id} booking={booking} handlePreDelete={handlePreDelete}/>
           )
           })}
         </div>
+        }
+
         <p className="booking-list-titular">PENDIENTES</p>
-        <div className="reservas-actuales-container reservas-container">
+        {bookings.length === 0
+        ?<div className="reservas-actuales-container reservas-container" style={{minHeight:"30%", flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
+          <p className="sin-resultados"> No tienes ninguna reserva pendiente.<br/>¿Hay hambre de más??</p>
+          <button onClick={()=>navigate('/')} className="reg-boton">Buscar Restaurantes</button>
+        </div>
+        :<div className="reservas-actuales-container reservas-container">
           {bookings.map(booking=>{
             return(
-              <div className="ficha-bookinglist-container" key={booking._id}>
-                <Link to={`/restaurants/${booking.restaurant._id}`}>
-                <div className="ficha-bookinglist-img-container">
-                  <img className="ficha-bookinglist-img" src={booking.restaurant.profileImage} alt="" />
-                </div>
-                </Link>
-                <div className="ficha-bookinglist-data-container">
-                  <div className="ficha-bookinglist-data-restaurant">
-                    <div className="data-cabecera">
-                      <p className="ficha-bookinglist-text">{booking.restaurant.name}</p>
-                      <p className="ficha-bookinglist-text">{booking.restaurant.rating}⭐</p>
-                    </div>
-                    <p className="ficha-bookinglist-text">{booking.restaurant.address}</p>
-                  </div>
-                  <hr className="separador"/>
-                  <div className="ficha-bookinglist-data-reserva">
-                    <p className="ficha-bookinglist-text-data">Reservada mesa el <strong> {booking.day.split('T')[0].split('-')[2]}/{booking.day.split('T')[0].split('-')[1]}/{booking.day.split('T')[0].split('-')[0]}</strong></p>
-                    <p className="ficha-bookinglist-text-data">Para <strong> {booking.partySize} </strong> personas</p>
-                  </div>
-                  <div className="ficha-bookinglist-botonera">
-                    <button onClick={handleDelete} className="ficha-bookinglist-boton" name={booking._id}>X</button>
-                  </div>
-                </div>
-              </div>)
+              <BookingCard key={booking._id} booking={booking} handlePreDelete={handlePreDelete}/>
+              )
             })}
         </div>
+        }
+
+        </>}
+
       </div>
     </div>
   )

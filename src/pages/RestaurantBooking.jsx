@@ -1,19 +1,25 @@
 import "../styles/RestaurantId.css"
 import { useContext, useEffect, useState } from "react"
-import { AuthContext } from "../context/auth.context";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { ThemeContext } from "../context/theme.context";
 import "../styles/RestaurantIdBooking.css"
+import service from "../services/config";
+import calcularDistancia from "../utils/calcularDistancia.js"
 
 
-function RestaurantBooking() {
+
+function RestaurantBooking(props) {
 
   let numResults = 0
 
   const API_URL = import.meta.env.VITE_API_URL;
 
-  const distance = 2 // aqui va la formula para calcular distancia entre position y las coordenadas del restaurante
+  const location = useLocation();
+  const from = location.state?.from 
+
+  const {position} = props
+  const [distance, setDistance] = useState(null)
 
   const { isDark } = useContext(ThemeContext)
   const navigate = useNavigate()
@@ -21,7 +27,6 @@ function RestaurantBooking() {
   const [infoMessage, setInfoMessage] = useState("")
   const [warning, setWarning] = useState(false)
 
-  const {loggedUserId} = useContext(AuthContext)
   const { restaurantId } = useParams()
 
   const [restaurante, setRestaurante] = useState(null)
@@ -56,11 +61,10 @@ function RestaurantBooking() {
       partySize: partySize,
       day: dia,
       startHour: e.target.name,
-      user: loggedUserId,
       restaurant: restaurantId
     }
     try {
-      const response = await axios.post(`${API_URL}/api/bookings`, newReview)
+      await service.post(`/bookings`, newReview)
       setInfoMessage(`Reserva realizada para ${partySize} personas`)
       getRestaurantSlots()
     } catch (error) {
@@ -76,7 +80,7 @@ function RestaurantBooking() {
     })
 
     const booking = await axios.get(`${API_URL}/api/bookings/restaurants/${restaurantId}/${dia}`)
-    console.log(booking.data)
+    // console.log(booking.data)
     booking.data.forEach(booking=>{
       clone.forEach(turno=>{
         if(turno[booking.startHour]){
@@ -86,6 +90,8 @@ function RestaurantBooking() {
     })
     setTurnos(clone)
     setRestaurante(response.data)
+    setDistance(calcularDistancia(position[0], position[1], response.data.coords[0], response.data.coords[1]).toFixed(1))
+
   }
 
   useEffect(()=>{
@@ -118,14 +124,14 @@ function RestaurantBooking() {
       <div className="restaurant-id-container">
         <div className="restaurant-id-img-container">
           <img className="restaurant-id-img" src={restaurante.profileImage} alt="" />
-          <div onClick={()=>navigate(`/restaurants/${restaurantId}`)} className="restaurant-id-volver"><p style={{pointerEvents:"none"}}>❮</p></div>
+          <div onClick={()=>navigate( from || `/restaurants/${restaurantId}` )} className="restaurant-id-volver"><p style={{pointerEvents:"none"}}>❮</p></div>
         </div>
 
         <div className="restaurant-id-ficha cabecera-booking">
           <p className={`${isDark?'dark-':'light-'}reg-warning reg-warning`} style={{opacity:warning?"1":"0", fontSize:".9rem", left:"0", zIndex:"25"}}>{infoMessage}</p>
           <div className="res-ficha-cabecera">
             <p className="res-id-name">{restaurante.name}</p>
-            <p className="res-id-rating">{restaurante.rating}⭐ - {distance}km</p>
+            <p className="res-id-rating">{restaurante.rating}⭐ - {distance} km</p>
           </div>
           <p className="res-id-address">{restaurante.address}, ({restaurante.city})</p>
           <div className="res-card-home-categories-container">

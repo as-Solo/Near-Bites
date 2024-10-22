@@ -7,13 +7,21 @@ import ReviewBoard from "../components/ReviewBoard";
 import { ThemeContext } from "../context/theme.context";
 import LikeWhite from "../assets/images/logos/Like_white.png"
 import LikeRed from "../assets/images/logos/Like_red.png"
+import FavUnselect from "../assets/images/logos/Favorites_unselected.png"
+import FavSelect from "../assets/images/logos/Favorites_selected.png"
+import defaultRes from "../assets/images/logos/DefaultRes.png"
+import service from "../services/config";
+import calcularDistancia from "../utils/calcularDistancia.js"
 
 
 
-function Restaurant() {
+
+function Restaurant(props) {
 
   const API_URL = import.meta.env.VITE_API_URL;
 
+  const { position } = props
+  
   const [infoMessage, setInfoMessage] = useState("")
   const [warning, setWarning] = useState(false)
 
@@ -22,7 +30,7 @@ function Restaurant() {
   
   const { isDark } = useContext(ThemeContext)
   const navigate = useNavigate()
-  const distance = 2 // aqui va la formula para calcular distancia entre position y las coordenadas del restaurante
+  const [distance, setDistance] = useState(null)
 
   const [restaurante, setRestaurante] = useState(null)
   const [reviews, setReviews] = useState(null)
@@ -31,17 +39,30 @@ function Restaurant() {
   const [newReview, setNewReview] = useState({description:'', rating:1})
 
   const [isLike, setIsLike] = useState(false)
+  const [isFav, setIsFav] = useState(false)
 
 
-  const getData = async () =>{
+  const getData = async (distance) =>{
     try {
       const response = await axios.get(`${API_URL}/api/restaurants/${restaurantId}`)
       setRestaurante(response.data)
+
+      setDistance(calcularDistancia(position[0], position[1], response.data.coords[0], response.data.coords[1]).toFixed(1))
+
+
       const resrev = await axios.get(`${API_URL}/api/reviews/${restaurantId}/with_users`)
       // console.log(resrev.data)
       setReviews(resrev.data)
+      const wishlist = await service.get(`/users/wishlist`)
+      // console.log(wishlist.data.wishlist)
+
       if(response.data.likes.includes(loggedUserId)){
         setIsLike(true)
+      }
+      
+
+      if(wishlist.data.wishlist.includes(restaurantId)){
+        setIsFav(true)
       }
     } catch (error) {
       console.log(error)
@@ -81,7 +102,7 @@ function Restaurant() {
   const handleCreate = async ()=>{
     if(newReview.description){
       try {
-          await axios.post(`${API_URL}/api/reviews`, {
+          await service.post(`/reviews`, {
           user: loggedUserId,
           restaurant: restaurantId,
           description: newReview.description,
@@ -106,17 +127,47 @@ function Restaurant() {
   }
 
   const handleLike = async ()=>{
-    const token = localStorage.getItem("authToken")
-    const config = {
-      headers: { Authorization: `Bearer ${token}` }
-  };
+    
     if(!isLike){
       try {
-        // console.log(typeof restaurantId, typeof loggedUserId)
-        const response = await axios.put(`${API_URL}/api/restaurants/like`, {restaurantId:restaurantId, userId:loggedUserId}, config)
+        const response = await service.put(`/restaurants/like`, {restaurantId:restaurantId})
         setInfoMessage(response.data.message)
         setIsLike(true)
+      }
+      catch (error) {
+        console.log(error)
+      }
+    }
+    else{
+      try {
+        const response = await service.put(`/restaurants/unlike`, {restaurantId:restaurantId})
+        setInfoMessage(response.data.message)
+        setIsLike(false)
       } catch (error) {
+        console.log(error)
+      }
+    }
+  }
+
+  const handleFav = async ()=>{
+    
+    if(!isFav){
+      try {
+        const response = await service.put(`/users/fav/${restaurantId}`)
+        setInfoMessage(response.data.message)
+        setIsFav(true)
+      }
+      catch (error) {
+        console.log(error)
+      }
+    }
+    else{
+      try {
+        const response = await service.put(`/users/unfav/${restaurantId}`)
+        setInfoMessage(response.data.message)
+        setIsFav(false)
+      }
+      catch (error) {
         console.log(error)
       }
     }
@@ -129,10 +180,13 @@ function Restaurant() {
     <div className="restaurant-id-centradito">
       <div className="restaurant-id-container">
         <div className="restaurant-id-img-container">
-          <img className="restaurant-id-img" src={restaurante.profileImage} alt="" />
+          <img className="restaurant-id-img" src={restaurante.profileImage} onError={(e) => { e.target.onerror = null; e.target.src = defaultRes }} alt="" />
           <div onClick={()=>navigate('/')} className="restaurant-id-volver"><p style={{pointerEvents:"none"}}>❮</p></div>
         </div>
         <div className="restaurant-id-ficha">
+          <div onClick={handleFav} className="favourite-button" style={{borderColor:isFav?"rgba(180, 25, 25, 0)":"white"}}>
+            <img src={isFav?FavSelect:FavUnselect} alt="" />
+          </div>
           <div onClick={handleLike} className="like-button" style={{borderColor:isLike?"rgba(180, 25, 25, 0)":"white"}}>
             <img src={isLike?LikeRed:LikeWhite} alt="" />
           </div>
@@ -150,7 +204,7 @@ function Restaurant() {
           </div>
           <p className="res-id-name">{restaurante.name}</p>
           <p className="res-id-address">{restaurante.address}, ({restaurante.city})</p>
-          <p className="res-id-rating">{restaurante.rating}⭐ - {distance}km</p>
+          <p className="res-id-rating">{restaurante.rating}⭐ - {distance} km</p>
           <div className="res-card-home-categories-container">
               {restaurante.categories.map((categoria, index)=>{
                 return(

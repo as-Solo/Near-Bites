@@ -65,7 +65,7 @@
     border-radius: 4px;
     display: flex;
     border: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 3px 7px 3px 3px;
+    padding: 3px 12px 3px 3px;
     gap: 8px;
     position: relative;
 }
@@ -173,7 +173,7 @@ strong{
         width: 100%;
         align-items: flex-start;
         justify-content: center;
-        gap: 10px;
+        gap: 15px;
         padding-top: 20px;
         min-height: 140px;
     }

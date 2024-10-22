@@ -1,0 +1,9 @@
+.el-input{
+    background-color: aquamarine;
+    border-radius: 100%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 import { ThemeContext } from "../context/theme.context";
 import nearBitesText from "../assets/images/logos/nearBites_texto.png";
+import service from "../services/config";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -25,7 +26,8 @@ function Login() {
   const handleSubmit = async (e)=>{
     e.preventDefault()
     try {
-      const response = await axios.post(`${API_URL}/api/auth/login`, {email, password})
+      // const response = await axios.post(`${API_URL}/api/auth/login`, {email, password})
+      const response = await service.post(`/auth/login`, {email, password})
       localStorage.setItem("authToken", response.data.authToken)
       await authenticateUser()
       navigate("/")

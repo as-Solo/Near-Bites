@@ -3,6 +3,55 @@
     color: rgb(70, 130, 182);
     color: rgb(127, 163, 201);
     color: rgb(243, 229, 240);
+    color: #F1C40F;
+}
+
+.delete-confirm{
+    width: 100%;
+    height: calc(100vh - 105px);
+    background-color: rgba(255, 255, 255, 0.2);
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 40;
+    padding: 40px;
+    transition: all .3s ease;
+}
+
+.marco-delete-confirm{
+    background-color: rgb(41, 46, 48);
+    padding: 20px;
+    border: 2px solid rgb(127, 163, 201);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+    color: rgb(127, 163, 201);
+}
+
+.delete-confirm-botonera{
+    display: flex;
+    gap: 10px;
+}
+
+.delete-confirm-boton{
+    padding: 3px 15px;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.delete-confirm-eliminar{
+    background-color: rgb(70, 130, 182);
+    color: white;
+}
+
+.delete-confirm-cancelar{
+    background-color: rgb(127, 163, 201);
 }
 
 .reg-centradito{

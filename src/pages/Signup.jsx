@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import { ThemeContext } from "../context/theme.context";
 import nearBitesText from "../assets/images/logos/nearBites_texto.png";
+import service from "../services/config";
 
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -42,7 +43,8 @@ function Signup() {
     e.preventDefault();
     
     try {
-      await axios.post(`${API_URL}/api/auth/signup`, {email, password, username})
+      // await axios.post(`${API_URL}/api/auth/signup`, {email, password, username})
+      await service.post("/auth/signup", {email, password, username})
       navigate("/login")
     } catch (error) {
       console.log(error)

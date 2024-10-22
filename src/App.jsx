@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {Routes, Route, Navigate} from "react-router-dom"
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -18,6 +18,25 @@ import Owner from './components/auth/Owner'
 
 function App() {
   
+  const [position, setPosition] = useState([40.3954259, -3.7182542]);
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.watchPosition(
+        (pos) => {
+          // console.log(pos)
+          const { latitude, longitude } = pos.coords;
+          setPosition([latitude, longitude]);
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+    }
+    else {
+      console.error('No podemos geolocalizarte');
+    }
+  }, [position]);
 
   return (
     <>
@@ -26,11 +45,11 @@ function App() {
         <Route path='/signup' element={ <Public> <Signup/> </Public> }/>
         <Route path='/login' element={ <Public> <Login/> </Public> }/>
         <Route path='/profile' element={ <Private> <Profile/> </Private> }/>
-        <Route path='/' element={ <Home/> }/>
-        <Route path='/restaurants/:restaurantId' element={ <Restaurant/> }/>
-        <Route path='/restaurants/:restaurantId/bookings' element={ <Private> <RestaurantBooking/> </Private> }/>
-        <Route path='/favourites' element={ <Private> <Favoritos/> </Private> } />
-        <Route path='/wishlist' element={ <Private> <Wishlist/> </Private> } />
+        <Route path='/' element={ <Home position={position}/> }/>
+        <Route path='/restaurants/:restaurantId' element={ <Restaurant position={position}/> }/>
+        <Route path='/restaurants/:restaurantId/bookings' element={ <Private> <RestaurantBooking position={position}/> </Private> }/>
+        <Route path='/favourites' element={ <Private> <Favoritos position={position}/> </Private> } />
+        <Route path='/wishlist' element={ <Private> <Wishlist position={position}/> </Private> } />
         <Route path='/bookings' element={ <Private> <Reservas/> </Private> }/>
         <Route path='/administrator' element={ <Owner> <Administrator/> </Owner> }/>
         <Route path='*' element={ <Home/> }/>

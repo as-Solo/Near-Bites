@@ -5,6 +5,7 @@ import "../styles/Profile.css"
 import { ThemeContext } from "../context/theme.context";
 import { useNavigate } from "react-router-dom";
 import profileLogo from "../assets/images/logos/Profile_white.png"
+import service from "../services/config";
 
 
 
@@ -22,9 +23,11 @@ function Profile() {
 
   const [errorMessage, setErrorMessage] = useState("")
   const [warning, setWarning] = useState(false)
+  const [confirm, setConfirm] = useState(false)
 
   const getData = async()=>{
-    const response = await axios.get(`${API_URL}/api/users/${loggedUserId}`)
+    // const response = await axios.get(`${API_URL}/api/users/${loggedUserId}`)
+    const response = await service.get(`/users/profile`)
     // console.log(response.data)
     setNewData({
       password: response.data.password || '',
@@ -56,6 +59,8 @@ function Profile() {
   }, [errorMessage]);
 
   const handleSubmit = async (e)=>{
+    console.log(oldUser)
+    console.log(newData.username)
     e.preventDefault()
     const updateData = {
       image: newData.image,
@@ -65,9 +70,11 @@ function Profile() {
     if(oldUser !== newData.username){
       updateData.username = newData.username
     }
+    console.log(newData)
 
     try {
-      const response = await axios.patch(`${API_URL}/api/users/${loggedUserId}`, updateData)
+      // const response = await axios.patch(`${API_URL}/api/users/${loggedUserId}`, updateData)
+      const response = await service.patch(`/users/profile`, updateData)
       await authenticateUser()
       setUpdate(current => !current)
       navigate("/")
@@ -95,6 +102,22 @@ function Profile() {
     navigate('/login')
   }
 
+  const handleConfirm = ()=>{
+    setConfirm(true)
+  }
+
+  const handleDelete = async ()=>{
+    try {
+      const response = await service.delete(`/users/profile`)
+      setConfirm(false)
+      setErrorMessage(`${response.data.username} eliminado con exito.`)
+      localStorage.removeItem("authToken")
+      authenticateUser()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
 
   // -------------------------------------  PINTADO  ----------------------------------------------
   if (newData === null){
@@ -111,26 +134,36 @@ function Profile() {
         </div>
         <form className={`${isDark?'dark-':'light-'}reg-form reg-form`} onSubmit={handleSubmit}>
           <div className={`${isDark?'dark-':'light-'}reg-pareja reg-pareja`}>
-            <label htmlFor="email">image</label>
+            <label htmlFor="email">imagen</label>
             <input className={`${isDark?'dark-':'light-'}reg-input reg-input`} onChange={(e)=>{handleChanges(e)}} type="text" name="image" value={newData.image} placeholder="https://ruta-de-la-imagen.jpg"/>
           </div>
           <div className="profile-row">
             <div className={`${isDark?'dark-':'light-'}reg-pareja reg-pareja`}>
-              <label htmlFor="email">name</label>
+              <label htmlFor="email">nombre</label>
               <input className={`${isDark?'dark-':'light-'}reg-input reg-input`} onChange={(e)=>{handleChanges(e)}} type="text" name="name" value={newData.name} placeholder="Your name"/>
             </div>
             <div className={`${isDark?'dark-':'light-'}reg-pareja reg-pareja`}>
-              <label htmlFor="email">lastname</label>
+              <label htmlFor="email">apellido</label>
               <input className={`${isDark?'dark-':'light-'}reg-input reg-input`} onChange={(e)=>{handleChanges(e)}} type="text" name="lastname" value={newData.lastname} placeholder="Your last name"/>
             </div>
           </div>
           <div className={`${isDark?'dark-':'light-'}reg-pareja reg-pareja`}>
-            <label htmlFor="email">username</label>
+            <label htmlFor="email">usuario</label>
             <input className={`${isDark?'dark-':'light-'}reg-input reg-input`} onChange={(e)=>{handleChanges(e)}} type="text" name="username" value={newData.username} placeholder="Your username"/>
           </div>
           <button className={`${isDark?'dark-':'light-'}reg-boton reg-boton`}>Actualizar</button>
           </form>
           <button className={`${isDark?'dark-':'light-'}reg-swap-boton reg-swap-boton profile-cerrar-sesion`} onClick={handleLogout}>CERRAR SESIÓN</button>
+          <button className={`eliminar-cuenta`} onClick={handleConfirm}>ELIMINAR CUENTA</button>
+          <div className="botonera-eliminar-container" style={{opacity:confirm?"1":"0", pointerEvents:confirm?"auto":"none"}}>
+            <div className="marco-eliminar">
+              <p className="texto-warning-delete">¿Estás seguro que quieres eliminar esta cuenta?<br/>Este proceso es irreversible.</p>
+              <div className="botonera-eliminar">
+                <button onClick={()=>{setConfirm(false)}} className="reg-boton reg-boton-cancelar">Cancelar</button>
+                <button onClick={handleDelete} className="reg-boton">Aceptar</button>
+              </div>
+            </div>
+          </div>
       </div>
     </div>
   )

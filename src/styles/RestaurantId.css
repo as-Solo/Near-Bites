@@ -217,9 +217,25 @@
     padding-top: 2px;
     background-color: rgba(41, 46, 48, 0.6);
 }
+
+.favourite-button{
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: -48px;
+    right: 60px;
+}
 .like-button img{
     width: 80%;
     height: 80%;
+    object-fit: contain;
+}
+.favourite-button img{
+    width: 90%;
+    height: 90%;
     object-fit: contain;
 }
 

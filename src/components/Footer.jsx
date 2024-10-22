@@ -26,12 +26,12 @@ function Footer() {
         </div>
         </Link>
         {isLogin && <>
-        <Link to="/favourites">
+        <Link to="/wishlist">
         <div className="footer-logo-container">
           <img className="footer-logo-profile" src={favouritesLogo_w} alt="" />
         </div>
         </Link>
-        <Link to="/wishlist">
+        <Link to="/favourites">
         <div className="footer-logo-container">
           <img className="footer-logo-profile" src={whishlistLogo_w} alt="" />
         </div>

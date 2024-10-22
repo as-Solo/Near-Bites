@@ -3,6 +3,7 @@
 // 2.- El "envoltorio"
 
 import axios from "axios";
+import service from "../services/config.js"
 import { createContext, useEffect, useState } from "react";
 
 const AuthContext = createContext()
@@ -23,10 +24,11 @@ function AuthWrapper(props){
 
   const authenticateUser = async ()=>{
     try {
-      const authToken = localStorage.getItem("authToken")
-      const response = await axios.get(`${API_URL}/api/auth/verify`, {
-        headers: { authorization: `Bearer ${authToken}`}
-      })
+      const response = await service.get(`/auth/verify`)
+      // const authToken = localStorage.getItem("authToken")
+      // const response = await axios.get(`${API_URL}/api/auth/verify`, {
+      //   headers: { authorization: `Bearer ${authToken}`}
+      // })
       setIsLogin(true);
       setLoggedUserId(response.data._id)
       // console.log(response.data.rol)
