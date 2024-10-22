@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 // import markerIconPng from "../assets/images/patata.png"
-import markerIconIhPng from "../assets/images/marjer-icon-ih.png"
+import markerIconIhPng from "../assets/images/marker-icon-ih.png"
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import {Icon} from 'leaflet'
 
