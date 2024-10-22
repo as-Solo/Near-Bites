@@ -8,7 +8,7 @@ import service from "../services/config"
 
 function Navbar() {
   
-  const { isLogin, update } = useContext(AuthContext)
+  const { isLogin, update, isOwner } = useContext(AuthContext)
   const [imageProfile, setImageProfile] = useState("")
   
   
@@ -36,6 +36,11 @@ function Navbar() {
   return (
     <div className="centradito">
       <div className="navbar-container">
+        {/* ACUERDATE DE QUITAR EL PLAYGROUND
+        <Link to={"/playground"}>
+         {isOwner&& <div style={{width:"20px", height:"20px", backgroundColor:"yellow", borderRadius:"100%", marginRight:"10px"}}></div>}
+        </Link>
+       _________________________________ */}
         <Link to={isLogin?"/profile":"/login"}>
         <div className="navbar-logo-container">
           <img className="navbar-logo-profile" src={imageProfile || profileLogo} alt="" />

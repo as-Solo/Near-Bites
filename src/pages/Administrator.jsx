@@ -1,59 +1,46 @@
-import { useState } from "react";
+import "../styles/Administrator.css"
+import { useEffect, useState } from "react";
 import service from "../services/config";
-import { useNavigate } from "react-router-dom";
 import "../styles/PruebasCloudinary.css"
+import nearBitesText from "../assets/images/logos/NearBites_texto.png";
+import RestaurantCardOwner from "../components/RestaurantCardOwner";
 
 function Administrator() {
-  
-  const [imageUrl, setImageUrl] = useState(null); 
-  const [isUploading, setIsUploading] = useState(false); // for a loading animation effect
-  const navigate = useNavigate()
 
-  
-  const handleFileUpload = async (e) => {
-    console.log("The file to be uploaded is: ", e.target.files[0]);
+  const [restaurants, setRestaurants] = useState([])
 
-    if (!event.target.files[0]) {
-      // to prevent accidentally clicking the choose file button and not selecting a file
-      return;
-    }
+  const getData = async ()=>{
+    const response = await service.get("/users/owner")
+    console.log(response.data)
+    setRestaurants(response.data.restaurantsOwned)
+  }
 
-    setIsUploading(true); // to start the loading animation
+  useEffect(()=>{
+    getData()
+  }, [])
 
-    const uploadData = new FormData(); // images and other files need to be sent to the backend in a FormData
-    uploadData.append("image", event.target.files[0]);
-    //                   |
-    //     this name needs to match the name used in the middleware in the backend => uploader.single("image")
+  return(
+    <div className="profile-centradito" >
+    {restaurants === null ? <h3>...cargando</h3>:
+      <div className="owner-res-area">
 
-    try {
-      const response = await service.post("/upload", uploadData)
-
-      setImageUrl(response.data.imageUrl);
-      //                          |
-      //     this is how the backend sends the image to the frontend => res.json({ imageUrl: req.file.path });
-
-      setIsUploading(false); // to stop the loading animation
-    } catch (error) {
-      navigate("/");
-    }
-  };
-  return (
-    <div className="favourites-centradito" >
-      <div className="favourites-container">
-        <label>Image: </label>
-        <div className="el-input">
-          <input style={{opacity:"1"}}
-            type="file"
-            name="image"
-            onChange={handleFileUpload}
-            disabled={isUploading}
-          />
+        <div className="logoHome-container" style={{top:"-70px", left:"10px"}}>
+          <img className="logoHome-img" src={nearBitesText} alt="Near bites logo" />
         </div>
-        <img src={imageUrl} alt="" style={{width:"300px", objectFit:"cover"}}/>
-        {imageUrl ?<div><img src={imageUrl} alt="img" width={200} /></div> : null}
+
+        <div className="owner-res-list-container">
+          {restaurants.map(restaurant=>{
+            return(
+              <RestaurantCardOwner key={restaurant._id} restaurant={restaurant}/>
+          )
+          })}
+        </div>
+        
       </div>
-    </div>
-    )
+  }
+  </div>
+  )
+  
   }
 
 export default Administrator

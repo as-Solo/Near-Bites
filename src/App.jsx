@@ -15,6 +15,8 @@ import Wishlist from './pages/Wishlist'
 import Private from './components/auth/Private'
 import Public from './components/auth/Public'
 import Owner from './components/auth/Owner'
+import PlayGround from './components/PlayGround'
+import EditRestaurant from './pages/EditRestaurant'
 
 function App() {
   
@@ -52,6 +54,10 @@ function App() {
         <Route path='/wishlist' element={ <Private> <Wishlist position={position}/> </Private> } />
         <Route path='/bookings' element={ <Private> <Reservas/> </Private> }/>
         <Route path='/administrator' element={ <Owner> <Administrator/> </Owner> }/>
+        <Route path='/edit-restaurants/:restaurantId' element={ <Owner> <EditRestaurant/> </Owner> }/>
+        {/*!----- ACUERDATE DE QUITAR EL PLAYGROUND ------*/}
+        <Route path='/playground' element={ <Owner> <PlayGround/> </Owner> }/>
+        {/*! -------------------------------------------- */}
         <Route path='*' element={ <Home/> }/>
       </Routes>
       <Footer/>
