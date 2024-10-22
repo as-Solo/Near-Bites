@@ -5,7 +5,7 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 import { ThemeContext } from "../context/theme.context";
-import nearBitesText from "../assets/images/logos/nearBites_texto.png";
+import nearBitesText from "../assets/images/logos/NearBites_texto.png";
 import service from "../services/config";
 
 const API_URL = import.meta.env.VITE_API_URL;

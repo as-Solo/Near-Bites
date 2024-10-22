@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import { ThemeContext } from "../context/theme.context";
-import nearBitesText from "../assets/images/logos/nearBites_texto.png";
+import nearBitesText from "../assets/images/logos/NearBites_texto.png";
 import service from "../services/config";
 
 
