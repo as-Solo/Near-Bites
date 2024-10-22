@@ -1,5 +1,5 @@
 import "../styles/Favoritos.css"
-import nearBitesText from "../assets/images/logos/nearBites_texto.png";
+import nearBitesText from "../assets/images/logos/NearBites_texto.png";
 import { useEffect, useState } from "react";
 import service from "../services/config";
 import RestaurantCardFav from "../components/RestaurantCardFav.jsx"
