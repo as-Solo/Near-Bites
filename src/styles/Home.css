@@ -116,7 +116,7 @@
     flex-direction: column;
     gap: 10px;
     /* border: 1px solid red; */
-    height: calc(50dvh - 60px);
+    height: calc(50dvh - 51px);
     overflow: auto;
 }
 

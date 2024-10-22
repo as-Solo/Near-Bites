@@ -11,7 +11,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: calc(100vh - 105px);
+    height: calc(100dvh - 105px);
     /* border: solid 1px rgba(255, 255, 255, 0.5); */
     margin-top: 60px;
     justify-content: center;
