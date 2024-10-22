@@ -2,6 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+// import markerIconPng from "../assets/images/patata.png"
+import markerIconPng from "leaflet/dist/images/marker-icon.png"
+import {Icon} from 'leaflet'
 
 const Map = (props) => {
   
@@ -23,13 +26,13 @@ const Map = (props) => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
-      <Marker position={position}>
+      <Marker position={position} icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})}>
         <Popup>Estás aquí</Popup>
       </Marker>
       {restaurantes.map((eachRes)=>{
         return(
           <div key={eachRes._id}>
-            <Marker position={eachRes.coords}>
+            <Marker position={eachRes.coords} icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})}>
               <Popup>{eachRes.name}</Popup>
             </Marker>
           </div>
