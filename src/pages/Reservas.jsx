@@ -142,6 +142,7 @@ function Reservas() {
             })}
         </div>
         }
+        {/* <div style={{padding:"30px", width:"100%"}}></div> */}
 
         </>}
 

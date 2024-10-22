@@ -152,7 +152,7 @@ function Home(props) {
                 <RestaurantCardHome key={restaurant._id} restaurant={restaurant} position={position}/>
               )
             })}
-            <div style={{height:"00px", width:"100%"}}></div>
+            {/* <div style={{padding:"30px", width:"100%"}}></div> */}
           </div>
         </div>
       </div>

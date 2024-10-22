@@ -176,6 +176,7 @@ function RestaurantBooking(props) {
                 )}
               })}
               {!numResults && <p className="sin-reservas">Lo sentimos mucho!.<br/> No tenemos reservas disponibles con esos terminos </p>}
+              {/* <div style={{padding:"30px", width:"100%"}}></div> */}
             </div>
         </div>
 
