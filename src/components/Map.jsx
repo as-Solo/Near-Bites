@@ -39,8 +39,8 @@ const Map = (props) => {
 
   const customIcon = new DivIcon({
     className: 'custom-icon',
-    html: `<div style="border-radius: 50%; border: 3px solid rgb(0, 183, 255); overflow: hidden; width: 35px; height: 35px;">
-             <img src="${pinImage}" style="width: 100%; height: 100%; object-fit:cover;" />
+    html: `<div style="border-radius: 50%; border: 3px solid rgb(0, 183, 255); overflow: hidden; width: 35px; height: 35px; background-color: rgba(41, 46, 48, .6); display: flex; justify-content: center; align-items:center">
+             <img src="${pinImage}" style="width: 90%; height: 90%; object-fit:cover;" />
            </div>`,
     iconSize: [35, 35],
     iconAnchor: [12, 41]

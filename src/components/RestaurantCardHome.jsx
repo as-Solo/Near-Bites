@@ -45,7 +45,7 @@ function RestaurantCardHome(props) {
             </div>
           </div>
           <Link to={`/restaurants/${restaurant._id}/bookings`} state={{from:'/'}}>
-            <button className="res-card-home-data-button"  style={restaurant.isDiscount ? {border:"1px solid #F1C40F"}:{}}>RESERVAR</button>
+            <button className="res-card-home-data-button"  style={restaurant.isDiscount ? {backgroundColor:"#F1C40F", color:"rgb(20, 20, 20)", fontWeight:"700"}:{}}>RESERVAR</button>
           </Link>
         </div>
     </div>
