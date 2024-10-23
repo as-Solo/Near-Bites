@@ -49,7 +49,7 @@ function RestaurantCardFav(props) {
           {restaurant.isDiscount && <div className="res-card-oferta">{restaurant.discountAmount*100}<span style={{fontWeight:"800", fontSize:".7rem"}}>%</span></div>}
         </div>
         </Link>
-        <div className="res-card-images">
+        <div className="res-card-images" style={restaurant.images.length === 0?{border:"none"}:{}}>
           {restaurant.images.map((image, index)=>{
             return(
               <div key={index} className="res-card-other-image">
