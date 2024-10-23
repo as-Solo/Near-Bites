@@ -28,6 +28,7 @@ function Wishlist(props) {
   return (
     <div className="favourites-centradito" >
       <div className="favourites-container">
+        <div onClick={()=>navigate(`/` )} className="restaurant-id-volver boton-fav-volver"><p style={{pointerEvents:"none"}}>❮</p></div>
         <div className="favourites-img-container">
           <img src={nearBitesText} alt="Near Bites logo"/>
           <div className="fav-icon-img-container">
