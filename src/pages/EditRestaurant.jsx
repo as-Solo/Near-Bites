@@ -11,12 +11,14 @@ function EditRestaurant() {
   const [moving, setMoving] = useState(false)
   const [isDisabled, setIsDisabled] = useState(false)
   const [newCategorie, setNewCategorie] = useState("")
+  const [deleteCategorie, setDeleteCategorie] = useState("")
 
   const [imageUrl, setImageUrl] = useState(null); 
   const [isUploading, setIsUploading] = useState(false);
 
   const [errorMessage, setErrorMessage] = useState("")
   const [warning, setWarning] = useState(false)
+  const [deleteConfirm, setDeleteConfirm] = useState(false)
 
   const [restaurante, setRestaurante] = useState({name:"", address:"", rating:0, city:"", country:"", zip_code:""})
   const [editData, setEditData] = useState({
@@ -107,8 +109,10 @@ function EditRestaurant() {
 
   const handleDeleteCategories = async (e)=>{
     const clone = structuredClone(editData)
-    clone.categories = clone.categories.filter(categoria=>categoria !== e.target.name)
+    clone.categories = clone.categories.filter(categoria=>categoria !== deleteCategorie)
     setEditData(clone)
+    setDeleteCategorie('')
+    setDeleteConfirm(false)
   }
 
   const handleNewCategorie = ()=>{
@@ -159,8 +163,14 @@ function EditRestaurant() {
     <div className="profile-centradito">
       <div className="edit-restaurant-area" ref={divRef}>
 
-        <div className="edit-restaurant-warning-delete">
-
+        <div className="edit-res-warning-delete" style={{opacity:deleteConfirm?"1":"0", pointerEvents:deleteConfirm?"auto":"none"}}>
+        <div className="marco-delete-confirm">
+          <p className="texto-warning-delete">¿Estás seguro que quieres eliminar esta categoria?</p>
+          <div className="delete-confirm-botonera">
+            <button onClick={handleDeleteCategories} className="delete-confirm-eliminar delete-confirm-boton">Eliminar</button>
+            <button onClick={()=>setDeleteConfirm(false)} className="delete-confirm-cancelar delete-confirm-boton">Cancelar</button>
+          </div>
+        </div>
         </div>
           <p className={`reg-warning`} style={{opacity:warning?"1":"0", zIndex:"90"}}>{errorMessage}</p>
           <button onClick={()=>handleDiapos( - 1)} className="botones-diapos" disabled={isDisabled} style={{left:"10px", paddingRight:"3px", opacity:diapositiva===0?0.1:1}}>❮</button>
@@ -194,7 +204,7 @@ function EditRestaurant() {
                   return(
                     <div key={categoria} className="edit-restaurant-categoria">
                       <p className="edit-res-cat-name"> {categoria} </p>
-                      <button onClick={handleDeleteCategories} className="edit-res-cat-button" name={categoria}>x</button>
+                      <button onClick={(e)=>{setDeleteConfirm(true), setDeleteCategorie(e.target.name)}} className="edit-res-cat-button" name={categoria}>x</button>
                     </div>
                   )
                 })}
@@ -210,6 +220,9 @@ function EditRestaurant() {
           {/* <div style={{width:`${divWidth}px`}} className="diapositiva-container" >DIAPO 4 {divWidth} - {`${diapositiva}px`}</div> */}
           
         </div>
+      </div>
+      <div className="barrita-progreso" style={{width:`${divWidth}px`}}>
+        <div className="relleno-barrita-progreso" style={{width:`${divWidth/3 * (diapositiva + 1)}px`, transition:moving?"all .7s ease":"none", backgroundColor:diapositiva===2?"rgb(70, 130, 182)":"rgb(127, 163, 201)"}}></div>
       </div>
     </div>
   )
