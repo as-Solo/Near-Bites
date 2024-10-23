@@ -2,6 +2,8 @@ import { useParams } from "react-router-dom"
 import "../styles/EditRestaurant.css"
 import { useEffect, useRef, useState } from "react";
 import service from "../services/config";
+import nearBitesText from "../assets/images/logos/NearBites_texto.png";
+import defaultImage from "../assets/images/img-default-edit.jpeg"
 
 function EditRestaurant() {
 
@@ -10,15 +12,21 @@ function EditRestaurant() {
   const [diapositiva, setDiapositiva] = useState(0)
   const [moving, setMoving] = useState(false)
   const [isDisabled, setIsDisabled] = useState(false)
+  
   const [newCategorie, setNewCategorie] = useState("")
   const [deleteCategorie, setDeleteCategorie] = useState("")
+  const [deleteImage, setDeleteImage] = useState("")
+  const [zoomImage, setZoomImage] = useState("")
 
-  const [imageUrl, setImageUrl] = useState(null); 
+  const [imageUrl, setImageUrl] = useState(defaultImage);
+
   const [isUploading, setIsUploading] = useState(false);
 
   const [errorMessage, setErrorMessage] = useState("")
   const [warning, setWarning] = useState(false)
   const [deleteConfirm, setDeleteConfirm] = useState(false)
+  const [deleteImgConfirm, setDeleteImgConfirm] = useState(false)
+  const [isZoom, setIsZoom] = useState(false)
 
   const [restaurante, setRestaurante] = useState({name:"", address:"", rating:0, city:"", country:"", zip_code:""})
   const [editData, setEditData] = useState({
@@ -107,12 +115,20 @@ function EditRestaurant() {
     }
   }
 
-  const handleDeleteCategories = async (e)=>{
+  const handleDeleteCategories = async ()=>{
     const clone = structuredClone(editData)
     clone.categories = clone.categories.filter(categoria=>categoria !== deleteCategorie)
     setEditData(clone)
     setDeleteCategorie('')
     setDeleteConfirm(false)
+  }
+
+  const handleDeleteImages = async ()=>{
+    const clone = structuredClone(editData)
+    clone.images = clone.images.filter(imagen=>imagen !== deleteImage)
+    setEditData(clone)
+    setDeleteImage('')
+    setDeleteImgConfirm(false)
   }
 
   const handleNewCategorie = ()=>{
@@ -159,27 +175,74 @@ function EditRestaurant() {
     }
   };
 
+  const handleFileUploadImages = async (e) => {
+    console.log("The file to be uploaded is: ", e.target.files[0]);
+
+    if (!event.target.files[0]) {
+      return;
+    }
+    setIsUploading(true);
+
+    const uploadData = new FormData();
+    uploadData.append("image", event.target.files[0]);
+   
+    try {
+      const clone = structuredClone(editData)
+      const response = await service.post("/upload", uploadData)
+      clone.images.push(response.data.imageUrl);
+      setEditData(clone)
+      setIsUploading(false);
+    }
+    catch (error) {
+      console.log(error)
+      setErrorMessage("Algo salió mal al subir la imagen, intentalo de nuevo en un rato.");
+    }
+  };
+
+  
+
   return (
     <div className="profile-centradito">
       <div className="edit-restaurant-area" ref={divRef}>
 
         <div className="edit-res-warning-delete" style={{opacity:deleteConfirm?"1":"0", pointerEvents:deleteConfirm?"auto":"none"}}>
-        <div className="marco-delete-confirm">
-          <p className="texto-warning-delete">¿Estás seguro que quieres eliminar esta categoria?</p>
-          <div className="delete-confirm-botonera">
-            <button onClick={handleDeleteCategories} className="delete-confirm-eliminar delete-confirm-boton">Eliminar</button>
-            <button onClick={()=>setDeleteConfirm(false)} className="delete-confirm-cancelar delete-confirm-boton">Cancelar</button>
+          <div className="marco-delete-confirm">
+            <p className="texto-warning-delete">¿Estás seguro que quieres eliminar esta categoria?</p>
+            <div className="delete-confirm-botonera">
+              <button onClick={handleDeleteCategories} className="delete-confirm-eliminar delete-confirm-boton">Eliminar</button>
+              <button onClick={()=>setDeleteConfirm(false)} className="delete-confirm-cancelar delete-confirm-boton">Cancelar</button>
+            </div>
           </div>
         </div>
-        </div>
-          <p className={`reg-warning`} style={{opacity:warning?"1":"0", zIndex:"90"}}>{errorMessage}</p>
-          <button onClick={()=>handleDiapos( - 1)} className="botones-diapos" disabled={isDisabled} style={{left:"10px", paddingRight:"3px", opacity:diapositiva===0?0.1:1}}>❮</button>
-          <button onClick={()=>handleDiapos( + 1)} className="botones-diapos" disabled={isDisabled} style={{right:"10px", paddingLeft:"3px", opacity:diapositiva===2?0.1:1}}>❯</button>
-          <div className="edit-res-diapos-botonera">
-            <button onClick={()=>handleDiapos( - 1)} className="botones-diapos-bottom" disabled={isDisabled} style={{opacity:diapositiva===0?0.1:1}}>anterior</button>
-            <button onClick={()=>handleDiapos( + 1)} className="botones-diapos-bottom" disabled={isDisabled} style={{opacity:diapositiva===2?0.1:1}}>siguiente</button>
+
+        <div className="edit-res-warning-delete" style={{opacity:deleteImgConfirm?"1":"0", pointerEvents:deleteImgConfirm?"auto":"none"}}>
+          <div className="marco-delete-confirm">
+            <p className="texto-warning-delete">¿Estás seguro que quieres eliminar esta imagen?</p>
+            <div className="delete-confirm-botonera">
+              <button onClick={handleDeleteImages} className="delete-confirm-eliminar delete-confirm-boton">Eliminar</button>
+              <button onClick={()=>setDeleteImgConfirm(false)} className="delete-confirm-cancelar delete-confirm-boton">Cancelar</button>
+            </div>
           </div>
-          <button className="botones-diapos-bottom save-changes-button">guardar cambios</button>
+        </div>
+
+        <div onClick={()=>setIsZoom(false)} className="edit-res-warning-delete" style={{opacity:isZoom?"1":"0", pointerEvents:isZoom?"auto":"none"}}>
+          <div className="marco-zoom">
+            <div className="delimitador-foto-zoom">
+              <img className="imagen-ampliada" src={zoomImage} alt="" />
+            </div>
+            <p className="texto-foto-ampliada">`{restaurante.name}`</p>
+          </div>
+        </div>
+
+        <p className={`reg-warning`} style={{opacity:warning?"1":"0", zIndex:"90"}}>{errorMessage}</p>
+        <button onClick={()=>handleDiapos( - 1)} className="botones-diapos" disabled={isDisabled} style={{left:"10px", paddingRight:"3px", opacity:diapositiva===0?0.1:1}}>❮</button>
+        <button onClick={()=>handleDiapos( + 1)} className="botones-diapos" disabled={isDisabled} style={{right:"10px", paddingLeft:"3px", opacity:diapositiva===2?0.1:1}}>❯</button>
+        <div className="edit-res-diapos-botonera">
+          <button onClick={()=>handleDiapos( - 1)} className="botones-diapos-bottom" disabled={isDisabled} style={{opacity:diapositiva===0?0.1:1}}>anterior</button>
+          <button onClick={()=>handleDiapos( + 1)} className="botones-diapos-bottom" disabled={isDisabled} style={{opacity:diapositiva===2?0.1:1}}>siguiente</button>
+        </div>
+        <button className="botones-diapos-bottom save-changes-button">guardar cambios</button>
+
         <div className="cuadro-diapositivas-container" style={{left:`${diapositiva * -divWidth}px`,transition:moving?"all .7s ease":"none"}}>
           <div style={{width:`${divWidth}px`}} className="diapositiva-container" >
             <div className="edit-restaurant-img-container">
@@ -215,11 +278,39 @@ function EditRestaurant() {
               </div>
             </div>
           </div>
-          <div style={{width:`${divWidth}px`}} className="diapositiva-container" >DIAPO 2 {divWidth} - {`${diapositiva}px`}</div>
-          <div style={{width:`${divWidth}px`}} className="diapositiva-container" >DIAPO 3 {divWidth} - {`${diapositiva}px`}</div>
-          {/* <div style={{width:`${divWidth}px`}} className="diapositiva-container" >DIAPO 4 {divWidth} - {`${diapositiva}px`}</div> */}
-          
+          <div style={{width:`${divWidth}px`}} className="diapositiva-container" >
+            <div className="ajustes-dispositiva-container">
+                <div className="galeria-imagenes-container">
+                  {editData.images.map(imagen=>{
+                    return(
+                    <div key={imagen} className="miniaturas">
+                      <img onClick={()=>{setZoomImage(imagen), setIsZoom(true)}} className="imagen-down" src={imagen} alt={`Imagen de ${restaurante.name}`} />
+                      <button onClick={(e)=>{setDeleteImgConfirm(true), setDeleteImage(e.target.name)}} className="boton-eliminar-imagen-galeria" name={imagen}>X</button>
+                    </div>)
+                  })
+                  }
+                </div>
+            </div>
+            <div className="imagen-load-container">
+              <img className="carga-imagenes" src={imageUrl} alt="" />
+              <div className="res-edit-cloudinary-input">
+                +
+                <input style={{opacity:"0", zIndex:"120", width:"100%", height:"100%", borderRadius:"50%", position:"absolute"}}
+                  type="file"
+                  name="image"
+                  onChange={handleFileUploadImages}
+                  disabled={isUploading}
+                />
+              </div>
+            </div>
+          </div>
+          <div style={{width:`${divWidth}px`}} className="diapositiva-container" >DIAPO 3 {divWidth} - {`${diapositiva}px`}</div>          
         </div>
+      </div>
+      <div className="logo-nearbites-container" style={{width:`${divWidth}px`}}>
+          <div className="near-bites-img-container">
+            <img className="near-bites-img" src={nearBitesText} alt="Near Bites logo" />
+          </div>
       </div>
       <div className="barrita-progreso" style={{width:`${divWidth}px`}}>
         <div className="relleno-barrita-progreso" style={{width:`${divWidth/3 * (diapositiva + 1)}px`, transition:moving?"all .7s ease":"none", backgroundColor:diapositiva===2?"rgb(70, 130, 182)":"rgb(127, 163, 201)"}}></div>
