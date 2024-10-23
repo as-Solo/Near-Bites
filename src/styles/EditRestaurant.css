@@ -189,6 +189,7 @@
     width: 50%;
     background-color: rgb(70, 130, 182);
     transition: none;
+    z-index: 100;
 }
 .edit-re-info-text-name{
     font-size: 1.1rem;
@@ -402,6 +403,9 @@
     height: 100%;
     max-width: 900px;
     padding: 10px;
+    gap: 15px;
+    display: flex;
+    flex-direction: column;
 }
 
 .res-edit-turnos-global-container{
@@ -470,6 +474,21 @@
     margin-left: 5px;
 }
 
+.diapo3-global-single{
+    gap: 15px;
+}
+
+.input-turno-text{
+    background-color: rgb(30, 30, 30);
+    border: none;
+    border-radius: 4px;
+    outline: none;
+    text-align: center;
+    color: rgb(70, 130, 182);
+    font-weight: 600;
+    border-bottom: 1px solid rgb(70, 130, 182);
+}
+
 
 @media (width > 600px){
     .botones-diapos{
@@ -509,5 +528,9 @@
 
     .input-turno{
         width: 40px;
+    }
+
+    .input-turno-text{
+        padding-left: 15px;
     }
 }

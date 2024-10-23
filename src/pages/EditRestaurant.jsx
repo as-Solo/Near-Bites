@@ -238,6 +238,29 @@ function EditRestaurant() {
     setDeleteSlotConfirm(false)
   }
 
+  const handleInputText = (e)=>{
+    const clone = structuredClone(editData)
+    if(e.target.value < e.target.min){
+      e.target.value = ""
+    }
+    if(e.target.name === "discountAmount"){
+      e.target.value /= 100
+      if(e.target.value > 0){
+        clone.isDiscount = true
+      }
+      else{
+        clone.isDiscount = false
+      }
+    }
+    clone[e.target.name] = e.target.value
+    // console.log(clone)
+    setEditData(clone)
+  }
+
+  const handleEditRestaurant = async ()=>{
+    const response = await service.patch(`/restaurants/owner/${restaurantId}`, editData)
+    console.log(response)
+  }
   
   return (
     <div className="profile-centradito">
@@ -289,7 +312,7 @@ function EditRestaurant() {
           <button onClick={()=>handleDiapos( - 1)} className="botones-diapos-bottom" disabled={isDisabled} style={{opacity:diapositiva===0?0.1:1}}>anterior</button>
           <button onClick={()=>handleDiapos( + 1)} className="botones-diapos-bottom" disabled={isDisabled} style={{opacity:diapositiva===2?0.1:1}}>siguiente</button>
         </div>
-        <button className="botones-diapos-bottom save-changes-button">Guardar cambios</button>
+        <button onClick={handleEditRestaurant} className="botones-diapos-bottom save-changes-button">Guardar cambios</button>
 
         <div className="cuadro-diapositivas-container" style={{left:`${diapositiva * -divWidth}px`,transition:moving?"all .7s ease":"none"}}>
           <div style={{width:`${divWidth}px`}} className="diapositiva-container" >
@@ -370,6 +393,18 @@ function EditRestaurant() {
                   <p>:</p>
                   <input onChange={handleTurno} className="input-turno" type="number" name="min" min={0} max={59} value={turnoVar.min}/>
                   <button onClick={handleCreateSlot} className="boton-add-turno">añadir</button>
+                </div>
+              </div>
+              <div className="res-edit-turnos-global-container diapo3-global-single">
+                <h4>ESTABLECER CAPACIDAD</h4>
+                <div className="res-edit-input-parejita-turno">
+                  <input onChange={handleInputText} className="input-turno-text" type="number" min={1} name="capacity" value={editData.capacity || ""}/>
+                </div>
+              </div>
+              <div className="res-edit-turnos-global-container diapo3-global-single">
+                <h4>ESTABLECER OFERTA</h4>
+                <div className="res-edit-input-parejita-turno">
+                  <input onChange={handleInputText} className="input-turno-text" type="number" min={0} name="discountAmount" value={(editData.discountAmount * 100).toFixed(1) || ''}/>
                 </div>
               </div>
             </div>
