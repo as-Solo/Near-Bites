@@ -12,6 +12,9 @@ function EditRestaurant() {
   const [isDisabled, setIsDisabled] = useState(false)
   const [newCategorie, setNewCategorie] = useState("")
 
+  const [errorMessage, setErrorMessage] = useState("")
+  const [warning, setWarning] = useState(false)
+
   const [restaurante, setRestaurante] = useState({name:"", address:"", rating:0, city:"", country:"", zip_code:""})
   const [editData, setEditData] = useState({
     profileImage: "",
@@ -69,6 +72,21 @@ function EditRestaurant() {
     };
   }, []);
 
+  useEffect(() => {
+    if (errorMessage) {
+      setWarning(true)
+      const warn = setTimeout(() => {
+        setWarning(false);
+      }, 3000);
+      
+      const timer = setTimeout(() => {
+        setErrorMessage("");
+      }, 3500);
+
+      return () => {clearTimeout(timer), clearTimeout(warn)};
+    }
+  }, [errorMessage]);
+
   const handleDiapos = (num)=>{
     if (diapositiva + num < 0 || diapositiva + num > 2){
       return
@@ -91,31 +109,47 @@ function EditRestaurant() {
   }
 
   const handleNewCategorie = ()=>{
-    const clone = structuredClone(editData)
-    clone.categories.push(newCategorie)
-    setEditData(clone)
+    if (!editData.categories.some(categoria => categoria.toLowerCase() === newCategorie.toLowerCase()) && newCategorie !== ''){
+      const clone = structuredClone(editData)
+      clone.categories.push(newCategorie)
+      setEditData(clone)
+    }
+    else{
+      if (newCategorie === ''){
+        setErrorMessage(`Debes introducir una categoria.`)
+      }
+      else{
+        setErrorMessage(`${newCategorie} ya se encuentra entre tus categorias.`)
+      }
+      console.log("patata")
+    }
     setNewCategorie("")
   }
 
   return (
     <div className="profile-centradito">
       <div className="edit-restaurant-area" ref={divRef}>
-          <button onClick={()=>handleDiapos( - 1)} className="botones-diapos" disabled={isDisabled} style={{left:"10px", paddingRight:"3px"}}>❮</button>
-          <button onClick={()=>handleDiapos( + 1)} className="botones-diapos" disabled={isDisabled} style={{right:"10px", paddingLeft:"3px"}}>❯</button>
+        <div className="edit-restaurant-warning-delete">
+
+        </div>
+          <p className={`reg-warning`} style={{opacity:warning?"1":"0", zIndex:"90"}}>{errorMessage}</p>
+          <button onClick={()=>handleDiapos( - 1)} className="botones-diapos" disabled={isDisabled} style={{left:"10px", paddingRight:"3px", opacity:diapositiva===0?0.1:1}}>❮</button>
+          <button onClick={()=>handleDiapos( + 1)} className="botones-diapos" disabled={isDisabled} style={{right:"10px", paddingLeft:"3px", opacity:diapositiva===2?0.1:1}}>❯</button>
           <div className="edit-res-diapos-botonera">
-            <button onClick={()=>handleDiapos( - 1)} className="botones-diapos-bottom" disabled={isDisabled} >anterior</button>
-            <button onClick={()=>handleDiapos( + 1)} className="botones-diapos-bottom" disabled={isDisabled} >siguiente</button>
+            <button onClick={()=>handleDiapos( - 1)} className="botones-diapos-bottom" disabled={isDisabled} style={{opacity:diapositiva===0?0.1:1}}>anterior</button>
+            <button onClick={()=>handleDiapos( + 1)} className="botones-diapos-bottom" disabled={isDisabled} style={{opacity:diapositiva===2?0.1:1}}>siguiente</button>
           </div>
+          <button className="botones-diapos-bottom save-changes-button">guardar cambios</button>
         <div className="cuadro-diapositivas-container" style={{left:`${diapositiva * -divWidth}px`,transition:moving?"all .7s ease":"none"}}>
           <div style={{width:`${divWidth}px`}} className="diapositiva-container" >
             <div className="edit-restaurant-img-container">
               <img className="edit-restaurant-image" src={editData.profileImage} alt="" />
             </div>
-            <div>
-              <p>{restaurante.name}</p>
-              <p>{restaurante.address}</p>
-              <p>{restaurante.zip_code}</p>
-              <p>{restaurante.city}</p>
+            <div className="edit-res-data-container">
+              <div className="edit-res-info-name-container">
+                <p>{restaurante.name}</p>
+                <p>{restaurante.address}, {restaurante.zip_code}, {restaurante.city}</p>
+              </div>
               <div className="edit-res-cat-container">
                 {editData.categories.map(categoria=>{
                   return(

@@ -38,7 +38,7 @@ function App() {
     else {
       console.error('No podemos geolocalizarte');
     }
-  }, [position]);
+  }, []);
 
   return (
     <>
