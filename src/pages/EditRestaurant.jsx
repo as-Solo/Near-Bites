@@ -16,7 +16,10 @@ function EditRestaurant() {
   const [newCategorie, setNewCategorie] = useState("")
   const [deleteCategorie, setDeleteCategorie] = useState("")
   const [deleteImage, setDeleteImage] = useState("")
+  const [deleteSlot, setDeleteSlot] = useState("")
   const [zoomImage, setZoomImage] = useState("")
+
+  const [turnoVar, setTurnoVar] = useState({min:"", hora:""})
 
   const [imageUrl, setImageUrl] = useState(defaultImage);
 
@@ -26,6 +29,7 @@ function EditRestaurant() {
   const [warning, setWarning] = useState(false)
   const [deleteConfirm, setDeleteConfirm] = useState(false)
   const [deleteImgConfirm, setDeleteImgConfirm] = useState(false)
+  const [deleteSlotConfirm, setDeleteSlotConfirm] = useState(false)
   const [isZoom, setIsZoom] = useState(false)
 
   const [restaurante, setRestaurante] = useState({name:"", address:"", rating:0, city:"", country:"", zip_code:""})
@@ -199,8 +203,42 @@ function EditRestaurant() {
     }
   };
 
-  
+  const handleTurno = (e)=>{
+    const clone = structuredClone(turnoVar)
 
+    console.log()
+    if (+e.target.value < e.target.min){
+      e.target.value = ""
+    }
+    if (+e.target.value > e.target.max){
+      console.log("entrando")
+      e.target.value = ""
+    }
+  
+    clone[e.target.name] = e.target.value // .padStart(2, '0')
+    setTurnoVar(clone)
+  }
+
+  const handleCreateSlot = ()=>{
+    const clone = structuredClone(editData)
+    const newSlot = turnoVar.hora.padStart(2, '0') + ":" + turnoVar.min.padStart(2, '0')
+    if(clone.timeSlots.includes(newSlot)){
+      setErrorMessage("Ya existe ese turno")
+    }
+    else{
+      clone.timeSlots.push(newSlot)
+      setEditData(clone)
+    }
+  }
+
+  const handleDeleteSlot = ()=>{
+    const clone = structuredClone(editData)
+    clone.timeSlots = clone.timeSlots.filter(elem=>elem !== deleteSlot)
+    setEditData(clone)
+    setDeleteSlotConfirm(false)
+  }
+
+  
   return (
     <div className="profile-centradito">
       <div className="edit-restaurant-area" ref={divRef}>
@@ -225,6 +263,16 @@ function EditRestaurant() {
           </div>
         </div>
 
+        <div className="edit-res-warning-delete" style={{opacity:deleteSlotConfirm?"1":"0", pointerEvents:deleteSlotConfirm?"auto":"none"}}>
+          <div className="marco-delete-confirm">
+            <p className="texto-warning-delete">¿Estás seguro que quieres eliminar esta imagen?</p>
+            <div className="delete-confirm-botonera">
+              <button onClick={handleDeleteSlot} className="delete-confirm-eliminar delete-confirm-boton">Eliminar</button>
+              <button onClick={()=>setDeleteSlotConfirm(false)} className="delete-confirm-cancelar delete-confirm-boton">Cancelar</button>
+            </div>
+          </div>
+        </div>
+
         <div onClick={()=>setIsZoom(false)} className="edit-res-warning-delete" style={{opacity:isZoom?"1":"0", pointerEvents:isZoom?"auto":"none"}}>
           <div className="marco-zoom">
             <div className="delimitador-foto-zoom">
@@ -241,7 +289,7 @@ function EditRestaurant() {
           <button onClick={()=>handleDiapos( - 1)} className="botones-diapos-bottom" disabled={isDisabled} style={{opacity:diapositiva===0?0.1:1}}>anterior</button>
           <button onClick={()=>handleDiapos( + 1)} className="botones-diapos-bottom" disabled={isDisabled} style={{opacity:diapositiva===2?0.1:1}}>siguiente</button>
         </div>
-        <button className="botones-diapos-bottom save-changes-button">guardar cambios</button>
+        <button className="botones-diapos-bottom save-changes-button">Guardar cambios</button>
 
         <div className="cuadro-diapositivas-container" style={{left:`${diapositiva * -divWidth}px`,transition:moving?"all .7s ease":"none"}}>
           <div style={{width:`${divWidth}px`}} className="diapositiva-container" >
@@ -304,7 +352,28 @@ function EditRestaurant() {
               </div>
             </div>
           </div>
-          <div style={{width:`${divWidth}px`}} className="diapositiva-container" >DIAPO 3 {divWidth} - {`${diapositiva}px`}</div>          
+          <div style={{width:`${divWidth}px`}} className="diapositiva-container" >
+            <div className="ajustes-diapositiva-3">
+              <div className="res-edit-turnos-global-container">
+                <h4>ESTABLECER TURNOS</h4>
+                <div className="res-edit-turnos-container">
+                  {editData.timeSlots.map((turno, index)=>{
+                    return(
+                    <div className="edicion-turnos-container" key={index}>
+                      <p className="edicion-texto-turno">{turno} h.</p>
+                      <button onClick={(e)=>{ setDeleteSlotConfirm(true), setDeleteSlot(e.target.name)}} className="edit-res-cat-button" name={turno}>X</button>
+                    </div>)
+                  })}
+                </div>
+                <div className="res-edit-input-parejita-turno">
+                  <input onChange={handleTurno} className="input-turno" type="number" name="hora" min={0} max={23} value={turnoVar.hora}/>
+                  <p>:</p>
+                  <input onChange={handleTurno} className="input-turno" type="number" name="min" min={0} max={59} value={turnoVar.min}/>
+                  <button onClick={handleCreateSlot} className="boton-add-turno">añadir</button>
+                </div>
+              </div>
+            </div>
+          </div>          
         </div>
       </div>
       <div className="logo-nearbites-container" style={{width:`${divWidth}px`}}>
