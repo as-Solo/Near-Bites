@@ -11,7 +11,7 @@ function Administrator() {
 
   const getData = async ()=>{
     const response = await service.get("/users/owner")
-    console.log(response.data)
+    // console.log(response.data)
     setRestaurants(response.data.restaurantsOwned)
   }
 
