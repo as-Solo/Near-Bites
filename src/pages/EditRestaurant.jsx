@@ -246,7 +246,7 @@ function EditRestaurant() {
       e.target.value = ""
     }
     if(e.target.name === "discountAmount"){
-      e.target.value /= 100
+      // e.target.value /= 100
       if(e.target.value > 0){
         clone.isDiscount = true
       }
@@ -264,6 +264,7 @@ function EditRestaurant() {
       const response = await service.patch(`/restaurants/owner/${restaurantId}`, editData)
       console.log(response)
       setErrorMessage("Cambios guardados correctamente")
+      // getData()
       // setTimeout(()=>{
       //   navigate("/administrator")
       // }, 2000)
@@ -416,7 +417,7 @@ function EditRestaurant() {
               <div className="res-edit-turnos-global-container diapo3-global-single">
                 <h4>ESTABLECER OFERTA</h4>
                 <div className="res-edit-input-parejita-turno">
-                  <input onChange={handleInputText} className="input-turno-text" type="number" min={0} name="discountAmount" value={(editData.discountAmount * 100).toFixed(1) || ''}/>
+                  <input onChange={handleInputText} className="input-turno-text" type="number" min={0} name="discountAmount" value={(editData.discountAmount) || ''}/> {/* .toFixed(1) */}
                 </div>
               </div>
             </div>

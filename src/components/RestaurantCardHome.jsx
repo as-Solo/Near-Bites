@@ -15,7 +15,7 @@ function RestaurantCardHome(props) {
           <Link to={`/restaurants/${restaurant._id}`}>
           <div className="res-card-main-image">
             <img className="res-card-image" src={restaurant.profileImage} onError={(e) => { e.target.onerror = null; e.target.src = defaultRes }} alt="Profile Restaurant pic" />
-            {restaurant.isDiscount && <div className="res-card-oferta">{restaurant.discountAmount*100}<span style={{fontWeight:"800", fontSize:".7rem"}}>%</span></div>}
+            {restaurant.isDiscount && <div className="res-card-oferta">{restaurant.discountAmount}<span style={{fontWeight:"800", fontSize:".7rem"}}>%</span></div>}
           </div>
           </Link>
           <div className="res-card-images" style={restaurant.images.length === 0?{border:"none"}:{}}>

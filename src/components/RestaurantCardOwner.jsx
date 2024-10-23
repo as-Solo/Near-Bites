@@ -10,7 +10,7 @@ function RestaurantCardOwner(props) {
           <div className="ficha-res-owner-img-container">
             <img className="ficha-res-owner-image" src={restaurant.profileImage} onError={(e) => { e.target.onerror = null; e.target.src = defaultRes }} alt={`Foto de ${restaurant.name}` } />
             {restaurant.isDiscount && <div className="etiqueta-oferta">
-              <p>{restaurant.discountAmount * 100} <span>%</span> </p>
+              <p>{restaurant.discountAmount} <span>%</span> </p>
             </div>}
           </div>
           </Link>
