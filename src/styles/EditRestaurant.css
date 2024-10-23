@@ -1,0 +1,157 @@
+.paleta{
+    color: rgb(41, 46, 48);
+    color: rgb(70, 130, 182);
+    color: rgb(127, 163, 201);
+    color: rgb(243, 229, 240);
+
+    color: rgb(0, 183, 255);
+}
+
+.edit-restaurant-area{
+    border: 1px solid rgb(70, 130, 182);
+    border-radius: 4px;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cuadro-diapositivas-container{
+    width: 300%;
+    height: 100%;
+    /* border: 1px solid blue; */
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.diapositiva-container{
+    height: 90%;
+    border: solid 1px pink;
+    display: flex;
+    align-self: flex-start;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+}
+
+.botones-diapos{
+    position: absolute;
+    z-index: 90;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid rgb(70, 130, 182);
+    background-color: rgba(255, 255, 255, 0.2);
+    color: rgb(127, 163, 201);
+    color: rgb(0, 183, 255);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    font-weight: 900;
+    font-size: 1.4rem;
+    padding-bottom: 2px;
+    /* bottom: 15px; */
+}
+
+.edit-res-diapos-botonera{
+    display: flex;
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    justify-content:space-evenly;
+    z-index: 10;
+}
+
+.botones-diapos-bottom{
+    width: 35%;
+    padding: 3px 0px;
+    border-radius: 4px;
+    border: 1px solid rgb(70, 130, 182);
+    background-color: rgba(70, 130, 182, 0.3);
+    color: white;
+    font-weight: 600;
+}
+
+.edit-restaurant-img-container{
+    width: 100%;
+    height: 50%;
+    border: 1px solid green;
+}
+.edit-restaurant-image{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.edit-res-cat-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.edit-restaurant-categoria{
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    border: 1px rgb(0, 183, 255) solid;
+    border-radius: 4px;
+    padding: 2px 25px 2px 8px;
+    color: rgb(70, 130, 182);
+    font-size: .75rem;
+}
+
+.edit-res-cat-button{
+    position: absolute;
+    height: 100%;
+    right: 0;
+    padding: 0 4px;
+    background-color: rgb(70, 130, 182);
+    color: white;
+    font-weight: 700;
+    border: none;
+    border-radius: 0px 4px 4px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.edit-res-cat-name{
+    font-weight: 500;
+}
+
+.edit-res-cat-input-container{
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    border: 1px green solid;
+    border-radius: 4px;
+    color: rgb(70, 130, 182);
+    font-size: .9rem;
+}
+
+.edit-res-cat-input{
+    border: 1px solid red;
+}
+
+
+@media (width > 600px){
+    .botones-diapos{
+        display: flex;
+    }
+
+    .diapositiva-container{
+        height: 100%;
+        align-self: center;
+    }
+
+    .edit-res-diapos-botonera{
+        display: none;
+    }
+}
