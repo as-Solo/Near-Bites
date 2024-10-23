@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import "../styles/EditRestaurant.css"
 import { useEffect, useRef, useState } from "react";
 import service from "../services/config";
@@ -6,6 +6,8 @@ import nearBitesText from "../assets/images/logos/NearBites_texto.png";
 import defaultImage from "../assets/images/img-default-edit.jpeg"
 
 function EditRestaurant() {
+
+  const navigate = useNavigate()
 
   const [divWidth, setDivWidth] = useState(0);  // Estado para el ancho del div
   const divRef = useRef(null);  // Referencia al div
@@ -258,8 +260,18 @@ function EditRestaurant() {
   }
 
   const handleEditRestaurant = async ()=>{
-    const response = await service.patch(`/restaurants/owner/${restaurantId}`, editData)
-    console.log(response)
+    try {
+      const response = await service.patch(`/restaurants/owner/${restaurantId}`, editData)
+      console.log(response)
+      setErrorMessage("Cambios guardados correctamente")
+      // setTimeout(()=>{
+      //   navigate("/administrator")
+      // }, 2000)
+    }
+    catch (error) {
+      console.log(error)
+      setErrorMessage("Algo ha salido mal, intentalo de nuevo mas tarde")
+    }
   }
   
   return (
