@@ -63,7 +63,7 @@
 .edit-res-diapos-botonera{
     display: flex;
     position: absolute;
-    bottom: 10px;
+    bottom: 50px;
     width: 100%;
     justify-content:space-evenly;
     z-index: 10;
@@ -84,6 +84,7 @@
     width: 100%;
     height: 45%;
     /* border: 1px solid green; */
+    position: relative;
 }
 .edit-restaurant-image{
     width: 100%;
@@ -118,6 +119,7 @@
     overflow-y: auto;
     align-content: baseline;
     max-width: 800px;
+    width: 100%;
 }
 
 .edit-res-cat-input-container{
@@ -182,10 +184,40 @@
 
 .save-changes-button{
     position: absolute;
-    bottom: 50px;
+    bottom: 10px;
     width: 50%;
     background-color: rgb(70, 130, 182);
     transition: none;
+}
+.edit-re-info-text-name{
+    font-size: 1.1rem;
+    font-style: italic;
+    color: rgb(127, 163, 201);
+}
+.edit-re-info-text-address{
+    font-size: .9rem;
+    color: rgb(127, 163, 201);
+
+}
+
+
+.res-edit-cloudinary-input{
+    background-color: rgba(136, 136, 136, 0.2);
+    border: 2px solid white;
+    border-radius: 100%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.9rem;
 }
 
 

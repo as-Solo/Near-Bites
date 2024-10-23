@@ -15,7 +15,6 @@ function PlayGround() {
           console.log("The file to be uploaded is: ", e.target.files[0]);
       
           if (!event.target.files[0]) {
-            // to prevent accidentally clicking the choose file button and not selecting a file
             return;
           }
       

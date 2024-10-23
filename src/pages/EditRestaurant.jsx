@@ -12,6 +12,9 @@ function EditRestaurant() {
   const [isDisabled, setIsDisabled] = useState(false)
   const [newCategorie, setNewCategorie] = useState("")
 
+  const [imageUrl, setImageUrl] = useState(null); 
+  const [isUploading, setIsUploading] = useState(false);
+
   const [errorMessage, setErrorMessage] = useState("")
   const [warning, setWarning] = useState(false)
 
@@ -126,9 +129,36 @@ function EditRestaurant() {
     setNewCategorie("")
   }
 
+  const handleFileUpload = async (e) => {
+    console.log("The file to be uploaded is: ", e.target.files[0]);
+
+    if (!event.target.files[0]) {
+      return;
+    }
+    setIsUploading(true);
+
+    const uploadData = new FormData(); // images and other files need to be sent to the backend in a FormData
+    uploadData.append("image", event.target.files[0]);
+    //                   |
+    //     this name needs to match the name used in the middleware in the backend => uploader.single("image")
+
+    try {
+      const clone = structuredClone(editData)
+      const response = await service.post("/upload", uploadData)
+      clone.profileImage = response.data.imageUrl;
+      setEditData(clone)
+      setIsUploading(false);
+    }
+    catch (error) {
+      console.log(error)
+      setErrorMessage("Algo salió mal al subir la imagen, intentalo de nuevo en un rato.");
+    }
+  };
+
   return (
     <div className="profile-centradito">
       <div className="edit-restaurant-area" ref={divRef}>
+
         <div className="edit-restaurant-warning-delete">
 
         </div>
@@ -144,11 +174,20 @@ function EditRestaurant() {
           <div style={{width:`${divWidth}px`}} className="diapositiva-container" >
             <div className="edit-restaurant-img-container">
               <img className="edit-restaurant-image" src={editData.profileImage} alt="" />
+              <div className="res-edit-cloudinary-input">
+                +
+                <input style={{opacity:"0", zIndex:"120", width:"100%", height:"100%", borderRadius:"50%", position:"absolute"}}
+                  type="file"
+                  name="image"
+                  onChange={handleFileUpload}
+                  disabled={isUploading}
+                />
+              </div>
             </div>
             <div className="edit-res-data-container">
               <div className="edit-res-info-name-container">
-                <p>{restaurante.name}</p>
-                <p>{restaurante.address}, {restaurante.zip_code}, {restaurante.city}</p>
+                <p className="edit-re-info-text-name">{restaurante.name}</p>
+                <p className="edit-re-info-text-address">{restaurante.address}, {restaurante.zip_code}, {restaurante.city}</p>
               </div>
               <div className="edit-res-cat-container">
                 {editData.categories.map(categoria=>{
