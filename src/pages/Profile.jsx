@@ -6,24 +6,27 @@ import { ThemeContext } from "../context/theme.context";
 import { useNavigate } from "react-router-dom";
 import profileLogo from "../assets/images/logos/Profile_white.png"
 import service from "../services/config";
+import DotLoader from "react-spinners/DotLoader";
 
 
 
 function Profile() {
-
+  
   const API_URL = import.meta.env.VITE_API_URL;
   const navigate = useNavigate()
   const {authenticateUser, setUpdate} = useContext(AuthContext)
-
+  
   const { loggedUserId } = useContext(AuthContext)
   const { isDark } = useContext(ThemeContext)
-
-  const [newData, setNewData] = useState(null)
+  
+  const [newData, setNewData] = useState({})
   const [oldUser, setOldUser] = useState(null)
-
+  
   const [errorMessage, setErrorMessage] = useState("")
   const [warning, setWarning] = useState(false)
   const [confirm, setConfirm] = useState(false)
+  
+  const [loading, setLoading] = useState(true);
 
   const getData = async()=>{
     // const response = await axios.get(`${API_URL}/api/users/${loggedUserId}`)
@@ -37,6 +40,7 @@ function Profile() {
       image: response.data.image || ''
     })
     setOldUser(response.data.username)
+    setLoading(false)
   }
   useEffect(()=>{
     getData()
@@ -120,14 +124,13 @@ function Profile() {
 
 
   // -------------------------------------  PINTADO  ----------------------------------------------
-  if (newData === null){
-    return ( <h3>Verificando...</h3>)
-  }
-  else{
    
   return (
     <div className="profile-centradito">
       <div className={`profile-container ${isDark?'dark-':'light-'}profile-container`}>
+      {loading ?
+          ( <div className="loader-container"> <DotLoader color={"#4682b6"} loading={loading} size={50} /> </div>)
+          : (<>
         <p className={`${isDark?'dark-':'light-'}reg-warning reg-warning`} style={{opacity:warning?"1":"0"}}>{errorMessage}</p>
         <div className="profile-marco-image">
           <img className="profile-image" src={newData.image || profileLogo} alt="" />
@@ -164,12 +167,11 @@ function Profile() {
               </div>
             </div>
           </div>
+          </>)
+          }
       </div>
     </div>
   )
 }
-}
-
-
 
 export default Profile
