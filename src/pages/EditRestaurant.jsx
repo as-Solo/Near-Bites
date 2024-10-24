@@ -222,6 +222,13 @@ function EditRestaurant() {
   }
 
   const handleCreateSlot = ()=>{
+
+  if (turnoVar.hora.length > 2 || turnoVar.min.length > 2 ) {
+    setErrorMessage("El formato del turno no es adecuado");
+    setTurnoVar({min:"", hora:""})
+    return;
+  }
+
     const clone = structuredClone(editData)
     const newSlot = turnoVar.hora.padStart(2, '0') + ":" + turnoVar.min.padStart(2, '0')
     if(clone.timeSlots.includes(newSlot)){
