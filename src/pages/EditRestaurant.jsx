@@ -213,7 +213,7 @@ function EditRestaurant() {
       e.target.value = ""
     }
     if (+e.target.value > e.target.max){
-      console.log("entrando")
+      // console.log("entrando")
       e.target.value = ""
     }
   
@@ -229,6 +229,11 @@ function EditRestaurant() {
     }
     else{
       clone.timeSlots.push(newSlot)
+      clone.timeSlots.sort();
+      if(clone.timeSlots.includes("00:00")){
+        clone.timeSlots.push('00:00')
+        clone.timeSlots.shift()
+      }
       setEditData(clone)
     }
   }
