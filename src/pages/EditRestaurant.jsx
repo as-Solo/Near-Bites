@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import service from "../services/config";
 import nearBitesText from "../assets/images/logos/NearBites_texto.png";
 import defaultImage from "../assets/images/img-default-edit.jpeg"
+import DotLoader from "react-spinners/DotLoader";
 
 function EditRestaurant() {
 
@@ -26,6 +27,8 @@ function EditRestaurant() {
   const [imageUrl, setImageUrl] = useState(defaultImage);
 
   const [isUploading, setIsUploading] = useState(false);
+  const [loading, setLoading] = useState(true);
+
 
   const [errorMessage, setErrorMessage] = useState("")
   const [warning, setWarning] = useState(false)
@@ -72,6 +75,7 @@ function EditRestaurant() {
     }
     setRestaurante(rest)
     setEditData(clone)
+    setLoading(false)
   }
   useEffect(() => {
     getData()
@@ -341,6 +345,9 @@ function EditRestaurant() {
 
         <div className="cuadro-diapositivas-container" style={{left:`${diapositiva * -divWidth}px`,transition:moving?"all .7s ease":"none"}}>
           <div style={{width:`${divWidth}px`}} className="diapositiva-container" >
+          {loading ?
+          ( <div className="loader-container"> <DotLoader color={"#4682b6"} loading={loading} size={50} /> </div>)
+          : (<>
             <div className="edit-restaurant-img-container">
               <img className="edit-restaurant-image" src={editData.profileImage} alt="" />
               <div className="res-edit-cloudinary-input">
@@ -373,8 +380,14 @@ function EditRestaurant() {
                 <button onClick={handleNewCategorie} className="edit-res-cat-button" name="" >añadir</button>
               </div>
             </div>
+            </>)
+          }
           </div>
+
           <div style={{width:`${divWidth}px`}} className="diapositiva-container" >
+          {loading ?
+          ( <div className="loader-container"> <DotLoader color={"#4682b6"} loading={loading} size={50} /> </div>)
+          : (<>
             <div className="ajustes-dispositiva-container" >
                 <div className="reposicionar-titular">
                   <h4 className="titular-imagenes">SELECCIONAR IMAGENES</h4>
@@ -402,40 +415,47 @@ function EditRestaurant() {
                 />
               </div>
             </div>
+            </>)
+          }
           </div>
           <div style={{width:`${divWidth}px`}} className="diapositiva-container" >
-            <div className="ajustes-diapositiva-3">
-              <div className="res-edit-turnos-global-container">
-                <h4>ESTABLECER TURNOS</h4>
-                <div className="res-edit-turnos-container">
-                  {editData.timeSlots.map((turno, index)=>{
-                    return(
-                    <div className="edicion-turnos-container" key={index}>
-                      <p className="edicion-texto-turno">{turno} h.</p>
-                      <button onClick={(e)=>{ setDeleteSlotConfirm(true), setDeleteSlot(e.target.name)}} className="edit-res-cat-button" name={turno}>X</button>
-                    </div>)
-                  })}
+            {loading ?
+            ( <div className="loader-container"> <DotLoader color={"#4682b6"} loading={loading} size={50} /> </div>)
+            : (<>
+              <div className="ajustes-diapositiva-3">
+                <div className="res-edit-turnos-global-container">
+                  <h4>ESTABLECER TURNOS</h4>
+                  <div className="res-edit-turnos-container">
+                    {editData.timeSlots.map((turno, index)=>{
+                      return(
+                      <div className="edicion-turnos-container" key={index}>
+                        <p className="edicion-texto-turno">{turno} h.</p>
+                        <button onClick={(e)=>{ setDeleteSlotConfirm(true), setDeleteSlot(e.target.name)}} className="edit-res-cat-button" name={turno}>X</button>
+                      </div>)
+                    })}
+                  </div>
+                  <div className="res-edit-input-parejita-turno">
+                    <input onChange={handleTurno} className="input-turno" type="number" name="hora" min={0} max={23} value={turnoVar.hora}/>
+                    <p>:</p>
+                    <input onChange={handleTurno} className="input-turno" type="number" name="min" min={0} max={59} value={turnoVar.min}/>
+                    <button onClick={handleCreateSlot} className="boton-add-turno">añadir</button>
+                  </div>
                 </div>
-                <div className="res-edit-input-parejita-turno">
-                  <input onChange={handleTurno} className="input-turno" type="number" name="hora" min={0} max={23} value={turnoVar.hora}/>
-                  <p>:</p>
-                  <input onChange={handleTurno} className="input-turno" type="number" name="min" min={0} max={59} value={turnoVar.min}/>
-                  <button onClick={handleCreateSlot} className="boton-add-turno">añadir</button>
+                <div className="res-edit-turnos-global-container diapo3-global-single">
+                  <h4>ESTABLECER CAPACIDAD</h4>
+                  <div className="res-edit-input-parejita-turno">
+                    <input onChange={handleInputText} className="input-turno-text" type="number" min={1} name="capacity" value={editData.capacity || ""}/>
+                  </div>
+                </div>
+                <div className="res-edit-turnos-global-container diapo3-global-single">
+                  <h4>ESTABLECER OFERTA</h4>
+                  <div className="res-edit-input-parejita-turno">
+                    <input onChange={handleInputText} className="input-turno-text" type="number" min={0} name="discountAmount" value={(editData.discountAmount) || ''}/> {/* .toFixed(1) */}
+                  </div>
                 </div>
               </div>
-              <div className="res-edit-turnos-global-container diapo3-global-single">
-                <h4>ESTABLECER CAPACIDAD</h4>
-                <div className="res-edit-input-parejita-turno">
-                  <input onChange={handleInputText} className="input-turno-text" type="number" min={1} name="capacity" value={editData.capacity || ""}/>
-                </div>
-              </div>
-              <div className="res-edit-turnos-global-container diapo3-global-single">
-                <h4>ESTABLECER OFERTA</h4>
-                <div className="res-edit-input-parejita-turno">
-                  <input onChange={handleInputText} className="input-turno-text" type="number" min={0} name="discountAmount" value={(editData.discountAmount) || ''}/> {/* .toFixed(1) */}
-                </div>
-              </div>
-            </div>
+            </>)
+          }
           </div>          
         </div>
       </div>

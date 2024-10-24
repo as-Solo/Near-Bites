@@ -5,16 +5,22 @@ import service from "../services/config";
 import RestaurantCardFav from "../components/RestaurantCardFav.jsx"
 import FavSelect from "../assets/images/logos/Favorites_selected.png"
 import { useNavigate } from "react-router-dom";
+import DotLoader from "react-spinners/DotLoader";
+
 
 function Wishlist(props) {
 
   const { position } = props
-  const [wishes, setWishes] = useState(null)
+  const [wishes, setWishes] = useState([])
   const navigate = useNavigate()
+
+  const [loading, setLoading] = useState(true)
+
 
   const getData = async ()=>{
     const response = await service.get('/users/wishlist/populate')
     setWishes(response.data.wishlist)
+    setLoading(false)
   }
 
   useEffect(()=>{
@@ -22,9 +28,6 @@ function Wishlist(props) {
     return ()=>{}
   }, [])
 
-  if (!wishes){
-    return (<h3>...loading</h3>)
-  }
   return (
     <div className="favourites-centradito" >
       <div className="favourites-container">
@@ -35,15 +38,21 @@ function Wishlist(props) {
             <img className="fav-icon-img" src={FavSelect} alt="Icono de favoritos" />
           </div>
         </div>
-        {wishes.length === 0 && <div className="reservas-anteriores-container reservas-container" style={{flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
-          <p className="sin-resultados"> No nos podemos creer que no tengas planeado ningún sitio al que ir.<br/>No puede ser.<br/>Echa un buen vistazo.</p>
-          <button onClick={()=>navigate('/')} className="reg-boton">Buscar Restaurantes</button>
-        </div>}
-      <div className="favourites-restaurants-container">
-        {wishes.map((restaurante)=>{
-          return(<RestaurantCardFav key={restaurante._id} restaurant={restaurante} position={position} getData={getData}/> )
-        })}
-      </div>
+        {loading ?
+          ( <div className="loader-container"> <DotLoader color={"#4682b6"} loading={loading} size={50} /> </div>)
+          : (<>
+            {wishes.length === 0 &&
+              <div className="reservas-anteriores-container reservas-container" style={{flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
+                <p className="sin-resultados"> No nos podemos creer que no tengas planeado ningún sitio al que ir.<br/>No puede ser.<br/>Echa un buen vistazo.</p>
+                <button onClick={()=>navigate('/')} className="reg-boton">Buscar Restaurantes</button>
+              </div>}
+          <div className="favourites-restaurants-container">
+            {wishes.map((restaurante)=>{
+              return(<RestaurantCardFav key={restaurante._id} restaurant={restaurante} position={position} getData={getData}/> )
+            })}
+          </div>
+          </>)
+        }
         
       </div>
     </div>

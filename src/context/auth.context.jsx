@@ -5,6 +5,8 @@
 import axios from "axios";
 import service from "../services/config.js"
 import { createContext, useEffect, useState } from "react";
+import DotLoader from "react-spinners/DotLoader";
+
 
 const AuthContext = createContext()
 
@@ -25,13 +27,9 @@ function AuthWrapper(props){
   const authenticateUser = async ()=>{
     try {
       const response = await service.get(`/auth/verify`)
-      // const authToken = localStorage.getItem("authToken")
-      // const response = await axios.get(`${API_URL}/api/auth/verify`, {
-      //   headers: { authorization: `Bearer ${authToken}`}
-      // })
+     
       setIsLogin(true);
       setLoggedUserId(response.data._id)
-      // console.log(response.data.rol)
       if (response.data.rol === "owner"){
         setIsOwner(true)
       }
@@ -39,16 +37,13 @@ function AuthWrapper(props){
         setIsOwner(false)
       }
       setIsValidatingToken(false)
-      // console.log(response)
     }
     catch (error) {
-      // el token no es valido o no existe
       console.log(error)
       setIsLogin(false)
       setLoggedUserId(null)
       setIsOwner(false)
       setIsValidatingToken(false)
-      // setUpdate(current=>!current)
     }
   }
 
@@ -62,7 +57,7 @@ function AuthWrapper(props){
   }
 
   if (isValidatingToken){
-    return <h3>Validando</h3>
+    return <div className="loader-container" style={{width:"100dvw", height:"100dvh"}}> <DotLoader color={"#4682b6"} loading={isValidatingToken} size={50} /> </div>
   }
   return (
     <AuthContext.Provider value={passedContext}>

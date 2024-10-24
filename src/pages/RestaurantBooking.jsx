@@ -6,14 +6,15 @@ import { ThemeContext } from "../context/theme.context";
 import "../styles/RestaurantIdBooking.css"
 import service from "../services/config";
 import calcularDistancia from "../utils/calcularDistancia.js"
-
-
+import DotLoader from "react-spinners/DotLoader";
 
 function RestaurantBooking(props) {
 
   let numResults = 0
 
   const API_URL = import.meta.env.VITE_API_URL;
+
+  const [loading, setLoading] = useState(true);
 
   const location = useLocation();
   const from = location.state?.from 
@@ -91,7 +92,7 @@ function RestaurantBooking(props) {
     setTurnos(clone)
     setRestaurante(response.data)
     setDistance(calcularDistancia(position[0], position[1], response.data.coords[0], response.data.coords[1]).toFixed(1))
-
+    setLoading(false)
   }
 
   useEffect(()=>{
@@ -123,25 +124,32 @@ function RestaurantBooking(props) {
     <div className="restaurant-id-centradito">
       <div className="restaurant-id-container">
         <div className="restaurant-id-img-container">
-          <img className="restaurant-id-img" src={restaurante.profileImage} alt="" />
+        {loading
+        ? ( <div className="loader-container"> <DotLoader color={"#4682b6"} loading={loading} size={50} /> </div> )
+        : <img className="restaurant-id-img" src={restaurante.profileImage} alt="" />
+        }
           <div onClick={()=>navigate( from || `/restaurants/${restaurantId}` )} className="restaurant-id-volver"><p style={{pointerEvents:"none"}}>❮</p></div>
         </div>
 
-        <div className="restaurant-id-ficha cabecera-booking">
-          <p className={`${isDark?'dark-':'light-'}reg-warning reg-warning`} style={{opacity:warning?"1":"0", fontSize:".9rem", left:"0", zIndex:"25"}}>{infoMessage}</p>
-          <div className="res-ficha-cabecera">
-            <p className="res-id-name">{restaurante.name}</p>
-            <p className="res-id-rating">{restaurante.rating}⭐ - {distance} km</p>
+        {loading
+        ? ( null )
+        :<>
+          <div className="restaurant-id-ficha cabecera-booking">
+            <p className={`${isDark?'dark-':'light-'}reg-warning reg-warning`} style={{opacity:warning?"1":"0", fontSize:".9rem", left:"0", zIndex:"25"}}>{infoMessage}</p>
+            <div className="res-ficha-cabecera">
+              <p className="res-id-name">{restaurante.name}</p>
+              <p className="res-id-rating">{restaurante.rating}⭐ - {distance} km</p>
+            </div>
+            <p className="res-id-address">{restaurante.address}, ({restaurante.city})</p>
+            <div className="res-card-home-categories-container">
+                {restaurante.categories.map((categoria, index)=>{
+                  return(
+                    <div key={index} className="res-card-home-data-categoria">{categoria}</div>
+                  )
+                })}
+            </div>
           </div>
-          <p className="res-id-address">{restaurante.address}, ({restaurante.city})</p>
-          <div className="res-card-home-categories-container">
-              {restaurante.categories.map((categoria, index)=>{
-                return(
-                  <div key={index} className="res-card-home-data-categoria">{categoria}</div>
-                )
-              })}
-          </div>
-        </div>
+        </>}
         
         <div className="form-booking-container">
           <div className="form-cabecera">
@@ -152,31 +160,35 @@ function RestaurantBooking(props) {
                 <input className="form-booking-input" onChange={handlePartySize} type="number" name="partySize" value={partySize} min={1} max={restaurante.capacity}/>
               </div>
             </div>
-            {/* <p className="form-text-slots">Turnos disponibles el <span>{dia.split('-')[2]}/{dia.split('-')[1]}/{dia.split('-')[0]}</span></p> */}
           </div>
+
           <div className="form-slots-select-container">
-            {turnos.map((turno, index)=>{
-              const [hora, capacidad] = (Object.entries(turno)[0])
-              if (capacidad >= partySize){
-                numResults++
-                return (
-                  <div className="ficha-turno-container" key={index} >
-                    <div className="ficha-data">
-                      <div className="ficha-turno-column">
-                        {/* <p className="ficha-labels">Turno</p> */}
-                        <p className="ficha-turno-hora">{hora}</p>
+            {loading ?
+              ( <div className="loader-container"> <DotLoader color={"#4682b6"} loading={loading} size={50} /> </div>)
+              : (<>
+                {turnos.map((turno, index)=>{
+                  const [hora, capacidad] = (Object.entries(turno)[0])
+                  if (capacidad >= partySize){
+                    numResults++
+                    return (
+                      <div className="ficha-turno-container" key={index} >
+                        <div className="ficha-data">
+                          <div className="ficha-turno-column">
+                            {/* <p className="ficha-labels">Turno</p> */}
+                            <p className="ficha-turno-hora">{hora}</p>
+                          </div>
+                          <div className="ficha-turno-column">
+                            <p className="ficha-labels">Huecos</p>
+                            <p className="ficha-turnos-capacidad">{capacidad}</p>
+                          </div>
+                        </div>
+                        <button className="ficha-booking-boton" onClick={handleCreateBooking} name={hora}>Reservar</button>
                       </div>
-                      <div className="ficha-turno-column">
-                        <p className="ficha-labels">Huecos</p>
-                        <p className="ficha-turnos-capacidad">{capacidad}</p>
-                      </div>
-                    </div>
-                    <button className="ficha-booking-boton" onClick={handleCreateBooking} name={hora}>Reservar</button>
-                  </div>
-                )}
-              })}
-              {!numResults && <p className="sin-reservas">Lo sentimos mucho!.<br/> No tenemos reservas disponibles con esos terminos </p>}
-              {/* <div style={{padding:"30px", width:"100%"}}></div> */}
+                    )}
+                  })}
+                  {!numResults && <p className="sin-reservas">Lo sentimos mucho!.<br/> No tenemos reservas disponibles con esos terminos </p>}
+                </>)
+              }
             </div>
         </div>
 

@@ -12,8 +12,7 @@ import FavSelect from "../assets/images/logos/Favorites_selected.png"
 import defaultRes from "../assets/images/logos/DefaultRes.png"
 import service from "../services/config";
 import calcularDistancia from "../utils/calcularDistancia.js"
-
-
+import DotLoader from "react-spinners/DotLoader"
 
 
 function Restaurant(props) {
@@ -32,8 +31,8 @@ function Restaurant(props) {
   const navigate = useNavigate()
   const [distance, setDistance] = useState(null)
 
-  const [restaurante, setRestaurante] = useState(null)
-  const [reviews, setReviews] = useState(null)
+  const [restaurante, setRestaurante] = useState("")
+  const [reviews, setReviews] = useState([])
 
   const [makingReview, setMakingReview] = useState(false)
   const [newReview, setNewReview] = useState({description:'', rating:1})
@@ -41,6 +40,7 @@ function Restaurant(props) {
   const [isLike, setIsLike] = useState(false)
   const [isFav, setIsFav] = useState(false)
 
+  const [loading, setLoading] = useState(true);
 
   const getData = async (distance) =>{
     try {
@@ -64,6 +64,7 @@ function Restaurant(props) {
       if(wishlist.data.wishlist.includes(restaurantId)){
         setIsFav(true)
       }
+      setLoading(false)
     } catch (error) {
       console.log(error)
     }
@@ -173,58 +174,68 @@ function Restaurant(props) {
     }
   }
 
-  if (restaurante === null || reviews === null){
-    return ( <h3>...Cargando datos</h3> )
-  }
+
   return (
     <div className="restaurant-id-centradito">
       <div className="restaurant-id-container">
         <div className="restaurant-id-img-container">
-          <img className="restaurant-id-img" src={restaurante.profileImage} onError={(e) => { e.target.onerror = null; e.target.src = defaultRes }} alt="" />
+        {loading
+        ? ( <div className="loader-container"> <DotLoader color={"#4682b6"} loading={loading} size={50} /> </div> )
+        : <img className="restaurant-id-img" src={restaurante.profileImage} onError={(e) => { e.target.onerror = null; e.target.src = defaultRes }} alt="" />
+        }
           <div onClick={()=>navigate('/')} className="restaurant-id-volver"><p style={{pointerEvents:"none"}}>❮</p></div>
         </div>
         <div className="restaurant-id-ficha">
-          <div onClick={handleFav} className="favourite-button" style={{borderColor:isFav?"rgba(180, 25, 25, 0)":"white"}}>
-            <img src={isFav?FavSelect:FavUnselect} alt="" />
-          </div>
-          <div onClick={handleLike} className="like-button" style={{borderColor:isLike?"rgba(180, 25, 25, 0)":"white"}}>
-            <img src={isLike?LikeRed:LikeWhite} alt="" />
-          </div>
-          <p className={`${isDark?'dark-':'light-'}reg-warning reg-warning`} style={{opacity:warning?"1":"0", fontSize:".9rem", left:"0", zIndex:"25"}}>{infoMessage}</p>
-          <div className="form-make-review" style={{opacity:makingReview?"1":"0", pointerEvents:makingReview?"auto":"none"}}>
-              <textarea onChange={(e)=>handleChanges(e)} className="make-review-area" name="description" id="" value={newReview.description}></textarea>
-              <div className="make-review-rating-container">
-                <label className="make-review-rating-text" htmlFor="rating">Rating</label>
-                <input onChange={(e)=>handleChanges(e)} className="make-review-rating" type="number" name="rating" max={5} min={1}  value={newReview.rating}/>
+          {loading ?
+            ( <div className="loader-container"> <DotLoader color={"#4682b6"} loading={loading} size={50} /> </div>)
+            : (<>
+              <div onClick={handleFav} className="favourite-button" style={{borderColor:isFav?"rgba(180, 25, 25, 0)":"white"}}>
+                <img src={isFav?FavSelect:FavUnselect} alt="" />
               </div>
-            <div className="make-review-botonera">
-              <button onClick={handleCancel}  className="make-review-boton review-boton-cancelar" >Cancelar</button>
-              <button onClick={handleCreate} className="make-review-boton review-boton-crear" >Crear</button>
-            </div>
-          </div>
-          <p className="res-id-name">{restaurante.name}</p>
-          <p className="res-id-address">{restaurante.address}, ({restaurante.city})</p>
-          <p className="res-id-rating">{restaurante.rating}⭐ - {distance} km</p>
-          <div className="res-card-home-categories-container">
-              {restaurante.categories.map((categoria, index)=>{
-                return(
-                  <div key={index} className="res-card-home-data-categoria">{categoria}</div>
-                )
-              })}
-            </div>
-            <div className="restaurant-id-botonera">
-              <button onClick={()=>setMakingReview(true)} className="res-id-boton boton-izq" >Comentar</button>
-              <button onClick={()=>navigate(`/restaurants/${restaurantId}/bookings`)} className="res-id-boton boton-der" >Reservar</button>
-            </div>
+              <div onClick={handleLike} className="like-button" style={{borderColor:isLike?"rgba(180, 25, 25, 0)":"white"}}>
+                <img src={isLike?LikeRed:LikeWhite} alt="" />
+              </div>
+              <p className={`${isDark?'dark-':'light-'}reg-warning reg-warning`} style={{opacity:warning?"1":"0", fontSize:".9rem", left:"0", zIndex:"25"}}>{infoMessage}</p>
+              <div className="form-make-review" style={{opacity:makingReview?"1":"0", pointerEvents:makingReview?"auto":"none"}}>
+                  <textarea onChange={(e)=>handleChanges(e)} className="make-review-area" name="description" id="" value={newReview.description}></textarea>
+                  <div className="make-review-rating-container">
+                    <label className="make-review-rating-text" htmlFor="rating">Rating</label>
+                    <input onChange={(e)=>handleChanges(e)} className="make-review-rating" type="number" name="rating" max={5} min={1}  value={newReview.rating}/>
+                  </div>
+                <div className="make-review-botonera">
+                  <button onClick={handleCancel}  className="make-review-boton review-boton-cancelar" >Cancelar</button>
+                  <button onClick={handleCreate} className="make-review-boton review-boton-crear" >Crear</button>
+                </div>
+              </div>
+              <p className="res-id-name">{restaurante.name}</p>
+              <p className="res-id-address">{restaurante.address}, ({restaurante.city})</p>
+              <p className="res-id-rating">{restaurante.rating}⭐ - {distance} km</p>
+              <div className="res-card-home-categories-container">
+                  {restaurante.categories.map((categoria, index)=>{
+                    return(
+                      <div key={index} className="res-card-home-data-categoria">{categoria}</div>
+                    )
+                  })}
+                </div>
+                <div className="restaurant-id-botonera">
+                  <button onClick={()=>setMakingReview(true)} className="res-id-boton boton-izq" >Comentar</button>
+                  <button onClick={()=>navigate(`/restaurants/${restaurantId}/bookings`)} className="res-id-boton boton-der" >Reservar</button>
+                </div>
+            </>)
+          }
         </div>
         <div className="restaurant-id-reviews">
-          {reviews.length === 0 && <p className="reviews-vacias">Aún no hay reseñas de este sitio.<br/>Se el primero en escribir una.</p> }
-          {reviews.map(review=>{
-            return(
-              <ReviewBoard key={review._id} review={review} setInfoMessage={setInfoMessage} getData={getData}/>
-            )
-          })}
-           {/* <div style={{padding:"30px", width:"100%"}}></div> */}
+          {loading ?
+            ( <div className="loader-container"> <DotLoader color={"#4682b6"} loading={loading} size={50} /> </div>)
+            : (<>
+              {reviews.length === 0 && <p className="reviews-vacias">Aún no hay reseñas de este sitio.<br/>Se el primero en escribir una.</p> }
+              {reviews.map(review=>{
+                return(
+                  <ReviewBoard key={review._id} review={review} setInfoMessage={setInfoMessage} getData={getData}/>
+                )
+              })}
+           </>)
+          }
         </div>
       </div>
     </div>

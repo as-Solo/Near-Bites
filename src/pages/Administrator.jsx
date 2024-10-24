@@ -4,8 +4,11 @@ import service from "../services/config";
 import "../styles/PruebasCloudinary.css"
 import nearBitesText from "../assets/images/logos/NearBites_texto.png";
 import RestaurantCardOwner from "../components/RestaurantCardOwner";
+import DotLoader from "react-spinners/DotLoader";
 
 function Administrator() {
+  
+  const [loading, setLoading] = useState(true);
 
   const [restaurants, setRestaurants] = useState([])
 
@@ -13,6 +16,7 @@ function Administrator() {
     const response = await service.get("/users/owner")
     // console.log(response.data)
     setRestaurants(response.data.restaurantsOwned)
+    setLoading(false)
   }
 
   useEffect(()=>{
@@ -29,11 +33,16 @@ function Administrator() {
         </div>
 
         <div className="owner-res-list-container">
-          {restaurants.map(restaurant=>{
-            return(
-              <RestaurantCardOwner key={restaurant._id} restaurant={restaurant}/>
-          )
-          })}
+          {loading ?
+            ( <div className="loader-container"> <DotLoader color={"#4682b6"} loading={loading} size={50} /> </div>)
+            : (<>
+              {restaurants.map(restaurant=>{
+                return(
+                  <RestaurantCardOwner key={restaurant._id} restaurant={restaurant}/>
+              )
+              })}
+            </>)
+          }
         </div>
         
       </div>

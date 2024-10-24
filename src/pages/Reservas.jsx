@@ -7,24 +7,25 @@ import "../styles/Listas.css"
 import BookingCard from "../components/BookingCard";
 import nearBitesText from "../assets/images/logos/NearBites_texto.png";
 import service from "../services/config";
+import DotLoader from "react-spinners/DotLoader";
 
 
 function Reservas() {
-
+  
   const API_URL = import.meta.env.VITE_API_URL;
-
+  
   const [infoMessage, setInfoMessage] = useState("")
   const [warning, setWarning] = useState(false)
   const [deleteConfirm, setDeleteConfirm] = useState(false)
   const [reservaId, setReservaId] = useState("")
-
-  const {loggedUserId} = useContext(AuthContext)
+  
   const [oldBookings, setOldBookings] = useState(null)
   const [bookings, setBookings] = useState(null)
-
+  
   const { isDark } = useContext(ThemeContext)
   const navigate = useNavigate()
-  const distance = 2
+
+  const [loading, setLoading] = useState(true);
 
   const getData = async ()=>{
     // const response = await axios.get(`${API_URL}/api/bookings/users/${loggedUserId}`)
@@ -43,6 +44,7 @@ function Reservas() {
     })
     setOldBookings(pasadas)
     setBookings(actuales)
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -84,12 +86,6 @@ function Reservas() {
    }
   }
 
-  if(oldBookings === null || bookings === null){
-    return(
-      <h3>...Accediendo a los datos</h3>
-    )
-  }
-
   return (
     <div className="centradito-listas">
       <div className="delete-confirm" style={{opacity:deleteConfirm?"1":"0", pointerEvents:deleteConfirm?"auto":"none"}}>
@@ -105,47 +101,51 @@ function Reservas() {
         <p className={`${isDark?'dark-':'light-'}reg-warning reg-warning`} style={{opacity:warning?"1":"0", fontSize:".9rem", left:"0", zIndex:"25"}}>{infoMessage}</p>
         <div onClick={()=>navigate('/')} className="restaurant-id-volver" style={{top:"-45px"}}><p style={{pointerEvents:"none"}}>❮</p></div>
         <img className={`${isDark?'dark-':'light-'}reg-image reg-image`} src={nearBitesText} alt="Near Bites logo"/>
-        {oldBookings.length === 0 && bookings.length === 0?
-        <div style={{display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column"}}>
-          <div className="reservas-anteriores-container reservas-container">
-            <p className="sin-resultados"> No tienes aun ninguna reserva hecha.<br/>Seguro que eso cambia pronto.<br/> ¿Por qué no echas un vistazo a nuestros restaurantes?</p>
-            <button onClick={()=>navigate('/')} className="reg-boton">Buscar Restaurantes</button>
-          </div>
-        </div>
-        :<>
-        <p className="booking-list-titular">ANTIGUAS</p>
-        {oldBookings.length === 0
-        ?<div className="reservas-anteriores-container reservas-container" style={{minHeight:"30%", flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
-          <p className="sin-resultados"> Nos alegra que te hayas unido hace poco a nuestra comunidad.<br/>¡Hay mucho que descubrir!</p>
-          <button onClick={()=>navigate('/')} className="reg-boton">Buscar Restaurantes</button>
-        </div>
-        :<div className="reservas-anteriores-container reservas-container">
-          {oldBookings.map(booking=>{
-            return(
-              <BookingCard key={booking._id} booking={booking} handlePreDelete={handlePreDelete}/>
-          )
-          })}
-        </div>
-        }
+   
+        {loading ?
+          ( <div className="loader-container"> <DotLoader color={"#4682b6"} loading={loading} size={50} /> </div>)
+          : (<>
+              {oldBookings.length === 0 && bookings.length === 0?
+              <div style={{display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column"}}>
+                <div className="reservas-anteriores-container reservas-container">
+                  <p className="sin-resultados"> No tienes aun ninguna reserva hecha.<br/>Seguro que eso cambia pronto.<br/> ¿Por qué no echas un vistazo a nuestros restaurantes?</p>
+                  <button onClick={()=>navigate('/')} className="reg-boton">Buscar Restaurantes</button>
+                </div>
+              </div>
+              :<>
+              <p className="booking-list-titular">ANTIGUAS</p>
+              {oldBookings.length === 0
+              ?<div className="reservas-anteriores-container reservas-container" style={{minHeight:"30%", flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
+                <p className="sin-resultados"> Nos alegra que te hayas unido hace poco a nuestra comunidad.<br/>¡Hay mucho que descubrir!</p>
+                <button onClick={()=>navigate('/')} className="reg-boton">Buscar Restaurantes</button>
+              </div>
+              :<div className="reservas-anteriores-container reservas-container">
+                {oldBookings.map(booking=>{
+                  return(
+                    <BookingCard key={booking._id} booking={booking} handlePreDelete={handlePreDelete}/>
+                )
+                })}
+              </div>
+              }
 
-        <p className="booking-list-titular">PENDIENTES</p>
-        {bookings.length === 0
-        ?<div className="reservas-actuales-container reservas-container" style={{minHeight:"30%", flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
-          <p className="sin-resultados"> No tienes ninguna reserva pendiente.<br/>¿Hay hambre de más??</p>
-          <button onClick={()=>navigate('/')} className="reg-boton">Buscar Restaurantes</button>
-        </div>
-        :<div className="reservas-actuales-container reservas-container">
-          {bookings.map(booking=>{
-            return(
-              <BookingCard key={booking._id} booking={booking} handlePreDelete={handlePreDelete}/>
-              )
-            })}
-        </div>
-        }
-        {/* <div style={{padding:"30px", width:"100%"}}></div> */}
-
-        </>}
-
+              <p className="booking-list-titular">PENDIENTES</p>
+              {bookings.length === 0
+              ?<div className="reservas-actuales-container reservas-container" style={{minHeight:"30%", flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
+                <p className="sin-resultados"> No tienes ninguna reserva pendiente.<br/>¿Hay hambre de más??</p>
+                <button onClick={()=>navigate('/')} className="reg-boton">Buscar Restaurantes</button>
+              </div>
+              :<div className="reservas-actuales-container reservas-container">
+                {bookings.map(booking=>{
+                  return(
+                    <BookingCard key={booking._id} booking={booking} handlePreDelete={handlePreDelete}/>
+                    )
+                  })}
+              </div>
+              }
+              </>}
+            </>)
+          }
+ 
       </div>
     </div>
   )
