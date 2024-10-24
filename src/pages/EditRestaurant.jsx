@@ -368,7 +368,10 @@ function EditRestaurant() {
             </div>
           </div>
           <div style={{width:`${divWidth}px`}} className="diapositiva-container" >
-            <div className="ajustes-dispositiva-container">
+            <div className="ajustes-dispositiva-container" >
+                <div className="reposicionar-titular">
+                  <h4 className="titular-imagenes">SELECCIONAR IMAGENES</h4>
+                </div>
                 <div className="galeria-imagenes-container">
                   {editData.images.map(imagen=>{
                     return(
