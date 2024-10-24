@@ -50,3 +50,41 @@ body {
   width: 100%;
   height: 100%;
 }
+
+
+.paleta{
+  color: rgb(41, 46, 48);
+  color: rgb(70, 130, 182);
+  color: rgb(127, 163, 201);
+  color: rgb(243, 229, 240);
+
+  color: rgb(0, 183, 255);
+}
+
+
+
+/* aspecto del scroll */
+::-webkit-scrollbar {
+  width: 8px; /* Ancho de la barra de desplazamiento */
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(20, 20, 20); /* Color del fondo del track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(70, 130, 182); /* Color de la barra de desplazamiento */
+  border-radius: 10px; /* Bordes redondeados */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(0, 183, 255); /* Color al pasar el mouse */
+}
+
+/* Para Firefox 
+{
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+}
+*/

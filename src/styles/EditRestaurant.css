@@ -183,13 +183,19 @@
     outline: none;
 }
 
-.save-changes-button{
+.save-changes-button-container{
     position: absolute;
     bottom: 10px;
-    width: 50%;
-    background-color: rgb(70, 130, 182);
     transition: none;
+    width: 100%;
+    justify-content: space-around;
+    display: flex;
+}
+.save-changes-button{
+    width: 45%;
+    background-color: rgb(70, 130, 182);
     z-index: 100;
+    white-space: nowrap;
 }
 .edit-re-info-text-name{
     font-size: 1.1rem;

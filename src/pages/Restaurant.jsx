@@ -24,7 +24,7 @@ function Restaurant(props) {
   const [infoMessage, setInfoMessage] = useState("")
   const [warning, setWarning] = useState(false)
 
-  const {loggedUserId} = useContext(AuthContext)
+  const {isLogin, loggedUserId} = useContext(AuthContext)
   const { restaurantId } = useParams()
   
   const { isDark } = useContext(ThemeContext)
@@ -46,6 +46,9 @@ function Restaurant(props) {
     try {
       const response = await axios.get(`${API_URL}/api/restaurants/${restaurantId}`)
       setRestaurante(response.data)
+      if(response.data){
+        setLoading(false)
+      }
 
       setDistance(calcularDistancia(position[0], position[1], response.data.coords[0], response.data.coords[1]).toFixed(1))
 
@@ -64,7 +67,6 @@ function Restaurant(props) {
       if(wishlist.data.wishlist.includes(restaurantId)){
         setIsFav(true)
       }
-      setLoading(false)
     } catch (error) {
       console.log(error)
     }
@@ -104,7 +106,6 @@ function Restaurant(props) {
     if(newReview.description){
       try {
           await service.post(`/reviews`, {
-          user: loggedUserId,
           restaurant: restaurantId,
           description: newReview.description,
           rating: newReview.rating
@@ -218,7 +219,7 @@ function Restaurant(props) {
                   })}
                 </div>
                 <div className="restaurant-id-botonera">
-                  <button onClick={()=>setMakingReview(true)} className="res-id-boton boton-izq" >Comentar</button>
+                  <button onClick={()=>{isLogin?setMakingReview(true):navigate('/login')}} className="res-id-boton boton-izq" >Comentar</button>
                   <button onClick={()=>navigate(`/restaurants/${restaurantId}/bookings`)} className="res-id-boton boton-der" >Reservar</button>
                 </div>
             </>)

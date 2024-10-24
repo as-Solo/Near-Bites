@@ -37,6 +37,9 @@ function EditRestaurant() {
   const [deleteSlotConfirm, setDeleteSlotConfirm] = useState(false)
   const [isZoom, setIsZoom] = useState(false)
 
+  const [descartarConfirm, setDescartarConfirm] = useState(false)
+  const [editConfirm, setEditConfirm] = useState(false)
+
   const [restaurante, setRestaurante] = useState({name:"", address:"", rating:0, city:"", country:"", zip_code:""})
   const [editData, setEditData] = useState({
     profileImage: "",
@@ -278,7 +281,8 @@ function EditRestaurant() {
   const handleEditRestaurant = async ()=>{
     try {
       const response = await service.patch(`/restaurants/owner/${restaurantId}`, editData)
-      console.log(response)
+      // console.log(response)
+      setEditConfirm(false)
       setErrorMessage("Cambios guardados correctamente")
       // getData()
       // setTimeout(()=>{
@@ -325,6 +329,29 @@ function EditRestaurant() {
           </div>
         </div>
 
+        <div className="edit-res-warning-delete" style={{opacity:descartarConfirm?"1":"0", pointerEvents:descartarConfirm?"auto":"none"}}>
+          <div className="marco-delete-confirm">
+            <p className="texto-warning-delete">¿Estás seguro que deseas descartar estos cambios?</p>
+            <div className="delete-confirm-botonera">
+              <button onClick={()=>setDescartarConfirm(false)} className="delete-confirm-cancelar delete-confirm-boton">Cancelar</button>
+              <button onClick={()=>{navigate(0)}} className="delete-confirm-eliminar delete-confirm-boton">Descartar</button>
+            </div>
+          </div>
+        </div>
+
+        <div className="edit-res-warning-delete" style={{opacity:editConfirm?"1":"0", pointerEvents:editConfirm?"auto":"none"}}>
+          <div className="marco-delete-confirm">
+            <p className="texto-warning-delete">¿Estás seguro que quieres guardar los cambios?</p>
+            <div className="delete-confirm-botonera">
+              <button onClick={()=>setEditConfirm(false)} className="delete-confirm-cancelar delete-confirm-boton">Cancelar</button>
+              <button onClick={handleEditRestaurant} className="delete-confirm-eliminar delete-confirm-boton">Guardar</button>
+            </div>
+          </div>
+        </div>
+
+        {/* res warning descartar cambios */}
+        {/* res warning realizar cambios */}
+
         <div onClick={()=>setIsZoom(false)} className="edit-res-warning-delete" style={{opacity:isZoom?"1":"0", pointerEvents:isZoom?"auto":"none"}}>
           <div className="marco-zoom">
             <div className="delimitador-foto-zoom">
@@ -341,7 +368,10 @@ function EditRestaurant() {
           <button onClick={()=>handleDiapos( - 1)} className="botones-diapos-bottom" disabled={isDisabled} style={{opacity:diapositiva===0?0.1:1}}>anterior</button>
           <button onClick={()=>handleDiapos( + 1)} className="botones-diapos-bottom" disabled={isDisabled} style={{opacity:diapositiva===2?0.1:1}}>siguiente</button>
         </div>
-        <button onClick={handleEditRestaurant} className="botones-diapos-bottom save-changes-button">Guardar cambios</button>
+        <div className="save-changes-button-container">
+          <button onClick={()=>setDescartarConfirm(true)} className="botones-diapos-bottom save-changes-button">Descartar cambios</button>
+          <button onClick={()=>setEditConfirm(true)} className="botones-diapos-bottom save-changes-button">Guardar cambios</button>
+        </div>
 
         <div className="cuadro-diapositivas-container" style={{left:`${diapositiva * -divWidth}px`,transition:moving?"all .7s ease":"none"}}>
           <div style={{width:`${divWidth}px`}} className="diapositiva-container" >
