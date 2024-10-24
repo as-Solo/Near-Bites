@@ -116,9 +116,6 @@ function RestaurantBooking(props) {
   }, [infoMessage]);
 
 
-  if (restaurante === null){
-    return( <h1>Probando</h1> )
-  }
   return (
     // annadirle un boton para ver el perfil del restaurante
     <div className="restaurant-id-centradito">
