@@ -30,7 +30,7 @@ function RestaurantBooking(props) {
 
   const { restaurantId } = useParams()
 
-  const [restaurante, setRestaurante] = useState(null)
+  const [restaurante, setRestaurante] = useState({})
 
   const [turnos, setTurnos] = useState([])
   const [partySize, setPartySize] = useState(1)
