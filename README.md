@@ -1,3 +1,5 @@
+<a name='inicio'></a>
+
 # Near Bites: Your Nearby Restaurant Guide
 
 ![Near Bites Logo](./src/assets/images/cabecera-readme.png)
@@ -10,17 +12,17 @@
 
 ## 📝 Tabla de Contenidos
 
-- [📍 Funcionalidades Principales](#-funcionalidades-principales)
-- [🚀 Tecnologías Utilizadas](#-tecnologías-utilizadas)
-- [🛠️ Estructura del Proyecto](#-estructura-del-proyecto)
-- [🔍 Lógica de la Aplicación](#-lógica-de-la-aplicación)
-- [🎯 Retos Técnicos y Soluciones](#-retos-técnicos-y-soluciones)
-- [👨‍💻 Habilidades Adquiridas](#-habilidades-adquiridas)
-- [❤️ Agradecimientos](#-agradecimientos)
-- [🤝 Contribuciones](#-contribuciones)
+- [📍 Funcionalidades Principales](#funcionalidades-principales)
+- [🚀 Tecnologías Utilizadas](#tecnologías-utilizadas)
+- [🛠️ Estructura del Proyecto](#estructura-del-proyecto)
+- [🔍 Lógica de la Aplicación](#lógica-de-la-aplicación)
+- [🎯 Retos Técnicos y Soluciones](#retos-técnicos-y-soluciones)
+- [👨‍💻 Habilidades Adquiridas](#habilidades-adquiridas)
+- [❤️ Agradecimientos](#agradecimientos)
+- [🤝 Contribuciones](#contribuciones)
 
 ---
-
+<a name='funcionalidades-principales'></a>
 ## 📍 Funcionalidades Principales
 
 - **Geolocalización en Tiempo Real**: La aplicación detecta la ubicación del usuario para mostrar los restaurantes cercanos, con posibilidad de ajustar el radio de búsqueda.
@@ -32,6 +34,7 @@
 
 ---
 
+<a name='tecnologías-utilizadas'></a>
 ## 🚀 Tecnologías Utilizadas
 
 Este proyecto ha sido desarrollado utilizando una combinación de tecnologías modernas que permiten una experiencia de usuario ágil y dinámica:
@@ -46,7 +49,7 @@ Este proyecto ha sido desarrollado utilizando una combinación de tecnologías m
 
 ---
 
-
+<a name='estructura-del-proyecto'></a>
 ## 🛠️ Estructura del Proyecto
 
 El proyecto está dividido en dos repositorios para organizar mejor las responsabilidades del frontend y backend:
@@ -64,6 +67,7 @@ El proyecto está dividido en dos repositorios para organizar mejor las responsa
 
 ---
 
+<a name='lógica-de-la-aplicación'></a>
 ## 🔍 Lógica de la Aplicación
 
 La aplicación está diseñada para ser completamente interactiva y adaptable a las necesidades de cada usuario:
@@ -75,6 +79,7 @@ La aplicación está diseñada para ser completamente interactiva y adaptable a 
 
 ---
 
+<a name='retos-técnicos-y-soluciones'></a>
 ## 🎯 Retos Técnicos y Soluciones
 
 Durante el desarrollo del proyecto, se presentaron varios desafíos técnicos, algunos de los más importantes fueron:
@@ -85,6 +90,7 @@ Durante el desarrollo del proyecto, se presentaron varios desafíos técnicos, a
 
 ---
 
+<a name='habilidades-adquiridas'></a>
 ## 👨‍💻 Habilidades Adquiridas
 
 Este proyecto ha sido una excelente oportunidad para mejorar mis habilidades en:
@@ -96,16 +102,18 @@ Este proyecto ha sido una excelente oportunidad para mejorar mis habilidades en:
 
 ---
 
+<a name='agradecimientos'></a>
 ## ❤️ Agradecimientos
 
 A mi profesor y mentor en el camino del desarrollo web, que en dos meses de guía, apoyo, consejos y una abrumadora transmisión de conocimientos, ha hecho posible que yo pueda hacer este proyecto en menos de dos semanas:
 * [Jorge Berrizbeitia](https://github.com/jorgeberrizbeitia)
 
-Mención especial para quien ya desde el primer proyecto de este bootcamp siempre dijo, adelante, aun sabiendo que eso significaría que le enterrase en dudas y que le pidiese a cada paso que "auditase" mi web. De todo corazón, muchas gracias!:
+Mención especial para quien ya desde el primer proyecto de este bootcamp siempre dijo, **adelante**, aun sabiendo que eso significaría que le enterrase en dudas y que le pidiese a cada paso que "auditase" mi web. De todo corazón: muchas gracias!:
 * [Jesús Suaste](https://github.com/suastech)
 
 ---
 
+<a name='contribuciones'></a>
 ## 🤝 Contribuciones
 
 Cualquier contribución a este proyecto es más que bienvenida. Si tienes ideas para nuevas funcionalidades, o deseas mejorar el código actual, no dudes en enviar un *pull request* o abrir una *issue*.
