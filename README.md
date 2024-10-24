@@ -6,7 +6,7 @@
 
 **Near Bites** es una aplicación web dinámica que utiliza geolocalización para ayudar a los usuarios a encontrar restaurantes cercanos. Además de ofrecer la posibilidad de filtrar resultados y gestionar reservas, **Near Bites** integra funciones de interacción como añadir restaurantes a favoritos, gestionar roles de usuarios (incluyendo propietarios y administradores), y un sistema completo de comentarios y valoraciones.
 
-[Visítanos aquí](https://github.com/as-Solo/Near-Bites)
+[**Échale un vistazo y logeate** 😜](https://nearbites.netlify.app/)
 
 ---
 
