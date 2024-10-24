@@ -321,7 +321,7 @@ function EditRestaurant() {
 
         <div className="edit-res-warning-delete" style={{opacity:deleteSlotConfirm?"1":"0", pointerEvents:deleteSlotConfirm?"auto":"none"}}>
           <div className="marco-delete-confirm">
-            <p className="texto-warning-delete">¿Estás seguro que quieres eliminar esta imagen?</p>
+            <p className="texto-warning-delete">¿Estás seguro que quieres eliminar este turno?</p>
             <div className="delete-confirm-botonera">
               <button onClick={handleDeleteSlot} className="delete-confirm-eliminar delete-confirm-boton">Eliminar</button>
               <button onClick={()=>setDeleteSlotConfirm(false)} className="delete-confirm-cancelar delete-confirm-boton">Cancelar</button>

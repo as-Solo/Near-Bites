@@ -17,6 +17,7 @@ function AuthWrapper(props){
   const [isLogin, setIsLogin] = useState(false)
   const [loggedUserId, setLoggedUserId] = useState(null)
   const [isOwner, setIsOwner] = useState(false)
+  const [isAdmin, setIsAdmin] = useState(false)
   const [isValidatingToken, setIsValidatingToken] = useState(true)
   const [update, setUpdate] = useState(true)
 
@@ -33,8 +34,12 @@ function AuthWrapper(props){
       if (response.data.rol === "owner"){
         setIsOwner(true)
       }
+      else if( response.data.rol === "admin"){
+        setIsAdmin(true)
+      }
       else{
         setIsOwner(false)
+        setIsAdmin(false)
       }
       setIsValidatingToken(false)
     }
@@ -43,6 +48,7 @@ function AuthWrapper(props){
       setIsLogin(false)
       setLoggedUserId(null)
       setIsOwner(false)
+      setIsAdmin(false)
       setIsValidatingToken(false)
     }
   }
@@ -51,6 +57,7 @@ function AuthWrapper(props){
     isLogin,
     loggedUserId,
     isOwner,
+    isAdmin,
     update,
     setUpdate,
     authenticateUser

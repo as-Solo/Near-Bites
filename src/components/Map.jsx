@@ -31,7 +31,7 @@ const Map = (props) => {
   useEffect(() => {
     const map = mapRef.current; // Acceder a la referencia del mapa
     if (map) {
-      console.log('Centrando mapa en:', position); // Mostrar en consola
+      // console.log('Centrando mapa en:', position); // Mostrar en consola
       map.setView(position, map.getZoom()); // Recentrar el mapa
     }
     return ()=>{}

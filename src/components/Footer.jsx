@@ -15,7 +15,7 @@ import { AuthContext } from "../context/auth.context"
 
 function Footer() {
   
-  const {isLogin, isOwner} = useContext(AuthContext)
+  const {isLogin, isOwner, isAdmin} = useContext(AuthContext)
 
   return (
     <div className="footer-centradito">
@@ -44,6 +44,11 @@ function Footer() {
         </>
         }
         {isOwner && <Link to="/administrator">
+        <div className="footer-logo-container">
+          <img className="footer-logo-profile" src={settingLogo_w} alt="" />
+        </div>
+        </Link>}
+        {isAdmin && <Link to="/admin-control">
         <div className="footer-logo-container">
           <img className="footer-logo-profile" src={settingLogo_w} alt="" />
         </div>
