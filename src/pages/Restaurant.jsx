@@ -52,12 +52,10 @@ function Restaurant(props) {
 
       setDistance(calcularDistancia(position[0], position[1], response.data.coords[0], response.data.coords[1]).toFixed(1))
 
-
       const resrev = await axios.get(`${API_URL}/api/reviews/${restaurantId}/with_users`)
-      // console.log(resrev.data)
+
       setReviews(resrev.data)
       const wishlist = await service.get(`/users/wishlist`)
-      // console.log(wishlist.data.wishlist)
 
       if(response.data.likes.includes(loggedUserId)){
         setIsLike(true)

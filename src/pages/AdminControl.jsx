@@ -22,11 +22,9 @@ function AdminControl() {
   }, [])
 
   const handleChangeRol = async (e)=>{
-    // console.log(e.target.checked)
     if(!e.target.checked){
       try {
         const response = await service.patch("/admins/change_rol", {userId:e.target.name, newRol:"user"})
-        // console.log(response.data)
         getData()
       } catch (error) {
         console.log(error)
@@ -35,7 +33,6 @@ function AdminControl() {
     else{
       try {
         const response = await service.patch("/admins/change_rol", {userId:e.target.name, newRol:"owner"})
-        // console.log(response.data)
         getData()
       } catch (error) {
         console.log(error)
@@ -46,7 +43,6 @@ function AdminControl() {
   const handleDeleteUser = async ()=>{
     try {
       const response = await service.delete(`/admins/users/${usuarioDelete}`)
-      // console.log(response)
       setUsuarioDelete("")
       setDeleteConfirm(false)
       getData()

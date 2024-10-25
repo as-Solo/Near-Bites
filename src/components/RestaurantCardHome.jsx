@@ -5,7 +5,6 @@ import defaultRes from "../assets/images/logos/DefaultRes.png"
 import calcularDistancia from "../utils/calcularDistancia.js"
 
 
-// https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfgCGR6P5HG_TjU9CKr52zZ4Vbo1tAqMjq4g&s
 function RestaurantCardHome(props) {
   const { restaurant, position } = props
   const distance = calcularDistancia(position[0], position[1], restaurant.coords[0], restaurant.coords[1]).toFixed(1) + " km"
@@ -31,7 +30,7 @@ function RestaurantCardHome(props) {
         <div className="res-card-home-data">
           <div className="res-card-home-data-izq">
             <p className="res-card-home-name">{restaurant.name}</p>
-            <p className="res-card-home-adress">{restaurant.address}</p> {/*, ({restaurant.city}) */}
+            <p className="res-card-home-adress">{restaurant.address}</p>
             <div className="res-car-homr-data-row">
               <p className="res-card-home-rating">{restaurant.rating}⭐</p>
               <p className="res-card-home-distance">{distance}</p>

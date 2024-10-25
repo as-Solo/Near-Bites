@@ -2,7 +2,6 @@
 
 import { useContext, useEffect, useRef, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-// import markerIconPng from "../assets/images/patata.png"
 import markerIconIhPng from "../assets/images/marker-icon-ih.png"
 import markerIconYouPng from "../assets/images/marker-icon-you.png"
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
@@ -29,13 +28,12 @@ const Map = (props) => {
     return ()=>{}
   }, [])
   useEffect(() => {
-    const map = mapRef.current; // Acceder a la referencia del mapa
+    const map = mapRef.current;
     if (map) {
-      // console.log('Centrando mapa en:', position); // Mostrar en consola
-      map.setView(position, map.getZoom()); // Recentrar el mapa
+      map.setView(position, map.getZoom());
     }
     return ()=>{}
-  }, [position]); // Dependencia en position
+  }, [position]);
 
   const customIcon = new DivIcon({
     className: 'custom-icon',
@@ -52,7 +50,6 @@ const Map = (props) => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
-      {/* <Marker position={position} icon={new Icon({iconUrl: pinImage, iconSize: [35, 35], iconAnchor: [12, 41]})}> */}
       <Marker position={position} icon={customIcon}>
         <Popup offset={[4, -25]}>Estás aquí</Popup>
       </Marker>

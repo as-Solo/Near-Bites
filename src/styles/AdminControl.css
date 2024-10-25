@@ -10,7 +10,6 @@
 
 
 .admin-centradito{
-    /* border: 1px solid green; */
     width: 100dvw;
     height: calc(100dvh - 105px);
     display: flex;
@@ -28,13 +27,11 @@
     width: 100%;
     height: 100%;
     max-width: 1000px;
-    /* border: 1px solid pink; */
     padding: 20px;
 }
 
 .admin-encabezado{
     display: flex;
-    /* border: 1px solid blue; */
     width: 60%;
     height: 30%;
     display: flex;
@@ -140,7 +137,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /* margin-top: 10px; */
     transition: all .3s ease;
 }
 

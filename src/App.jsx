@@ -28,7 +28,6 @@ function App() {
     if (navigator.geolocation) {
       navigator.geolocation.watchPosition(
         (pos) => {
-          // console.log(pos)
           const { latitude, longitude } = pos.coords;
           setPosition([latitude, longitude]);
         },

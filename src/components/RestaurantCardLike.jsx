@@ -7,7 +7,6 @@ import { useState } from "react"
 import service from "../services/config.js"
 
 
-// https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfgCGR6P5HG_TjU9CKr52zZ4Vbo1tAqMjq4g&s
 function RestaurantCardLike(props) {
   const { restaurant, position, getData } = props
 
@@ -16,7 +15,6 @@ function RestaurantCardLike(props) {
   const handleLike = async ()=>{
       try {
         const response = await service.put(`/restaurants/unlike`, {restaurantId:restaurant._id})
-        // console.log(response)
         getData()
         setConfirm(false)
       }
@@ -62,7 +60,7 @@ function RestaurantCardLike(props) {
       <div className="res-card-home-data">
         <div className="res-card-home-data-izq">
           <p className="res-card-home-name">{restaurant.name}</p>
-          <p className="res-card-home-adress">{restaurant.address}</p> {/*, ({restaurant.city}) */}
+          <p className="res-card-home-adress">{restaurant.address}</p>
           <div className="res-car-homr-data-row">
             <p className="res-card-home-rating">{restaurant.rating}⭐</p>
             <p className="res-card-home-distance">{distance}</p>

@@ -1,7 +1,3 @@
-// Los contextos tienen necesariamente dos componentes:
-// 1.- El contexto como tal AuthContext
-// 2.- El "envoltorio"
-
 import axios from "axios";
 import service from "../services/config.js"
 import { createContext, useEffect, useState } from "react";

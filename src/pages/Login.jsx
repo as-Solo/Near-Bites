@@ -26,7 +26,6 @@ function Login() {
   const handleSubmit = async (e)=>{
     e.preventDefault()
     try {
-      // const response = await axios.post(`${API_URL}/api/auth/login`, {email, password})
       const response = await service.post(`/auth/login`, {email, password})
       localStorage.setItem("authToken", response.data.authToken)
       await authenticateUser()

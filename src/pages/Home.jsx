@@ -12,13 +12,13 @@ function Home(props) {
 
   const API_URL = import.meta.env.VITE_API_URL;
 
-  // const [position, setPosition] = useState([40.3954259, -3.7182542]);
+  
   const {position} = props
   const [restaurantList, setRestaurantList] = useState([])
   const [availableCategories, setAvailableCategories] = useState([])
   
   const [queryString, setQueryString] = useState('')
-  const [categoriesList, setCategoriesList] = useState([]) // estos son los filtros
+  const [categoriesList, setCategoriesList] = useState([])
   const [limitRes, setLimitRes] = useState(5)
   const [distanceRes, setDistanceRes] = useState(4)
   const [isTyping, setIsTyping] = useState(null)
@@ -91,7 +91,6 @@ function Home(props) {
       clone = clone.filter(elem=>elem!=e.target.name)
     }
     setCategoriesList(clone)
-    console.log(clone)
   }
 
   return (

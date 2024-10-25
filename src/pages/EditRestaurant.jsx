@@ -10,8 +10,8 @@ function EditRestaurant() {
 
   const navigate = useNavigate()
 
-  const [divWidth, setDivWidth] = useState(0);  // Estado para el ancho del div
-  const divRef = useRef(null);  // Referencia al div
+  const [divWidth, setDivWidth] = useState(0);
+  const divRef = useRef(null);
   const [diapositiva, setDiapositiva] = useState(0)
   const [moving, setMoving] = useState(false)
   const [isDisabled, setIsDisabled] = useState(false)
@@ -84,7 +84,7 @@ function EditRestaurant() {
     getData()
     const handleResize = (entries) => {
       for (let entry of entries) {
-        setDivWidth(entry.contentRect.width);  // Actualiza el ancho del div
+        setDivWidth(entry.contentRect.width);
       }
     };
     const resizeObserver = new ResizeObserver(handleResize);
@@ -157,7 +157,6 @@ function EditRestaurant() {
       else{
         setErrorMessage(`${newCategorie} ya se encuentra entre tus categorias.`)
       }
-      console.log("patata")
     }
     setNewCategorie("")
   }
@@ -170,11 +169,9 @@ function EditRestaurant() {
     }
     setIsUploading(true);
 
-    const uploadData = new FormData(); // images and other files need to be sent to the backend in a FormData
+    const uploadData = new FormData();
     uploadData.append("image", event.target.files[0]);
-    //                   |
-    //     this name needs to match the name used in the middleware in the backend => uploader.single("image")
-
+    
     try {
       const clone = structuredClone(editData)
       const response = await service.post("/upload", uploadData)
@@ -220,11 +217,10 @@ function EditRestaurant() {
       e.target.value = ""
     }
     if (+e.target.value > e.target.max){
-      // console.log("entrando")
       e.target.value = ""
     }
   
-    clone[e.target.name] = e.target.value // .padStart(2, '0')
+    clone[e.target.name] = e.target.value
     setTurnoVar(clone)
   }
 
@@ -265,7 +261,6 @@ function EditRestaurant() {
       e.target.value = ""
     }
     if(e.target.name === "discountAmount"){
-      // e.target.value /= 100
       if(e.target.value > 0){
         clone.isDiscount = true
       }
@@ -274,14 +269,12 @@ function EditRestaurant() {
       }
     }
     clone[e.target.name] = e.target.value
-    // console.log(clone)
     setEditData(clone)
   }
 
   const handleEditRestaurant = async ()=>{
     try {
       const response = await service.patch(`/restaurants/owner/${restaurantId}`, editData)
-      // console.log(response)
       setEditConfirm(false)
       setErrorMessage("Cambios guardados correctamente")
       // getData()
@@ -348,9 +341,6 @@ function EditRestaurant() {
             </div>
           </div>
         </div>
-
-        {/* res warning descartar cambios */}
-        {/* res warning realizar cambios */}
 
         <div onClick={()=>setIsZoom(false)} className="edit-res-warning-delete" style={{opacity:isZoom?"1":"0", pointerEvents:isZoom?"auto":"none"}}>
           <div className="marco-zoom">

@@ -26,17 +26,11 @@ function CheckBox(props) {
 	let etiqueta_01 = texto_01 || "user"
 	let etiqueta_02 = texto_02 || "owner"
 
-  // const [value, setValue] = useState(false)
-
 	const handleCheck = (e)=>{
-    // console.log(e.target.name)
+
     const clone = structuredClone(users)
-    console.log(clone)
     clone[index][e.target.name] = e.target.checked
-    console.log(clone[index][e.target.name])
-    console.log(clone)
     setValue(clone)
-    // console.log(users)
 	}
 
 	const pastillaNormal = {
@@ -86,14 +80,11 @@ function CheckBox(props) {
   return (
       
     <div style={container}>
-      {/* aqui podrias valorar el meter los dos textos a la vez y que pasen por opacidad de uno a otro o algo asi
-      para tener siempre el width del texto mayor */}
+    
       <p style={texto}>{value?etiqueta_02:etiqueta_01}</p>
-      {/* <p style={texto}>{etiqueta_01}</p>
-      <p style={texto}>{etiqueta_02}</p> */}
+
       <div style={pastillaNormal}>
         <div style={pelotica}></div>
-        {/* <div></div> */}
         <input onChange={(e)=>handleCheck(e)} type="checkbox" name={name} value={value} style={{opacity:"0", position:"absolute", width:"100%"}}/>
       </div>
     </div>

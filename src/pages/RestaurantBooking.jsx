@@ -81,7 +81,6 @@ function RestaurantBooking(props) {
     })
 
     const booking = await axios.get(`${API_URL}/api/bookings/restaurants/${restaurantId}/${dia}`)
-    // console.log(booking.data)
     booking.data.forEach(booking=>{
       clone.forEach(turno=>{
         if(turno[booking.startHour]){
@@ -117,7 +116,6 @@ function RestaurantBooking(props) {
 
 
   return (
-    // annadirle un boton para ver el perfil del restaurante
     <div className="restaurant-id-centradito">
       <div className="restaurant-id-container">
         <div className="restaurant-id-img-container">
@@ -171,7 +169,6 @@ function RestaurantBooking(props) {
                       <div className="ficha-turno-container" key={index} >
                         <div className="ficha-data">
                           <div className="ficha-turno-column">
-                            {/* <p className="ficha-labels">Turno</p> */}
                             <p className="ficha-turno-hora">{hora}</p>
                           </div>
                           <div className="ficha-turno-column">

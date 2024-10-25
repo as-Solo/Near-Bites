@@ -43,7 +43,6 @@ function Signup() {
     e.preventDefault();
     
     try {
-      // await axios.post(`${API_URL}/api/auth/signup`, {email, password, username})
       await service.post("/auth/signup", {email, password, username})
       navigate("/login")
     } catch (error) {

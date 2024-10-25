@@ -13,7 +13,6 @@ function ReviewBoard(props) {
   const handleRemove = async ()=>{
     try {
       const response = await service.delete(`/reviews/${review._id}`)
-      console.log(response)
       setInfoMessage(response.data.message)
       getData()
     } catch (error) {

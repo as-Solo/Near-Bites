@@ -29,9 +29,7 @@ function Profile() {
   const [loading, setLoading] = useState(true);
 
   const getData = async()=>{
-    // const response = await axios.get(`${API_URL}/api/users/${loggedUserId}`)
     const response = await service.get(`/users/profile`)
-    // console.log(response.data)
     setNewData({
       password: response.data.password || '',
       name: response.data.name || '',
@@ -63,8 +61,6 @@ function Profile() {
   }, [errorMessage]);
 
   const handleSubmit = async (e)=>{
-    console.log(oldUser)
-    console.log(newData.username)
     e.preventDefault()
     const updateData = {
       image: newData.image,
@@ -74,10 +70,8 @@ function Profile() {
     if(oldUser !== newData.username){
       updateData.username = newData.username
     }
-    console.log(newData)
 
     try {
-      // const response = await axios.patch(`${API_URL}/api/users/${loggedUserId}`, updateData)
       const response = await service.patch(`/users/profile`, updateData)
       await authenticateUser()
       setUpdate(current => !current)
@@ -122,8 +116,6 @@ function Profile() {
     }
   }
 
-
-  // -------------------------------------  PINTADO  ----------------------------------------------
    
   return (
     <div className="profile-centradito">

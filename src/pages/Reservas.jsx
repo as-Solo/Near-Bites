@@ -28,7 +28,6 @@ function Reservas() {
   const [loading, setLoading] = useState(true);
 
   const getData = async ()=>{
-    // const response = await axios.get(`${API_URL}/api/bookings/users/${loggedUserId}`)
     const response = await service.get(`/bookings/users/bookingList`)
     const hoy = new Date()
     hoy.setDate(hoy.getDate() - 1)
@@ -75,7 +74,6 @@ function Reservas() {
   const handleDelete = async (e) =>{
     e.preventDefault()
    try {
-    //  await axios.delete(`${API_URL}/api/bookings/${reservaId}`)
      await service.delete(`/bookings/${reservaId}`)
      setInfoMessage("Reserva eliminada correctamente")
      getData()

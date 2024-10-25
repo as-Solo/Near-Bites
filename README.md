@@ -39,8 +39,15 @@
 
 Este proyecto ha sido desarrollado utilizando una combinación de tecnologías modernas que permiten una experiencia de usuario ágil y dinámica:
 
-- **[React](https://reactjs.org/)**: Para la construcción de la interfaz de usuario, utilizando componentes reutilizables y un enfoque modular.
+
+- **HTML**: Lenguaje de marcado utilizado para estructurar el contenido de la aplicación web.
+- **CSS**: Herramienta para estilizar y mejorar la apariencia visual de la interfaz de usuario.
+- **Javascript**: Lenguaje de programación utilizado para la lógica de la aplicación, gestión de eventos y manipulación del DOM.
+- **React Context**: Mecanismo de React que permite compartir estados y funciones entre componentes sin necesidad de pasar props manualmente, facilitando la gestión global de datos en la aplicación.
+- **[axios](https://axios-http.com/)**: Librería para realizar solicitudes HTTP de manera sencilla, utilizada para interactuar con el servidor y la API.
+
 - **[Vite](https://vitejs.dev/)**: Como el *bundler* para ofrecer una experiencia de desarrollo rápida y eficiente.
+- **[React](https://reactjs.org/)**: Para la construcción de la interfaz de usuario, utilizando componentes reutilizables y un enfoque modular.
 - **[Express](https://expressjs.com/)**: Manejo del backend, con un enfoque RESTful en las APIs.
 - **[MongoDB](https://www.mongodb.com/)** y **[Mongoose](https://mongoosejs.com/)**: Base de datos NoSQL utilizada para gestionar la información de usuarios, restaurantes, comentarios, y reservas.
 - **[Leaflet](https://leafletjs.com/)**: Librería para la integración de mapas interactivos y geolocalización.
@@ -60,6 +67,8 @@ El proyecto está dividido en dos repositorios para organizar mejor las responsa
     - `/src/services`: Configuración de Axios para gestionar las solicitudes HTTP al backend.
     - `/src/context`: Manejadores de estado globales (como el de autenticación y roles) que permiten compartir datos y funciones entre componentes.
     - `/src/assets`: Imágenes y recursos estáticos utilizados en la interfaz.
+    - `/src/styles`: Distintos archivos .css usados.
+    - `/src/utils`: Funcionalidades recurrentes.
   
 - **[Backend (Repositorio Separado)](https://github.com/as-Solo/Near-Bites-server)**: Toda la lógica del servidor, incluyendo las rutas de la API, la configuración de **MongoDB** y la gestión de roles, se encuentra en este repositorio.
     - En este repositorio se manejan las conexiones con la base de datos, la autenticación de usuarios, las reservas, los comentarios, la gestión de restaurantes y el control de acceso basado en roles (usuarios, propietarios y administradores).
