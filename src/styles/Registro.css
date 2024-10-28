@@ -170,3 +170,90 @@
     padding: 3px;
     font-weight: 600;
 }
+
+.user-profile-row{
+    display: flex;
+    gap: 5px;
+    background-color: rgba(20, 20, 20, 0.55);
+    padding: 3px 15px;
+    border-bottom: 1px solid rgb(0, 183, 255);
+    color: rgb(70, 130, 182);
+    position: relative;
+    border-radius: 3px;
+    font-size: .8rem;
+    width: 100%;
+}
+
+.user-profile-row span{
+    font-size: .65rem;
+}
+
+.boton-follow-user{
+    background-color: rgb(70, 130, 182);
+    border: none;
+    padding: 2px 15px;
+    border-radius: 5px;
+    font-weight: 700;
+    color: white;
+}
+
+.user-profile-row-sep{
+    display: flex;
+    gap: 5px;
+    width: 100%;
+}
+
+.boton-follow-container{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.user-profile-label-info{
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    width: 100%;
+    white-space: nowrap;
+    /* border: 1px solid pink; */
+
+}
+
+.user-profile-label-info > p{
+    font-size: .7rem;
+    color: rgb(70, 130, 182);
+    line-height: .5rem;
+}
+
+.cajon-info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    /* align-items: flex-start; */
+    gap: 20px;
+}
+
+.boton-clasico{
+    width: 80%;
+    max-width: 350px;
+    background-color: rgb(70, 130, 182);
+    padding: 3px 15px;
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: 4px;
+    margin-top: 15px;
+}
+
+.profile-follows-row{
+    display: flex;
+    gap: 15px;
+    /* background-color: rgba(20, 20, 20, 0.55); */
+    padding: 3px 20px;
+    /* border-bottom: 1px solid rgb(0, 183, 255); */
+    color: rgb(70, 130, 182);
+    border-radius: 3px;
+    font-size: .8rem;
+    width: 80%;
+    justify-content: center;
+}

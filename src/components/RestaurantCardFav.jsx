@@ -3,14 +3,24 @@ import { Link, useLocation } from "react-router-dom"
 import defaultDish from "../assets/images/logos/DefaultDish.png"
 import defaultRes from "../assets/images/logos/DefaultRes.png"
 import calcularDistancia from "../utils/calcularDistancia.js"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import service from "../services/config.js"
+import Stars from "./Stars.jsx"
 
 
 function RestaurantCardFav(props) {
   const { restaurant, position, getData } = props
 
   const [confirm, setConfirm] = useState(false)
+  const [numFav, setNumFav] = useState([])
+
+  const getFav = async ()=>{
+    const response = await service.get(`/users/allfavs/${restaurant._id}`)
+    setNumFav(response.data)
+  }
+  useEffect(()=>{
+    getFav()
+  },[])
 
   const handleFav = async ()=>{
       try {
@@ -60,9 +70,14 @@ function RestaurantCardFav(props) {
           <p className="res-card-home-name">{restaurant.name}</p>
           <p className="res-card-home-adress">{restaurant.address}</p>
           <div className="res-car-homr-data-row">
-            <p className="res-card-home-rating">{restaurant.rating}⭐</p>
-            <p className="res-card-home-distance">{distance}</p>
-          </div>
+              <div className="rating-container">
+                {/* <p className="res-card-home-rating">{restaurant.rating}</p> */}
+                <Stars value={restaurant.rating}/>
+              </div>
+              <p className="res-card-home-rating">{restaurant.likes.length}💕</p>
+              <p className="res-card-home-rating">{numFav}🔖</p>
+              <p className="res-card-home-distance">{distance}</p>
+            </div>
           <div className="res-card-home-categories-container">
             {restaurant.categories.slice(0, 3).map((categoria, index)=>{
               return(

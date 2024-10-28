@@ -7,6 +7,7 @@ import "../styles/RestaurantIdBooking.css"
 import service from "../services/config";
 import calcularDistancia from "../utils/calcularDistancia.js"
 import DotLoader from "react-spinners/DotLoader";
+import Stars from "../components/Stars.jsx";
 
 function RestaurantBooking(props) {
 
@@ -133,7 +134,10 @@ function RestaurantBooking(props) {
             <p className={`${isDark?'dark-':'light-'}reg-warning reg-warning`} style={{opacity:warning?"1":"0", fontSize:".9rem", left:"0", zIndex:"25"}}>{infoMessage}</p>
             <div className="res-ficha-cabecera">
               <p className="res-id-name">{restaurante.name}</p>
-              <p className="res-id-rating">{restaurante.rating}⭐ - {distance} km</p>
+              <div className="rating-container">
+                <Stars value={restaurante.rating}/>
+                <p className="res-id-rating"> - {distance} km</p> {/*{restaurante.rating}⭐*/}
+              </div>
             </div>
             <p className="res-id-address">{restaurante.address}, ({restaurante.city})</p>
             <div className="res-card-home-categories-container">

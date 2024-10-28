@@ -13,6 +13,8 @@ import defaultRes from "../assets/images/logos/DefaultRes.png"
 import service from "../services/config";
 import calcularDistancia from "../utils/calcularDistancia.js"
 import DotLoader from "react-spinners/DotLoader"
+import Stars from "../components/Stars.jsx";
+import StarsInput from "../components/StarsInput.jsx";
 
 
 function Restaurant(props) {
@@ -27,6 +29,8 @@ function Restaurant(props) {
   const {isLogin, loggedUserId} = useContext(AuthContext)
   const { restaurantId } = useParams()
   
+  const [numFav, setNumFav] = useState("")
+
   const { isDark } = useContext(ThemeContext)
   const navigate = useNavigate()
   const [distance, setDistance] = useState(null)
@@ -57,14 +61,18 @@ function Restaurant(props) {
       setReviews(resrev.data)
       const wishlist = await service.get(`/users/wishlist`)
 
+      const numFavs = await service.get(`/users/allfavs/${restaurantId}`)
+      setNumFav(numFavs.data)
+
       if(response.data.likes.includes(loggedUserId)){
         setIsLike(true)
       }
       
-
       if(wishlist.data.wishlist.includes(restaurantId)){
         setIsFav(true)
       }
+
+
     } catch (error) {
       console.log(error)
     }
@@ -131,6 +139,7 @@ function Restaurant(props) {
     if(!isLike){
       try {
         const response = await service.put(`/restaurants/like`, {restaurantId:restaurantId})
+        getData()
         setInfoMessage(response.data.message)
         setIsLike(true)
       }
@@ -141,6 +150,7 @@ function Restaurant(props) {
     else{
       try {
         const response = await service.put(`/restaurants/unlike`, {restaurantId:restaurantId})
+        getData()
         setInfoMessage(response.data.message)
         setIsLike(false)
       } catch (error) {
@@ -154,6 +164,7 @@ function Restaurant(props) {
     if(!isFav){
       try {
         const response = await service.put(`/users/fav/${restaurantId}`)
+        getData()
         setInfoMessage(response.data.message)
         setIsFav(true)
       }
@@ -164,6 +175,7 @@ function Restaurant(props) {
     else{
       try {
         const response = await service.put(`/users/unfav/${restaurantId}`)
+        getData()
         setInfoMessage(response.data.message)
         setIsFav(false)
       }
@@ -198,7 +210,8 @@ function Restaurant(props) {
               <div className="form-make-review" style={{opacity:makingReview?"1":"0", pointerEvents:makingReview?"auto":"none"}}>
                   <textarea onChange={(e)=>handleChanges(e)} className="make-review-area" name="description" id="" value={newReview.description}></textarea>
                   <div className="make-review-rating-container">
-                    <label className="make-review-rating-text" htmlFor="rating">Rating</label>
+                    <StarsInput value={newReview.rating} handle={handleChanges}/>
+                    {/* <label className="make-review-rating-text" htmlFor="rating">Rating</label> */}
                     <input onChange={(e)=>handleChanges(e)} className="make-review-rating" type="number" name="rating" max={5} min={1}  value={newReview.rating}/>
                   </div>
                 <div className="make-review-botonera">
@@ -208,7 +221,11 @@ function Restaurant(props) {
               </div>
               <p className="res-id-name">{restaurante.name}</p>
               <p className="res-id-address">{restaurante.address}, ({restaurante.city})</p>
-              <p className="res-id-rating">{restaurante.rating}⭐ - {distance} km</p>
+              <div className="rating-container">
+              {/* <p className="res-id-rating">{restaurante.rating}</p> */}
+              <Stars value={restaurante.rating}/>
+              <p className="res-id-rating">- {restaurante.likes.length}💕 - {numFav}🔖 - {distance} km</p>
+              </div>
               <div className="res-card-home-categories-container">
                   {restaurante.categories.map((categoria, index)=>{
                     return(

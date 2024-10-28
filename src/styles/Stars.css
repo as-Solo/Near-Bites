@@ -1,0 +1,23 @@
+.stars-container{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    /* aspect-ratio: 10/2.2; */
+    /* border: solid 1px pink; */
+    width: 55px;
+}
+
+.stars-container img{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+.stars-filled {
+    mask-image: linear-gradient(to right, black 100%, transparent 0);
+    mask-repeat: no-repeat;
+}

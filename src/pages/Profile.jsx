@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import profileLogo from "../assets/images/logos/Profile_white.png"
 import service from "../services/config";
 import DotLoader from "react-spinners/DotLoader";
+import Stars from "../components/Stars";
 
 
 
@@ -22,9 +23,13 @@ function Profile() {
   const [newData, setNewData] = useState({})
   const [oldUser, setOldUser] = useState(null)
   
+  const [following, setFollowing] = useState(0)
+  const [followers, setFollowers] = useState(0)
+  
   const [errorMessage, setErrorMessage] = useState("")
   const [warning, setWarning] = useState(false)
   const [confirm, setConfirm] = useState(false)
+
   
   const [loading, setLoading] = useState(true);
 
@@ -37,8 +42,11 @@ function Profile() {
       username: response.data.username || '',
       image: response.data.image || ''
     })
+    const numFollowers = await service.get(`/users/followers`)
+    setFollowers(numFollowers.data)
     setOldUser(response.data.username)
     setLoading(false)
+    setFollowing(response.data.follow.length)
   }
   useEffect(()=>{
     getData()
@@ -126,6 +134,10 @@ function Profile() {
         <p className={`${isDark?'dark-':'light-'}reg-warning reg-warning`} style={{opacity:warning?"1":"0"}}>{errorMessage}</p>
         <div className="profile-marco-image">
           <img className="profile-image" src={newData.image || profileLogo} alt="" />
+        </div>
+        <div className={`profile-follows-row`}>
+          <p>{followers} seguidores</p>
+          <p>{following} siguiendo</p>
         </div>
         <form className={`${isDark?'dark-':'light-'}reg-form reg-form`} onSubmit={handleSubmit}>
           <div className={`${isDark?'dark-':'light-'}reg-pareja reg-pareja`}>

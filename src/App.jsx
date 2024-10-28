@@ -19,6 +19,7 @@ import PlayGround from './components/PlayGround'
 import EditRestaurant from './pages/EditRestaurant'
 import Admin from './components/auth/Admin'
 import AdminControl from './pages/AdminControl'
+import UserProfile from './pages/UserProfile'
 
 function App() {
   
@@ -57,6 +58,7 @@ function App() {
         <Route path='/administrator' element={ <Owner> <Administrator/> </Owner> }/>
         <Route path='/edit-restaurants/:restaurantId' element={ <Owner> <EditRestaurant/> </Owner> }/>
         <Route path='/admin-control' element={ <Admin> <AdminControl/> </Admin> }/>
+        <Route path="/user-profile/:userId" element={ <Private> <UserProfile/> </Private> }/>
        
         <Route path='*' element={ <Home/> }/>
       </Routes>

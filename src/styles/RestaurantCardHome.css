@@ -75,7 +75,7 @@
 .res-car-homr-data-row{
     display: flex;
     gap: 15px;
-    align-items: baseline;
+    align-items: center;
 }
 
 .res-card-home-name{
@@ -165,4 +165,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.rating-container{
+    height: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.rating-container-booking{
+    height: 12px;
+    display: flex;
+    align-items: center;
+    gap: 35px;
+    background-color: rgb(20, 20, 20);
 }

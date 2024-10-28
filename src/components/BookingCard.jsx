@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Stars from "./Stars";
 
 
 function BookingCard(props) {
@@ -16,7 +17,8 @@ function BookingCard(props) {
         <div className="ficha-bookinglist-data-restaurant">
         <div className="data-cabecera">
           <p className="ficha-bookinglist-text">{booking.restaurant.name}</p>
-          <p className="ficha-bookinglist-text">{booking.restaurant.rating}⭐</p>
+          <Stars value={booking.restaurant.rating}/>
+          {/* <p className="ficha-bookinglist-text">{booking.restaurant.rating}⭐</p> */}
         </div>
         <p className="ficha-bookinglist-text">{booking.restaurant.address}</p>
         </div>
