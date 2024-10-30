@@ -52,6 +52,9 @@ function RestaurantBooking(props) {
 
   const handlePartySize = (e)=>{
     e.preventDefault()
+    if(e.target.value <= 0){
+      e.target.value = ""
+    }
     if(e.target.value > restaurante.capacity){
       e.target.value = restaurante.capacity
     }
