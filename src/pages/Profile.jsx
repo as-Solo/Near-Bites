@@ -42,11 +42,11 @@ function Profile() {
       username: response.data.username || '',
       image: response.data.image || ''
     })
-    const numFollowers = await service.get(`/users/followers`)
-    setFollowers(numFollowers.data)
     setOldUser(response.data.username)
     setLoading(false)
     setFollowing(response.data.follow.length)
+    const numFollowers = await service.get(`/users/followers`)
+    setFollowers(numFollowers.data)
   }
   useEffect(()=>{
     getData()

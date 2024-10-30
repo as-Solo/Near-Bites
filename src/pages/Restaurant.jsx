@@ -48,6 +48,8 @@ function Restaurant(props) {
 
   const getData = async (distance) =>{
     try {
+      const numFavs = await service.get(`/users/allfavs/${restaurantId}`)
+      setNumFav(numFavs.data)
       const response = await axios.get(`${API_URL}/api/restaurants/${restaurantId}`)
       setRestaurante(response.data)
       if(response.data){
@@ -61,8 +63,6 @@ function Restaurant(props) {
       setReviews(resrev.data)
       const wishlist = await service.get(`/users/wishlist`)
 
-      const numFavs = await service.get(`/users/allfavs/${restaurantId}`)
-      setNumFav(numFavs.data)
 
       if(response.data.likes.includes(loggedUserId)){
         setIsLike(true)

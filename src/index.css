@@ -23,6 +23,10 @@ a {
   text-decoration: inherit;
 }
 
+button{
+  user-select: none;
+}
+
 body {
   margin: 0;
   display: flex;

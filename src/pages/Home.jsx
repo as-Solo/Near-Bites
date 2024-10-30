@@ -37,7 +37,7 @@ function Home(props) {
 
   const getCategories = async ()=>{
     try {
-      const response = await axios.get(`${API_URL}/api/restaurants/unique/categories`)
+      const response = await axios.get(`${API_URL}/api/restaurants/unique/categories/${position[0]}/${position[1]}/${distanceRes*1000 || 4000}/${limitRes || 5}`)
       setAvailableCategories(response.data)
     } catch (error) {
       console.log(error)

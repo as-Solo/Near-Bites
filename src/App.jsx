@@ -15,11 +15,13 @@ import Wishlist from './pages/Wishlist'
 import Private from './components/auth/Private'
 import Public from './components/auth/Public'
 import Owner from './components/auth/Owner'
-import PlayGround from './components/PlayGround'
 import EditRestaurant from './pages/EditRestaurant'
 import Admin from './components/auth/Admin'
 import AdminControl from './pages/AdminControl'
 import UserProfile from './pages/UserProfile'
+import Conversation from './pages/Conversation'
+import ConversationsList from './pages/ConversationsList'
+import ConvAccepted from './components/auth/ConvAccepted'
 
 function App() {
   
@@ -59,6 +61,8 @@ function App() {
         <Route path='/edit-restaurants/:restaurantId' element={ <Owner> <EditRestaurant/> </Owner> }/>
         <Route path='/admin-control' element={ <Admin> <AdminControl/> </Admin> }/>
         <Route path="/user-profile/:userId" element={ <Private> <UserProfile/> </Private> }/>
+        <Route path="/conversation/:userId" element={ <Private> <ConvAccepted> <Conversation/> </ConvAccepted> </Private> }/>
+        <Route path="/conversations" element={ <Private>  <ConversationsList/> </Private> }/>
        
         <Route path='*' element={ <Home/> }/>
       </Routes>

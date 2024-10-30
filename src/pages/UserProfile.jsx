@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import service from "../services/config";
 import { AuthContext } from "../context/auth.context";
 import profileLogo from "../assets/images/logos/Profile_white.png"
+import DotLoader from "react-spinners/DotLoader";
 
 
 
@@ -11,9 +12,15 @@ function UserProfile() {
 
   const {userId} = useParams()
   const {loggedUserId} = useContext(AuthContext)
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState('')
   const [numLikes, setNumLikes] = useState('')
   const [isFollowed, setIsFollowed] = useState(false)
+
+  const [isAccepted, setIsAccepted] = useState(false)
+  const [isBlock, setIsBlock] = useState(false)
+  const [isRequest, setIsRequest] = useState(false)
+
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate()
 
@@ -22,6 +29,7 @@ function UserProfile() {
       const response = await service.get(`/users/userby/${userId}`)
       // console.log(response.data)
       setUser(response.data)
+      setLoading(false)
     } catch (error) {
       console.log(error)
     }
@@ -30,7 +38,7 @@ function UserProfile() {
   const getFollows = async ()=>{
     try {
       const response = await service.get(`/users/is-following/${userId}`)
-      console.log(response.data)
+      // console.log(response.data)
       if (response.data){
         setIsFollowed(true)
       }
@@ -46,6 +54,30 @@ function UserProfile() {
     const response = await service.get(`/restaurants/user/like/${userId}`)
     setNumLikes(response.data.length)
   }
+
+  const getAccepted = async ()=>{
+    const response = await service.get(`/users/is-accepted/${userId}`)
+    // console.log(response.data)
+    setIsAccepted(response.data)
+  }
+
+  const getRequest = async ()=>{
+    const response = await service.get(`/users/is-request/${userId}`)
+    setIsRequest(response.data)
+    getData()
+  }
+
+  useEffect(()=>{
+    if(userId === loggedUserId){
+      navigate("/profile")
+    }
+    getAccepted()
+    getRequest()
+    getLikes()
+    getFollows()
+    getData()
+    return ()=>{}
+  }, [])
 
   const handleFollow = async()=>{
     try {
@@ -64,27 +96,33 @@ function UserProfile() {
     
   }
 
-  useEffect(()=>{
-    if(userId === loggedUserId){
-      navigate("/profile")
+  const handleRequest = async () =>{
+    if(isAccepted){
+      try {
+        await service.put(`/users/request/yes/${userId}`)
+      } catch (error) {
+        console.log(error)
+      }
+      navigate(`/conversation/${userId}`)
     }
-    getLikes()
-    getFollows()
-    getData()
-    return ()=>{}
-  }, [])
-
-  if (user === null){
-    return (
-    <h1>loading</h1>
-  )
+    else{
+      try {
+        const response = await service.put(`/users/request/${userId}`)
+        console.log(response.data.message)
+        getRequest()
+      } catch (error) {
+        console.log(error)
+      }
+    }
   }
+
   return (
     <div className="reg-centradito">
       <img className={`reg-image`} src={nearBitesText} alt="Near Bites logo"/>
       <div className={`reg-cajon`}>
+      {loading?( <div className="loader-container"> <DotLoader color={"#4682b6"} loading={loading} size={50} /> </div> ):<>
         <div className="boton-follow-container">
-          <button onClick={handleFollow} className="boton-follow-user">{isFollowed?"Unfollow":"Follow"}</button>
+          <button onClick={handleFollow} className="boton-follow-user" style={isFollowed?{backgroundColor:"rgba(127, 163, 201, .3)", color:"rgba(255, 255, 255, .7)"}:{}}>{isFollowed?"Unfollow":"Follow"}</button>
         </div>
         <div className="profile-marco-image">
           <img className="profile-image" src={user.image || profileLogo} alt="" />
@@ -124,9 +162,11 @@ function UserProfile() {
          
         </div>
         
-
+        </>}
       </div>
-      <button className="boton-clasico">Abrir conversación</button>
+      {!isBlock &&
+        <button onClick={handleRequest} className="boton-clasico" disabled={isRequest} style={isRequest?{backgroundColor:"rgba(127, 163, 201, .1)", color:"rgba(255, 255, 255, .2)"}:{}}>{isAccepted?'Abrir conversación':isRequest?'Solicitud enviada':'Conectar'}</button>
+      }
     </div>
   )
 }

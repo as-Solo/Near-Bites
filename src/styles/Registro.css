@@ -207,6 +207,10 @@
     position: absolute;
     top: 10px;
     right: 10px;
+    width: 100px;
+    /* border: 1px solid white; */
+    display: flex;
+    justify-content: center;
 }
 
 .user-profile-label-info{
@@ -256,4 +260,8 @@
     font-size: .8rem;
     width: 80%;
     justify-content: center;
+}
+
+.boton-follow-container button:hover{
+    outline: 1px solid rgba(255, 255, 255, 0.7);
 }

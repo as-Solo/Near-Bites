@@ -1,3 +1,12 @@
+.paleta{
+    color: rgb(41, 46, 48);
+    color: rgb(70, 130, 182);
+    color: rgb(127, 163, 201);
+    color: rgb(243, 229, 240);
+
+    color: rgb(0, 183, 255);
+}
+
 .centradito{
     display: flex;
     width: 100%;
@@ -14,8 +23,10 @@
     justify-content: flex-end;
     height: 60px;
     position: fixed;
-    z-index: 50;
+    z-index: 1001;
     top: 0;
+    gap: 15px;
+    transition: all .3s ease;
 }
 
 .navbar-logo-container{
@@ -26,6 +37,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: all .2s ease;
+
 }
 
 .navbar-logo-profile{
@@ -33,4 +46,173 @@
     height: 90%;
     object-fit: cover;
     border-radius: 100%;
+}
+
+.inbox-container{
+    width: 25px;
+    height: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all .2s ease;
+    position: relative;
+}
+
+.inbox-container img{
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+}
+
+.inbox-container:hover{
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.navbar-logo-container:hover{
+    border-color: rgb(70, 130, 182);
+}
+
+.request-pendientes-container{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    align-items: flex-end;
+    top: 28px;
+    right: 0;
+    background-color: rgb(38, 42, 44);
+    box-shadow: 1px 1px 3px rgba(255, 255, 255, 0.1);
+    gap: 3px;
+    padding: 5px;
+    border-radius: 2px;
+    white-space: nowrap;
+    height: auto;
+    transition: all 0.3s ease;
+    /* overflow: hidden; */
+    clip-path: inset(0 0 100% 0);
+    z-index: 9999 !important;
+}
+
+.request-pendientes-container hr{
+    width: 100%;
+    border: none;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+a {
+    text-decoration: inherit;
+  }
+
+.link-conversaciones{
+    color: rgb(70, 130, 182);
+    font-size: .6rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.solicitudes-pendientes{
+    color: rgb(70, 130, 182);
+    font-size: .65rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.ficha-user-request-image-container{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ficha-user-request-image-container img{
+    width: 90%;
+    height: 90%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.request-map-container{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    padding: 5px;
+    width: 100%;
+}
+
+.ficha-request-column{
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.ficha-request-pendientes{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+    transition: all .3s ease;
+}
+
+.ficha-request-name{
+    font-size: .75rem;
+    color: rgb(0, 183, 255);
+}
+
+.ficha-request-created{
+    font-size: .65rem;
+    color: rgb(127, 163, 201);
+}
+
+.datos-user-ficha-request{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ficha-request-column button{
+    font-size: .6rem;
+    padding: 1px 10px;
+    font-weight: 700;
+    border: none;
+    border-radius: 3px;
+}
+
+.boton-aceptar{
+    background-color: rgb(70, 130, 182);
+    color: white;
+}
+
+.boton-rechazar{
+    background-color: rgba(127, 163, 201, 0.6);
+    color: rgba(20, 20, 20, 0.7);
+}
+
+.notificacion-request-pendientes{
+    width: 12px;
+    height: 12px;
+    font-size: .65rem;
+    background-color: rgb(255, 216, 43);
+    position: absolute;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 800;
+    right: 0;
+    top: -5px;
+    transition: all .3s ease;
+    z-index: 2;
+}
+
+@media (width > 550px){
+    .navbar-container{
+        padding-right: 35px;
+    }
 }
