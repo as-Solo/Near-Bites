@@ -12,6 +12,7 @@ function Conversation() {
   const [message, setMessage] = useState('')
   const [conversation, setConversation] = useState([])
   const [destinatario, setDestinatario] = useState({image:'', username:''})
+  const [loading, setLoading] = useState(true)
 
   const getConversation = async ()=>{
     const response = await service.get(`/messages/group-by/conversation/${userId}`)
@@ -27,6 +28,7 @@ function Conversation() {
   useEffect(()=>{
     getConversation()
     getDestinatario()
+    setLoading(false)
     return ()=>{}
   }, [])
 
@@ -37,7 +39,7 @@ function Conversation() {
     getConversation()
   }
 
-  if(conversation.length === 0){
+  if(loading){
     return (
       <h1>Hola</h1>
     )
