@@ -83,11 +83,11 @@ function UserProfile() {
     try {
       if(isFollowed){
         const response =await service.put(`/users/unfollow/${userId}`)
-        console.log(response.data.message)
+        // console.log(response.data.message)
       }
       else{
         const response = await service.put(`/users/follow/${userId}`)
-        console.log(response.data.message)
+        // console.log(response.data.message)
       }
     } catch (error) {
       console.log(error)

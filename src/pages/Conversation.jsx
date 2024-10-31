@@ -1,13 +1,25 @@
 import { useNavigate, useParams } from "react-router-dom"
 import "../styles/Conversation.css"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import service from "../services/config"
 import MessageCard from "../components/MessageCard"
+import io from "socket.io-client"
+import { AuthContext } from "../context/auth.context"
 
 function Conversation() {
 
+  const API_URL = import.meta.env.VITE_API_URL;
+  // const socket = io(API_URL)
+  const socket = useRef(null);
+
+  // useEffect(()={
+  //   return ()=>{};
+  // }, [])
+
   const navigate = useNavigate()
   const { userId } = useParams()
+
+  const {loggedUserId} = useContext(AuthContext)
 
   const [message, setMessage] = useState('')
   const [conversation, setConversation] = useState([])
@@ -26,14 +38,25 @@ function Conversation() {
   }
 
   useEffect(()=>{
+    socket.current = io(API_URL);
+
     getConversation()
     getDestinatario()
     setLoading(false)
-    return ()=>{}
+    socket.current.on('mensaje', (mensaje)=>{
+      if(loggedUserId === mensaje){
+        getConversation()
+      }
+    })
+    return ()=>{
+      socket.current.disconnect();
+      console.log("Desconectado del servidor de sockets");
+    }
   }, [])
 
   const handleCreateMessage = async ()=>{
     const response = await service.post(`/messages/${userId}`, {message:message})
+    socket.current.emit("mensaje", response.data.destinatario)
     // console.log(response)
     setMessage('')
     getConversation()
