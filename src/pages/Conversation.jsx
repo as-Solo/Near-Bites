@@ -5,6 +5,8 @@ import service from "../services/config"
 import MessageCard from "../components/MessageCard"
 import io from "socket.io-client"
 import { AuthContext } from "../context/auth.context"
+import defaultUser from "../assets/images/logos/Profile_white.png"
+
 
 function Conversation() {
 
@@ -73,7 +75,7 @@ function Conversation() {
       <div className="tope-width-conversacion">
         <div className="cabecera-chat">
           <div className="container-imagen-destinatario">
-            <img src={destinatario.image} alt="" />
+            <img src={destinatario.image || defaultUser} alt="" />
           </div>
           <p>@{destinatario.username}</p>
         </div>
