@@ -28,6 +28,9 @@
 - **Geolocalización en Tiempo Real**: La aplicación detecta la ubicación del usuario para mostrar los restaurantes cercanos, con posibilidad de ajustar el radio de búsqueda.
 - **Comentarios y Valoraciones**: Los usuarios pueden dejar reseñas en los restaurantes, ayudando a otros a tomar decisiones informadas.
 - **Favoritos y Lista de Deseos**: Guarda los restaurantes favoritos y agrega otros a tu lista de deseos para reservas futuras.
+- **Interacción entre Usuarios**: Los usuarios pueden ver perfiles de otros, estadísticas, y seguirse entre sí, fomentando una comunidad activa.
+- **Chat en Tiempo Real**: Implementación de un sistema de chat en tiempo real utilizando **Socket.IO**, donde los usuarios pueden comunicarse, recibir notificaciones y aceptar o rechazar conversaciones, evitando spam y mejorando la experiencia de usuario.
+- **Bandeja de Entrada de Chats**: Una interfaz que permite a los usuarios acceder a sus conversaciones y gestionar sus notificaciones.
 - **Reservas Dinámicas**: Permite realizar reservas en tiempo real, gestionando horarios y disponibilidad automáticamente.
 - **Gestión de Roles**: Los usuarios pueden tener roles especiales como `owner`, con acceso a herramientas de administración para gestionar la apariencia y datos de su restaurante, y `admin` que gestiona y administra las distintas cuentas y sus permisos.
 - **Panel de Control para Propietarios y Administradores**: Los propietarios tienen un panel donde pueden modificar fácilmente los datos de su restaurante (imágenes, turnos, ofertas, etc.), mientras que los administradores pueden gestionan usuarios y permisos con un solo click.
@@ -50,6 +53,7 @@ Este proyecto ha sido desarrollado utilizando una combinación de tecnologías m
 - **[React](https://reactjs.org/)**: Para la construcción de la interfaz de usuario, utilizando componentes reutilizables y un enfoque modular.
 - **[Express](https://expressjs.com/)**: Manejo del backend, con un enfoque RESTful en las APIs.
 - **[MongoDB](https://www.mongodb.com/)** y **[Mongoose](https://mongoosejs.com/)**: Base de datos NoSQL utilizada para gestionar la información de usuarios, restaurantes, comentarios, y reservas.
+- **[Socket.IO](https://socket.io/)**: Librería que permite la comunicación en tiempo real entre el cliente y el servidor. Utilizada para implementar un sistema de chat en tiempo real que mejora la interacción entre usuarios a través de notificaciones instantáneas y gestión de mensajes.
 - **[Leaflet](https://leafletjs.com/)**: Librería para la integración de mapas interactivos y geolocalización.
 - **[Cloudinary](https://cloudinary.com/)**: Servicio utilizado para la gestión y almacenamiento de imágenes.
 - **[React Spinners](https://www.davidhu.io/react-spinners/)**: Para la integración de *loaders* y mejorar la experiencia de usuario mientras se cargan los datos.
@@ -85,6 +89,8 @@ La aplicación está diseñada para ser completamente interactiva y adaptable a 
 - **Sistema de Filtrado**: Los usuarios pueden ajustar el radio de búsqueda y aplicar filtros adicionales como disponibilidad, tipo de comida, y calificación.
 - **Gestión de Reservas**: Near Bites controla la disponibilidad de cada restaurante, integrando un sistema de turnos dinámico que permite gestionar las reservas en tiempo real.
 - **Gestión de Roles**: Implementa un sistema de autorización basado en roles, permitiendo que los propietarios gestionen la información de sus restaurantes y los administradores supervisen y editen roles de usuarios.
+- **Sistema de Chat**: La aplicación permite a los usuarios chatear entre sí en tiempo real. Las notificaciones se envían para que los usuarios acepten o rechacen conversaciones, evitando interacciones no deseadas y mejorando la comunicación. La bandeja de entrada de chats facilita el acceso a las conversaciones.
+
 
 ---
 
@@ -96,6 +102,8 @@ Durante el desarrollo del proyecto, se presentaron varios desafíos técnicos, a
 - **Gestión de Geolocalización y Mapa**: Sincronizar la posición del usuario con los datos de los restaurantes cercanos en tiempo real fue un reto resuelto mediante el uso de **[Leaflet](https://leafletjs.com/)**.
 - **Gestión Compleja de Estados**: El uso de **Context API** y hooks de React permitió gestionar de forma eficiente estados complejos, como las reservas en tiempo real y la autenticación basada en roles.
 - **Optimización de Consultas a la Base de Datos**: Se implementaron consultas eficientes en MongoDB para manejar el filtrado de restaurantes y gestionar la disponibilidad en tiempo real sin sobrecargar el servidor.
+- **Integración de Chat en Tiempo Real**: Se integró **[Socket.IO](https://socket.io/)** para permitir la comunicación instantánea entre usuarios. Esto incluyó la implementación de un sistema de notificaciones para aceptar o rechazar conversaciones, abordando el reto de mantener una experiencia de usuario fluida y evitar el spam en los chats.
+
 
 ---
 
@@ -108,13 +116,14 @@ Este proyecto ha sido una excelente oportunidad para mejorar mis habilidades en:
 - **Desarrollo Fullstack**: Integración fluida entre un frontend moderno basado en React y un backend robusto con Express y MongoDB.
 - **Optimización de Rendimiento**: Reducción del tiempo de carga mediante una planificación cuidadosa de las consultas al servidor y la adaptación de las peticiones a las necesidades específicas de cada momento, garantizando una mayor eficiencia en la interacción con la base de datos y el servidor.
 - **Control de Acceso y Roles**: Desarrollo de un sistema de roles robusto que permite la personalización de la experiencia según el tipo de usuario.
+- **Comunicación en Tiempo Real**: Implementación de un sistema de chat en tiempo real utilizando **[Socket.IO](https://socket.io/)**, mejorando la interacción entre los usuarios y gestionando notificaciones para una mejor experiencia de usuario.
 
 ---
 
 <a name='agradecimientos'></a>
 ## ❤️ Agradecimientos
 
-A mi profesor y mentor en el camino del desarrollo web, que en dos meses de guía, apoyo, consejos y una abrumadora transmisión de conocimientos, ha hecho posible que yo pueda hacer este proyecto en menos de dos semanas:
+A mi profesor y mentor en el camino del desarrollo web, que en dos meses de guía, apoyo, consejos y una abrumadora transmisión de conocimientos, ha hecho posible que yo pueda hacer este proyecto en menos de ~~_dos_~~ tres semanas:
 * [Jorge Berrizbeitia](https://github.com/jorgeberrizbeitia)
 
 Mención especial para quien ya desde el primer proyecto de este bootcamp siempre dijo, **adelante**, aun sabiendo que eso significaría que le enterrase en dudas y que le pidiese a cada paso que "auditase" mi web. De todo corazón: muchas gracias!:
