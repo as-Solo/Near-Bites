@@ -6,17 +6,15 @@ import MessageCard from "../components/MessageCard"
 import io from "socket.io-client"
 import { AuthContext } from "../context/auth.context"
 import defaultUser from "../assets/images/logos/Profile_white.png"
+import DotLoader from "react-spinners/DotLoader";
 
 
 function Conversation() {
 
   const API_URL = import.meta.env.VITE_API_URL;
-  // const socket = io(API_URL)
   const socket = useRef(null);
-
-  // useEffect(()={
-  //   return ()=>{};
-  // }, [])
+  const chatRef = useRef(null)
+  const endOfMessagesRef = useRef(null);
 
   const navigate = useNavigate()
   const { userId } = useParams()
@@ -50,11 +48,22 @@ function Conversation() {
         getConversation()
       }
     })
+    if (endOfMessagesRef.current) {
+      endOfMessagesRef.current.scrollIntoView({ behavior: "smooth" });
+    }
     return ()=>{
       socket.current.disconnect();
       console.log("Desconectado del servidor de sockets");
     }
   }, [])
+
+  useEffect(() => {
+    if (!loading) {
+      if (endOfMessagesRef.current) {
+        endOfMessagesRef.current.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [conversation, loading])
 
   const handleCreateMessage = async ()=>{
     const response = await service.post(`/messages/${userId}`, {message:message})
@@ -66,7 +75,11 @@ function Conversation() {
 
   if(loading){
     return (
-      <h1>Hola</h1>
+      <div className="reg-centradito" >
+        <div className="tope-width-conversacion">
+          <div className="loader-container"> <DotLoader color={"#4682b6"} loading={loading} size={50} /> </div>
+        </div>
+      </div>
     )
   }
 
@@ -81,7 +94,7 @@ function Conversation() {
         </div>
         <div onClick={()=>navigate(`/` )} className="conversacion-volver"><p style={{pointerEvents:"none"}}>❮</p></div>
           
-        <div className="conversation-area conversation-modules">
+        <div ref={chatRef} className="conversation-area conversation-modules">
           {conversation.map(dia=>{
             return(
               <div className="recolocacion-chats" key={dia.day}>
@@ -94,6 +107,7 @@ function Conversation() {
               </div>
               )
             })}
+            <div ref={endOfMessagesRef}></div>
           </div>
         <div className="writing-area-container conversation-modules">
           <textarea className="area-nuevo-mensaje" onChange={(e)=>setMessage(e.target.value)} name="" id="" value={message}></textarea>
