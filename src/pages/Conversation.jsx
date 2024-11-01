@@ -92,7 +92,7 @@ function Conversation() {
           </div>
           <p>@{destinatario.username}</p>
         </div>
-        <div onClick={()=>navigate(`/` )} className="conversacion-volver"><p style={{pointerEvents:"none"}}>❮</p></div>
+        <div onClick={()=>navigate(`/conversations` )} className="conversacion-volver"><p style={{pointerEvents:"none"}}>❮</p></div>
           
         <div ref={chatRef} className="conversation-area conversation-modules">
           {conversation.map(dia=>{
